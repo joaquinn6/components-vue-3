@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import {
+  BaseInput,
   BaseTable,
   BaseText,
   type BaseTableColumn,
@@ -20,16 +21,46 @@ const selectedRows = ref<BaseTableRow[]>([]);
 const lastAction = ref<TableAction | null>(null);
 // El estado se guarda como clave y se traduce al mostrarlo, así los datos no dependen del idioma.
 const rows = ref<BaseTableRow[]>([
-  { id: 1, reference: "HTK-1042", customer: "María López", status: "transit" },
+  {
+    id: 1,
+    reference: "HTK-1042",
+    locator: "LC-88412",
+    customer: "María López",
+    city: "Managua",
+    status: "transit",
+  },
   {
     id: 2,
     reference: "HTK-1043",
+    locator: "LC-88413",
     customer: "Carlos Pérez",
+    city: "León",
     status: "delivered",
   },
-  { id: 3, reference: "HTK-1044", customer: "Ana Ruiz", status: "pending" },
-  { id: 4, reference: "HTK-1045", customer: "Luis Gómez", status: "transit" },
-  { id: 5, reference: "HTK-1046", customer: "Elena Díaz", status: "delivered" },
+  {
+    id: 3,
+    reference: "HTK-1044",
+    locator: "LC-88414",
+    customer: "Ana Ruiz",
+    city: "Granada",
+    status: "pending",
+  },
+  {
+    id: 4,
+    reference: "HTK-1045",
+    locator: "LC-88415",
+    customer: "Luis Gómez",
+    city: "Masaya",
+    status: "transit",
+  },
+  {
+    id: 5,
+    reference: "HTK-1046",
+    locator: "LC-88416",
+    customer: "Elena Díaz",
+    city: "Estelí",
+    status: "delivered",
+  },
 ]);
 
 const t = useMessages({
@@ -43,11 +74,16 @@ const t = useMessages({
     customer: "Customer",
     status: "Status",
     required: "This field is required.",
+    referencePlaceholder: "HTK-0000",
+    customerPlaceholder: "Customer name",
+    noLocator: "No locator",
     statuses: {
       transit: "In transit",
       delivered: "Delivered",
       pending: "Pending",
     } as Record<ShipmentStatus, string>,
+    summary: (visible: number, total: number) =>
+      `Showing ${visible} of ${total} shipments`,
     selected: (count: number) => `${count} rows selected`,
     noChanges: "No changes yet.",
     actions: {
@@ -66,11 +102,15 @@ const t = useMessages({
     customer: "Cliente",
     status: "Estado",
     required: "Este campo es obligatorio.",
+    referencePlaceholder: "HTK-0000",
+    customerPlaceholder: "Nombre del cliente",
+    noLocator: "Sin localizador",
     statuses: {
       transit: "En tránsito",
       delivered: "Entregado",
       pending: "Pendiente",
     },
+    summary: (visible, total) => `Mostrando ${visible} de ${total} envíos`,
     selected: (count) => `${count} filas seleccionadas`,
     noChanges: "Todavía no hay cambios.",
     actions: {
@@ -100,13 +140,16 @@ const columns = computed<BaseTableColumn[]>(() => [
     key: "status",
     label: t.value.status,
     sortable: true,
-    formatter: (value) =>
-      t.value.statuses[value as ShipmentStatus] ?? value ?? "",
+    formatter: statusLabel,
   },
 ]);
 
+function statusLabel(value: unknown) {
+  return t.value.statuses[value as ShipmentStatus] ?? value ?? "";
+}
+
 function handleAdd(row: BaseTableRow, resetDraft: () => void) {
-  rows.value = [...rows.value, { ...row, id: Date.now() }];
+  rows.value = [...rows.value, { status: "pending", ...row, id: Date.now() }];
   resetDraft();
   lastAction.value = "added";
 }
@@ -134,7 +177,14 @@ const page = ref(1);
 const sort = ref(null);
 const selectedRows = ref([]);
 const rows = ref([
-  { id: 1, reference: "HTK-1042", customer: "María López", status: "transit" },
+  {
+    id: 1,
+    reference: "HTK-1042",
+    locator: "LC-88412",
+    customer: "María López",
+    city: "Managua",
+    status: "transit",
+  },
   // …
 ]);
 const statusLabels = { transit: "In transit", delivered: "Delivered", pending: "Pending" };
@@ -145,7 +195,7 @@ const columns = [
 ];
 
 function handleAdd(row, resetDraft) {
-  rows.value = [...rows.value, { ...row, id: Date.now() }];
+  rows.value = [...rows.value, { status: "pending", ...row, id: Date.now() }];
   resetDraft();
 }
 function handleEdit(row, finishEditing) {
@@ -177,11 +227,51 @@ function handleDelete(row) {
     @edit="handleEdit"
     @delete="handleDelete"
   >
-    <template #cell-reference="{ value }">
-      <BaseText color="heading" weight="bold">{{ value }}</BaseText>
+    <template #cell-reference="{ row }">
+      <div class="shipment-cell">
+        <BaseText as="span" color="heading" weight="bold">{{ row.reference }}</BaseText>
+        <BaseText as="span" variant="label" color="muted">{{ row.locator || "No locator" }}</BaseText>
+      </div>
+    </template>
+    <template #cell-customer="{ row }">
+      <div class="shipment-cell">
+        <BaseText as="span" color="heading" weight="bold">{{ row.customer }}</BaseText>
+        <BaseText as="span" variant="label" color="muted">{{ row.city }}</BaseText>
+      </div>
+    </template>
+    <template #cell-status="{ value }">
+      <span class="shipment-status" :class="\`shipment-status--\${value}\`">
+        {{ statusLabels[value] }}
+      </span>
+    </template>
+
+    <template #add-cell-reference="{ row, required, invalid }">
+      <BaseInput
+        v-model="row.reference"
+        :required="required"
+        :state="invalid ? 'error' : 'default'"
+        aria-label="Reference"
+        placeholder="HTK-0000"
+      />
+    </template>
+    <template #add-cell-customer="{ row, required, invalid }">
+      <BaseInput
+        v-model="row.customer"
+        :required="required"
+        :state="invalid ? 'error' : 'default'"
+        aria-label="Customer"
+        placeholder="Customer name"
+      />
+    </template>
+    <template #edit-cell-customer="{ row }">
+      <BaseInput v-model="row.customer" aria-label="Customer" />
+    </template>
+
+    <template #pagination-summary="{ visibleCount, totalItems }">
+      Showing {{ visibleCount }} of {{ totalItems }} shipments
     </template>
     <template #selection-summary="{ selectedCount }">
-      <BaseText variant="label" color="heading">{{ selectedCount }} rows selected</BaseText>
+      {{ selectedCount }} rows selected
     </template>
   </BaseTable>
 </template>`;
@@ -209,13 +299,65 @@ function handleDelete(row) {
         @edit="handleEdit"
         @delete="handleDelete"
       >
-        <template #cell-reference="{ value }">
-          <BaseText color="heading" weight="bold">{{ value }}</BaseText>
+        <template #cell-reference="{ row }">
+          <div class="table-demo__cell">
+            <BaseText as="span" color="heading" weight="bold">
+              {{ row.reference }}
+            </BaseText>
+            <BaseText as="span" variant="label" color="muted">
+              {{ row.locator || t.noLocator }}
+            </BaseText>
+          </div>
+        </template>
+        <template #cell-customer="{ row }">
+          <div class="table-demo__cell">
+            <BaseText as="span" color="heading" weight="bold">
+              {{ row.customer }}
+            </BaseText>
+            <BaseText as="span" variant="label" color="muted">
+              {{ row.city }}
+            </BaseText>
+          </div>
+        </template>
+        <template #cell-status="{ value }">
+          <span
+            class="table-demo__status"
+            :class="`table-demo__status--${value}`"
+          >
+            {{ statusLabel(value) }}
+          </span>
+        </template>
+
+        <template #add-cell-reference="{ row, required, invalid }">
+          <BaseInput
+            v-model="row.reference"
+            :required="required"
+            :state="invalid ? 'error' : 'default'"
+            :aria-label="t.reference"
+            :placeholder="t.referencePlaceholder"
+          />
+        </template>
+        <template #add-cell-customer="{ row, required, invalid }">
+          <BaseInput
+            v-model="row.customer"
+            :required="required"
+            :state="invalid ? 'error' : 'default'"
+            :aria-label="t.customer"
+            :placeholder="t.customerPlaceholder"
+          />
+        </template>
+        <template #edit-cell-reference="{ row }">
+          <BaseInput v-model="row.reference" :aria-label="t.reference" />
+        </template>
+        <template #edit-cell-customer="{ row }">
+          <BaseInput v-model="row.customer" :aria-label="t.customer" />
+        </template>
+
+        <template #pagination-summary="{ visibleCount, totalItems }">
+          {{ t.summary(visibleCount, totalItems) }}
         </template>
         <template #selection-summary="{ selectedCount }">
-          <BaseText variant="label" color="heading">
-            {{ t.selected(selectedCount) }}
-          </BaseText>
+          {{ t.selected(selectedCount) }}
         </template>
       </BaseTable>
       <BaseText variant="sm" color="muted" aria-live="polite">
@@ -227,3 +369,35 @@ function handleDelete(row) {
     </DemoExample>
   </DemoSection>
 </template>
+
+<style scoped>
+.table-demo__cell {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.table-demo__status {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-round);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+.table-demo__status--transit {
+  color: var(--jnv-color-brand-secondary);
+  background: var(--jnv-color-surface-highlight);
+}
+
+.table-demo__status--delivered {
+  color: var(--jnv-color-state-success);
+  background: var(--jnv-color-state-success-surface);
+}
+
+.table-demo__status--pending {
+  color: var(--jnv-color-state-warning);
+  background: var(--jnv-color-surface-subtle);
+}
+</style>

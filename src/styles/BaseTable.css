@@ -38,21 +38,21 @@
 .base-table__table {
   width: 100%;
   min-width: 48rem;
-  border-spacing: var(--space-table-0);
+  border-spacing: var(--space-0);
   border-collapse: collapse;
   color: var(--color-text-body);
 }
 
 .base-table__table th,
 .base-table__table td {
-  padding: var(--space-table-4) var(--space-table-6);
+  padding: var(--space-4) var(--space-6);
   border-bottom: var(--border-width-thin) solid var(--color-border-default);
   vertical-align: middle;
 }
 
 .base-table__selection-cell {
   width: var(--space-10);
-  padding-inline: var(--space-table-4) !important;
+  padding-inline: var(--space-4) !important;
   text-align: center;
 }
 
@@ -73,9 +73,9 @@
 .base-table__sort-button {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-table-2);
-  padding: var(--space-table-0);
-  border: var(--space-table-0);
+  gap: var(--space-2);
+  padding: var(--space-0);
+  border: var(--space-0);
   color: inherit;
   background: transparent;
   font: inherit;
@@ -125,7 +125,7 @@
   --base-field-gap: var(--space-0);
   --base-field-message-min-height: var(--space-0);
   text-align: left;
-  padding-block: var(--space-table-2);
+  padding-block: var(--space-2);
 }
 
 .base-table__row-actions {
@@ -144,7 +144,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-1);
-  border: var(--space-table-0);
+  border: var(--space-0);
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   background: transparent;
@@ -157,7 +157,7 @@
 }
 
 .base-table__table tbody tr:last-child td {
-  border-bottom: var(--space-table-0);
+  border-bottom: var(--space-0);
 }
 
 .base-table__cell--left {
@@ -180,11 +180,11 @@
 
 .base-table__footer {
   display: flex;
-  min-height: var(--header-height);
+  min-height: calc(var(--space-12) + var(--space-8));
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-table-4);
-  padding: var(--space-table-4) var(--space-table-6);
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
   border-top: var(--border-width-thin) solid var(--color-border-default);
   background: var(--color-surface-subtle);
 }
@@ -192,18 +192,18 @@
 .base-table__summaries {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-table-4);
+  gap: var(--space-4);
   align-items: center;
 }
 
 .base-table__summary {
-  margin: var(--space-table-0);
+  margin: var(--space-0);
   color: var(--color-text-muted);
   font-size: var(--font-size-xs);
 }
 
 .base-table__selection-summary {
-  margin: var(--space-table-0);
+  margin: var(--space-0);
   color: var(--color-text-heading);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -212,16 +212,16 @@
 .base-table__pagination {
   display: flex;
   align-items: center;
-  gap: var(--space-table-2);
+  gap: var(--space-2);
 }
 
 .base-table__page-button {
   display: inline-flex;
-  width: var(--stepper-number-size);
-  height: var(--stepper-number-size);
+  width: calc(var(--space-8) + var(--space-1));
+  height: calc(var(--space-8) + var(--space-1));
   align-items: center;
   justify-content: center;
-  padding: var(--space-table-0);
+  padding: var(--space-0);
   border: var(--border-width-thin) solid var(--color-border-default);
   border-radius: var(--radius-md);
   color: var(--color-text-heading);
@@ -253,7 +253,7 @@
 }
 
 .base-table__ellipsis {
-  min-width: var(--space-table-4);
+  min-width: var(--space-4);
   color: var(--color-text-muted);
   text-align: center;
 }
@@ -261,7 +261,7 @@
 @media (max-width: 35.9375rem) {
   .base-table__table th,
   .base-table__table td {
-    padding-inline: var(--space-table-4);
+    padding-inline: var(--space-4);
   }
 
   .base-table__footer {
