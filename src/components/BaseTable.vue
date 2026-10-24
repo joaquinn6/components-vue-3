@@ -104,7 +104,7 @@ const {
 } = useBaseTableCrud(props, emit, resolveValue, resolveRowKey);
 
 const hasRowActions = computed(
-  () => props.addable || props.editable || props.deletable
+  () => props.addable || props.editable || props.deletable,
 );
 
 const normalizedColumns = computed(() => [
@@ -127,10 +127,10 @@ const normalizedColumns = computed(() => [
 ]);
 
 const totalPages = computed(() =>
-  Math.max(1, Math.ceil(props.totalItems / props.pageSize))
+  Math.max(1, Math.ceil(props.totalItems / props.pageSize)),
 );
 const currentPage = computed(() =>
-  Math.min(Math.max(props.page, 1), totalPages.value)
+  Math.min(Math.max(props.page, 1), totalPages.value),
 );
 const rowOffset = computed(() => (currentPage.value - 1) * props.pageSize);
 const sortedRows = computed(() => {
@@ -138,14 +138,14 @@ const sortedRows = computed(() => {
     return props.rows;
 
   const column = normalizedColumns.value.find(
-    (item) => item.key === sortState.value.key
+    (item) => item.key === sortState.value.key,
   );
   if (!column) return props.rows;
 
   return [...props.rows].sort((firstRow, secondRow) => {
     const result = compareValues(
       resolveValue(firstRow, column),
-      resolveValue(secondRow, column)
+      resolveValue(secondRow, column),
     );
     return sortState.value.direction === "desc" ? -result : result;
   });
@@ -154,30 +154,30 @@ const visibleRows = computed(() => {
   if (props.paginationMode === "remote") return props.rows;
   return sortedRows.value.slice(
     rowOffset.value,
-    rowOffset.value + props.pageSize
+    rowOffset.value + props.pageSize,
   );
 });
 const visibleCount = computed(() => visibleRows.value.length);
 const summaryStart = computed(() =>
-  props.totalItems && visibleCount.value ? rowOffset.value + 1 : 0
+  props.totalItems && visibleCount.value ? rowOffset.value + 1 : 0,
 );
 const summaryEnd = computed(() =>
   visibleCount.value
     ? Math.min(summaryStart.value + visibleCount.value - 1, props.totalItems)
-    : 0
+    : 0,
 );
 const selectedKeys = computed(
-  () => new Set(props.selectedRows.map((row) => resolveRowKey(row)))
+  () => new Set(props.selectedRows.map((row) => resolveRowKey(row))),
 );
 const visibleSelectedCount = computed(
-  () => visibleRows.value.filter((row) => isRowSelected(row)).length
+  () => visibleRows.value.filter((row) => isRowSelected(row)).length,
 );
 const allVisibleSelected = computed(
   () =>
-    visibleCount.value > 0 && visibleSelectedCount.value === visibleCount.value
+    visibleCount.value > 0 && visibleSelectedCount.value === visibleCount.value,
 );
 const someVisibleSelected = computed(
-  () => visibleSelectedCount.value > 0 && !allVisibleSelected.value
+  () => visibleSelectedCount.value > 0 && !allVisibleSelected.value,
 );
 const selectedCount = computed(() => props.selectedRows.length);
 
@@ -233,14 +233,14 @@ watch(
     if (!props.loading && props.page !== currentPage.value)
       emitPageChange(currentPage.value);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 watch(
   () => props.sort,
   (value) => {
     sortState.value = value;
-  }
+  },
 );
 
 watch(
@@ -248,7 +248,7 @@ watch(
   (value, oldValue) => {
     if (!props.clearSelectionOnPageChange || value === oldValue) return;
     updateSelection([]);
-  }
+  },
 );
 
 function emitPageChange(page) {
@@ -305,8 +305,8 @@ function toggleSort(column) {
     sortState.value?.key !== column.key
       ? { key: column.key, direction: "asc" }
       : sortState.value.direction === "asc"
-      ? { key: column.key, direction: "desc" }
-      : null;
+        ? { key: column.key, direction: "desc" }
+        : null;
 
   sortState.value = nextSort;
   emit("update:sort", nextSort);
@@ -325,7 +325,7 @@ function updateSelection(rows) {
 function toggleRowSelection(row, selected) {
   const rowKey = resolveRowKey(row);
   const nextSelection = props.selectedRows.filter(
-    (selectedRow) => resolveRowKey(selectedRow) !== rowKey
+    (selectedRow) => resolveRowKey(selectedRow) !== rowKey,
   );
 
   if (selected) nextSelection.push(row);
@@ -334,10 +334,10 @@ function toggleRowSelection(row, selected) {
 
 function toggleVisibleSelection(selected) {
   const visibleKeys = new Set(
-    visibleRows.value.map((row) => resolveRowKey(row))
+    visibleRows.value.map((row) => resolveRowKey(row)),
   );
   const nextSelection = props.selectedRows.filter(
-    (row) => !visibleKeys.has(resolveRowKey(row))
+    (row) => !visibleKeys.has(resolveRowKey(row)),
   );
 
   if (selected) nextSelection.push(...visibleRows.value);
@@ -382,6 +382,7 @@ function absoluteRowIndex(index) {
                 scope="col"
               >
                 <BaseCheckbox
+                  label-position="top"
                   :model-value="allVisibleSelected"
                   :indeterminate="someVisibleSelected"
                   :disabled="loading || !visibleCount"
@@ -474,17 +475,18 @@ function absoluteRowIndex(index) {
                 :class="{
                   'base-table__row--editing': isEditing(
                     row,
-                    absoluteRowIndex(visibleIndex)
+                    absoluteRowIndex(visibleIndex),
                   ),
                 }"
               >
                 <td v-if="selectable" class="base-table__selection-cell">
                   <BaseCheckbox
+                    label-position="top"
                     :model-value="isRowSelected(row)"
                     :disabled="loading"
                     :aria-label="`Seleccionar fila ${resolveRowKey(
                       row,
-                      absoluteRowIndex(visibleIndex)
+                      absoluteRowIndex(visibleIndex),
                     )}`"
                     @update:model-value="toggleRowSelection(row, $event)"
                   />
@@ -511,7 +513,7 @@ function absoluteRowIndex(index) {
                         formatValue(
                           editDraftRow,
                           column,
-                          absoluteRowIndex(visibleIndex)
+                          absoluteRowIndex(visibleIndex),
                         )
                       }}
                     </slot>
@@ -559,7 +561,7 @@ function absoluteRowIndex(index) {
                           :disabled="loading || editingRowKey !== null"
                           :aria-label="`Editar fila ${resolveRowKey(
                             row,
-                            absoluteRowIndex(visibleIndex)
+                            absoluteRowIndex(visibleIndex),
                           )}`"
                           title="Editar"
                           @click="
@@ -575,7 +577,7 @@ function absoluteRowIndex(index) {
                           :disabled="loading || editingRowKey !== null"
                           :aria-label="`Eliminar fila ${resolveRowKey(
                             row,
-                            absoluteRowIndex(visibleIndex)
+                            absoluteRowIndex(visibleIndex),
                           )}`"
                           title="Eliminar"
                           @click="deleteRow(row)"

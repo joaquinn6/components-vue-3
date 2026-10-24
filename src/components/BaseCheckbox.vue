@@ -9,7 +9,7 @@ const props = defineProps({
   label: { type: String, default: "" },
   labelPosition: {
     type: String,
-    default: "top",
+    default: "end",
     validator: (value) => ["top", "end"].includes(value),
   },
   info: { type: String, default: "" },
