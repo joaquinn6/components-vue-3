@@ -23,6 +23,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  /* clip (no hidden) evita el scroll horizontal sin romper position: sticky. Protege contra
+     elementos ocultos que sobresalen, como el tooltip de BaseFieldInfo cerca del borde. */
+  overflow-x: clip;
   background: var(--jnv-color-surface-subtle);
 }
 
@@ -77,6 +80,16 @@ code {
   gap: var(--space-3);
 }
 
+/* BaseSwitch reserva espacio para su mensaje de error; en la barra no lo necesita y lo descentraría. */
+.playground-topbar__theme {
+  --jnv-field-gap: 0;
+  --jnv-field-message-min-height: 0;
+  --jnv-choice-field-min-height: 0;
+
+  display: inline-flex;
+  align-items: center;
+}
+
 .playground-topbar__menu {
   display: none;
 }
@@ -94,7 +107,22 @@ code {
 .playground-main {
   display: grid;
   min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-10);
+}
+
+/*
+ * Los elementos de grid tienen min-width: auto y crecen hasta el ancho de su contenido
+ * (steppers, tablas, líneas de código). Se fuerza min-width: 0 para que cada componente use su
+ * propio scroll horizontal en lugar de ensanchar la página.
+ */
+.playground-main > *,
+.demo-section > *,
+.demo-example > *,
+.demo-example__preview > *,
+.demo-stack > *,
+.demo-grid > * {
+  min-width: 0;
 }
 
 .playground-main:focus {
@@ -111,7 +139,19 @@ code {
   border: var(--border-width-thin) solid var(--jnv-color-border-default);
   border-radius: var(--radius-lg);
   background: var(--jnv-color-surface-page);
+  overscroll-behavior: contain;
   scrollbar-width: thin;
+}
+
+/* El buscador queda fijo arriba mientras se recorre el índice. */
+.playground-nav__search {
+  position: sticky;
+  z-index: 1;
+  top: calc(var(--space-4) * -1);
+  margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) 0;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  border-bottom: var(--border-width-thin) solid var(--jnv-color-border-default);
+  background: var(--jnv-color-surface-page);
 }
 
 .playground-backdrop {
@@ -166,6 +206,7 @@ code {
 /* Secciones por componente. */
 .demo-section {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-6);
   padding-bottom: var(--space-10);
   border-bottom: var(--border-width-thin) solid var(--jnv-color-border-default);
@@ -183,6 +224,7 @@ code {
 .demo-example {
   display: grid;
   min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3);
 }
 
@@ -198,6 +240,7 @@ code {
 .demo-example__preview {
   display: grid;
   min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
 
@@ -346,8 +389,20 @@ code {
   padding: var(--space-5) var(--space-2) var(--space-2);
 }
 
-/* Tablet y móvil: el índice pasa a ser un panel lateral. */
+/* Tablet: el índice sigue visible a la derecha, más estrecho. */
 @media (max-width: 900px) {
+  :root {
+    --playground-aside-width: 13rem;
+  }
+
+  .playground-layout {
+    gap: var(--space-5);
+    padding: var(--space-4);
+  }
+}
+
+/* Teléfono: el índice pasa a ser un panel lateral que se abre con el botón de menú. */
+@media (max-width: 640px) {
   .playground-topbar {
     padding: 0 var(--space-4);
   }
@@ -374,6 +429,9 @@ code {
     display: none;
     width: min(var(--playground-aside-width) + 2rem, 85vw);
     max-height: none;
+    /* align-self: start (necesario para el sticky de escritorio) haría que el panel fijo midiera
+       todo su contenido y se desplazara sobre la barra en lugar de ocupar de top a bottom. */
+    align-self: stretch;
     border-width: 0 0 0 var(--border-width-thin);
     border-radius: 0;
     box-shadow: var(--shadow-md);
@@ -381,6 +439,12 @@ code {
 
   .playground-aside--open {
     display: block;
+  }
+
+  /* Con el índice abierto solo se desplaza el panel, no la página de fondo. */
+  .playground-menu-open,
+  .playground-menu-open body {
+    overflow: hidden;
   }
 
   .playground-backdrop {

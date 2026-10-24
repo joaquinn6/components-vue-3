@@ -42,15 +42,16 @@ const groups = computed(() => {
 
 <template>
   <nav class="playground-nav" aria-label="Índice de componentes">
-    <BaseInput
-      id="playground-nav-search"
-      v-model="query"
-      class="playground-nav__search"
-      label="Buscar componente"
-      placeholder="Ej. button, fecha…"
-      type="search"
-      size="sm"
-    />
+    <div class="playground-nav__search" role="search">
+      <BaseInput
+        id="playground-nav-search"
+        v-model="query"
+        label="Buscar componente"
+        placeholder="Ej. button, fecha…"
+        type="search"
+        size="sm"
+      />
+    </div>
 
     <div
       v-for="group in groups"

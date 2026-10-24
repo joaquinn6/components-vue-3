@@ -108,14 +108,15 @@ const catalogCode = `<BaseIcon name="package" size="lg" decorative />`;
       description="Nombres disponibles para BaseIcon y para props como BaseDropdownMenu.icon."
       :code="catalogCode"
     >
-      <BaseInput
-        id="icon-catalog-filter"
-        v-model="filter"
-        class="icon-catalog__filter"
-        label="Filtrar iconos"
-        placeholder="Ej. arrow"
-        type="search"
-      />
+      <div class="icon-catalog__filter">
+        <BaseInput
+          id="icon-catalog-filter"
+          v-model="filter"
+          label="Filtrar iconos"
+          placeholder="Ej. arrow"
+          type="search"
+        />
+      </div>
       <div class="icon-catalog">
         <div
           v-for="iconName in visibleIcons"
