@@ -1,0 +1,71 @@
+/* Tema JNV claro opcional: importar después de jnv.css y activar con data-theme="light". */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  /* Paleta privada del tema JNV claro. Nunca la consumen los componentes. */
+  --jnv-palette-white: #ffffff;
+  --jnv-palette-gray-50: #f8f7fb;
+  --jnv-palette-gray-100: #f2f0f7;
+  --jnv-palette-gray-200: #e6e3ee;
+  --jnv-palette-gray-300: #d4d0de;
+  --jnv-palette-gray-400: #9a95ab;
+  --jnv-palette-gray-500: #6b6580;
+  --jnv-palette-gray-700: #2e2a38;
+  --jnv-palette-gray-900: #17131f;
+  --jnv-palette-purple-950: #2e1065;
+  --jnv-palette-purple-900: #3b1580;
+  --jnv-palette-purple-700: #6d28d9;
+  --jnv-palette-purple-600: #7c3aed;
+  --jnv-palette-purple-50: #f1ebff;
+  --jnv-palette-red-700: #c62839;
+  --jnv-palette-red-800: #a82030;
+  --jnv-palette-red-50: #fdecee;
+  --jnv-palette-amber-700: #b45309;
+  --jnv-palette-amber-50: #fff4e0;
+  --jnv-palette-green-700: #15803d;
+  --jnv-palette-green-50: #e9f7ef;
+  --jnv-palette-sky-700: #0369a1;
+  --jnv-palette-sky-50: #e6f3fa;
+
+  --jnv-color-brand-primary: var(--jnv-palette-purple-700);
+  --jnv-color-brand-primary-hover: var(--jnv-palette-purple-600);
+  --jnv-color-brand-secondary: var(--jnv-palette-purple-950);
+  --jnv-color-brand-secondary-hover: var(--jnv-palette-purple-900);
+  --jnv-color-surface-page: var(--jnv-palette-white);
+  --jnv-color-surface-subtle: var(--jnv-palette-gray-50);
+  --jnv-color-surface-muted: var(--jnv-palette-gray-100);
+  --jnv-color-surface-inverse: var(--jnv-palette-gray-900);
+  --jnv-color-surface-inverse-hover: rgb(255 255 255 / 0.06);
+  --jnv-color-surface-footer: var(--jnv-palette-gray-900);
+  --jnv-color-surface-highlight: var(--jnv-palette-purple-50);
+  --jnv-color-text-heading: var(--jnv-palette-gray-900);
+  --jnv-color-text-body: var(--jnv-palette-gray-700);
+  --jnv-color-text-muted: var(--jnv-palette-gray-500);
+  --jnv-color-text-inverse: var(--jnv-palette-white);
+  --jnv-color-text-inverse-muted: var(--jnv-palette-gray-300);
+  --jnv-color-text-on-primary: var(--jnv-palette-white);
+  --jnv-color-border-default: var(--jnv-palette-gray-200);
+  --jnv-color-border-strong: var(--jnv-palette-gray-300);
+  --jnv-color-border-inverse: rgb(255 255 255 / 0.14);
+  --jnv-color-action-danger-hover: var(--jnv-palette-red-800);
+  --jnv-color-focus-ring: var(--jnv-palette-purple-700);
+  --jnv-color-focus-shadow: rgb(109 40 217 / 0.2);
+  --jnv-color-state-error: var(--jnv-palette-red-700);
+  --jnv-color-state-error-surface: var(--jnv-palette-red-50);
+  --jnv-color-state-warning: var(--jnv-palette-amber-700);
+  --jnv-color-state-success: var(--jnv-palette-green-700);
+  --jnv-color-state-success-surface: var(--jnv-palette-green-50);
+  --jnv-color-status-info-text: var(--jnv-palette-sky-700);
+  --jnv-alert-warning-background: var(--jnv-palette-amber-50);
+  --jnv-alert-info-background: var(--jnv-palette-sky-50);
+  --jnv-alert-primary-text: var(--jnv-color-brand-primary);
+  --jnv-alert-secondary-border: var(--jnv-color-brand-secondary);
+  --jnv-alert-secondary-text: var(--jnv-color-brand-secondary);
+  --jnv-alert-close-hover-background: var(--jnv-color-surface-muted);
+  --jnv-control-background: var(--jnv-color-surface-page);
+  --jnv-color-signature-guide: var(--jnv-palette-gray-400);
+  --jnv-color-signature-ink: var(--jnv-palette-gray-900);
+  --jnv-field-info-focus-shadow: rgb(107 101 128 / 0.18);
+  --jnv-date-picker-menu-background: var(--jnv-color-surface-page);
+  --jnv-date-picker-menu-tooltip-background: var(--jnv-color-surface-page);
+}

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.log
+*.tgz
+.env
+.env.*
+!.env.example
+.DS_Store
+.node-version.pnpm-store/
+.tmp-playground-build/
