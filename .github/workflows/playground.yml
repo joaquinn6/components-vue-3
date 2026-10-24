@@ -1,0 +1,63 @@
+name: Playground en GitHub Pages
+
+on:
+  # Se despliega con cada push a master...
+  push:
+    branches: [master]
+  # ...o manualmente desde la pestaña Actions.
+  workflow_dispatch:
+
+# Permisos mínimos que necesita el despliegue a Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si llegan dos pushes seguidos, se cancela el despliegue anterior.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Validar
+        run: |
+          pnpm check:types
+          pnpm check:playground-types
+          pnpm check:base-colors
+
+      - name: Construir el playground
+        run: pnpm build:playground
+
+      - name: Subir el sitio como artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist-playground
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
