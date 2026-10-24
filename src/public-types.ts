@@ -280,6 +280,7 @@ export interface BaseTableProps {
   paginationMode?: "local" | "remote";
   rowKey?: string | ((row: BaseTableRow, index?: number) => string | number);
   loading?: boolean;
+  size?: Size;
   caption?: string;
   emptyText?: string;
   sort?: BaseTableSort | null;

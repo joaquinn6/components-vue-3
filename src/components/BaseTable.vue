@@ -42,6 +42,11 @@ const props = defineProps({
     default: "id",
   },
   loading: Boolean,
+  size: {
+    type: String,
+    default: "sm",
+    validator: (value) => ["sm", "md", "lg"].includes(value),
+  },
   caption: {
     type: String,
     default: "",
@@ -363,7 +368,10 @@ function absoluteRowIndex(index) {
 <template>
   <div
     class="base-table"
-    :class="{ 'base-table--add-row-empty': adding && !visibleRows.length }"
+    :class="[
+      `base-table--${size}`,
+      { 'base-table--add-row-empty': adding && !visibleRows.length },
+    ]"
     :aria-busy="loading || undefined"
   >
     <div v-loading="loading" class="base-table__content">

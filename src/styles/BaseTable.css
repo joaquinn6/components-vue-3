@@ -8,6 +8,31 @@
   --base-menu-bottom: calc(100% + var(--space-1));
 }
 
+/* Cada tamaño traduce sus tokens públicos a variables privadas del componente. */
+.base-table--sm {
+  --base-table-cell-padding-block: var(--jnv-table-sm-cell-padding-block);
+  --base-table-cell-padding-inline: var(--jnv-table-sm-cell-padding-inline);
+  --base-table-font-size: var(--jnv-table-sm-font-size);
+  --base-table-header-font-size: var(--jnv-table-sm-header-font-size);
+  --base-table-page-button-size: var(--jnv-table-sm-page-button-size);
+}
+
+.base-table--md {
+  --base-table-cell-padding-block: var(--jnv-table-md-cell-padding-block);
+  --base-table-cell-padding-inline: var(--jnv-table-md-cell-padding-inline);
+  --base-table-font-size: var(--jnv-table-md-font-size);
+  --base-table-header-font-size: var(--jnv-table-md-header-font-size);
+  --base-table-page-button-size: var(--jnv-table-md-page-button-size);
+}
+
+.base-table--lg {
+  --base-table-cell-padding-block: var(--jnv-table-lg-cell-padding-block);
+  --base-table-cell-padding-inline: var(--jnv-table-lg-cell-padding-inline);
+  --base-table-font-size: var(--jnv-table-lg-font-size);
+  --base-table-header-font-size: var(--jnv-table-lg-header-font-size);
+  --base-table-page-button-size: var(--jnv-table-lg-page-button-size);
+}
+
 .base-table__scroll {
   overflow-x: auto;
 }
@@ -45,14 +70,15 @@
 
 .base-table__table th,
 .base-table__table td {
-  padding: var(--space-4) var(--space-6);
+  padding: var(--base-table-cell-padding-block)
+    var(--base-table-cell-padding-inline);
   border-bottom: var(--border-width-thin) solid var(--color-border-default);
   vertical-align: middle;
 }
 
 .base-table__selection-cell {
   width: var(--space-10);
-  padding-inline: var(--space-4) !important;
+  padding-inline: var(--base-table-cell-padding-block) !important;
   text-align: center;
 }
 
@@ -63,7 +89,7 @@
 .base-table__table th {
   color: var(--color-text-muted);
   background: var(--color-surface-subtle);
-  font-size: var(--font-size-xs);
+  font-size: var(--base-table-header-font-size);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-label);
   line-height: var(--line-height-heading);
@@ -102,7 +128,7 @@
 }
 
 .base-table__table td {
-  font-size: var(--font-size-sm);
+  font-size: var(--base-table-font-size);
 }
 
 .base-table__table tbody tr {
@@ -180,11 +206,11 @@
 
 .base-table__footer {
   display: flex;
-  min-height: calc(var(--space-12) + var(--space-8));
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: var(--space-4) var(--space-6);
+  padding: var(--base-table-cell-padding-block)
+    var(--base-table-cell-padding-inline);
   border-top: var(--border-width-thin) solid var(--color-border-default);
   background: var(--color-surface-subtle);
 }
@@ -217,8 +243,8 @@
 
 .base-table__page-button {
   display: inline-flex;
-  width: calc(var(--space-8) + var(--space-1));
-  height: calc(var(--space-8) + var(--space-1));
+  width: var(--base-table-page-button-size);
+  height: var(--base-table-page-button-size);
   align-items: center;
   justify-content: center;
   padding: var(--space-0);
@@ -261,7 +287,7 @@
 @media (max-width: 35.9375rem) {
   .base-table__table th,
   .base-table__table td {
-    padding-inline: var(--space-4);
+    padding-inline: min(var(--base-table-cell-padding-inline), var(--space-4));
   }
 
   .base-table__footer {

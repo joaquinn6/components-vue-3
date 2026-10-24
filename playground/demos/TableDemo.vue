@@ -63,11 +63,16 @@ const rows = ref<BaseTableRow[]>([
   },
 ]);
 
+const sizes = ["sm", "md", "lg"] as const;
+const sizeRows = rows.value.slice(0, 2);
+
 const t = useMessages({
   en: {
     description:
       "Semantic table with sorting, local or remote pagination, selection, slots and CRUD.",
     title: "Local CRUD · selectable, addable, editable, deletable, slots",
+    sizesTitle: "Sizes · size",
+    sizeCaption: (size: string) => `Demo shipments, size ${size}`,
     caption: "Demo shipments",
     empty: "There are no items to show.",
     reference: "Reference",
@@ -96,6 +101,8 @@ const t = useMessages({
     description:
       "Tabla semántica con ordenamiento, paginación local o remota, selección, slots y CRUD.",
     title: "CRUD local · selectable, addable, editable, deletable, slots",
+    sizesTitle: "Tamaños · size",
+    sizeCaption: (size: string) => `Envíos de demostración, tamaño ${size}`,
     caption: "Envíos de demostración",
     empty: "No hay elementos para mostrar.",
     reference: "Referencia",
@@ -169,6 +176,11 @@ function handleDelete(rowToDelete: BaseTableRow) {
   );
   lastAction.value = "deleted";
 }
+
+const sizesCode = `<!-- sm is the default; it controls text, cell spacing and pagination buttons -->
+<BaseTable size="sm" :rows="rows" :columns="columns" :total-items="rows.length" :page-size="2" />
+<BaseTable size="md" :rows="rows" :columns="columns" :total-items="rows.length" :page-size="2" />
+<BaseTable size="lg" :rows="rows" :columns="columns" :total-items="rows.length" :page-size="2" />`;
 
 const code = `<script setup>
 import { ref } from "vue";
@@ -367,10 +379,36 @@ function handleDelete(row) {
         JSON.stringify({ page, sort, selected: selectedRows.length })
       }}</pre>
     </DemoExample>
+
+    <DemoExample :title="t.sizesTitle" :code="sizesCode">
+      <div class="table-demo__sizes">
+        <BaseTable
+          v-for="size in sizes"
+          :key="size"
+          :size="size"
+          :rows="sizeRows"
+          :columns="columns"
+          :total-items="sizeRows.length"
+          :page-size="2"
+          row-key="id"
+          :caption="t.sizeCaption(size)"
+          :empty-text="t.empty"
+        >
+          <template #pagination-summary="{ visibleCount, totalItems }">
+            size="{{ size }}" · {{ t.summary(visibleCount, totalItems) }}
+          </template>
+        </BaseTable>
+      </div>
+    </DemoExample>
   </DemoSection>
 </template>
 
 <style scoped>
+.table-demo__sizes {
+  display: grid;
+  gap: var(--space-6);
+}
+
 .table-demo__cell {
   display: grid;
   gap: var(--space-1);

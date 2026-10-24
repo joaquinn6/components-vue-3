@@ -443,12 +443,21 @@ puede importar la exportación pública `loading` como se muestra en la sección
 | `paginationMode`             | `local \| remote`            | `local`                          | Pagina y ordena internamente, o delega esas operaciones al consumidor.                                         |
 | `rowKey`                     | `string \| Function`         | `id`                             | Propiedad o función que identifica cada fila.                                                                  |
 | `loading`                    | `boolean`                    | `false`                          | Deshabilita acciones y muestra la carga.                                                                       |
+| `size`                       | `sm \| md \| lg`             | `sm`                             | Densidad de la tabla: tamaño de texto, espaciado de celdas y botones de paginación.                            |
 | `caption`                    | `string`                     | `Tabla de datos`                 | Descripción accesible de la tabla.                                                                             |
 | `emptyText`                  | `string`                     | `No hay elementos para mostrar.` | Texto del estado vacío.                                                                                        |
 | `sort`                       | `{ key, direction } \| null` | `null`                           | Orden controlado; `direction` puede ser `asc` o `desc`.                                                        |
 | `selectable`                 | `boolean`                    | `false`                          | Muestra selección por fila y selección de filas visibles.                                                      |
 | `selectedRows`               | `Array`                      | `[]`                             | Filas seleccionadas de forma controlada.                                                                       |
 | `clearSelectionOnPageChange` | `boolean`                    | `false`                          | Limpia la selección cuando cambia `page`.                                                                      |
+
+`size` aplica los tokens `--jnv-table-{sm,md,lg}-*`, descritos en
+[Tema y tokens CSS](./theming.md#tokens-de-basetable). Afecta el texto predeterminado de las celdas
+y el encabezado; el contenido de los slots conserva su propia tipografía.
+
+```vue
+<BaseTable size="md" :rows="rows" :columns="columns" :total-items="rows.length" :page-size="10" />
+```
 
 Cada columna puede definirse así:
 

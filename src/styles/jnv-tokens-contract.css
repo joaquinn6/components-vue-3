@@ -56,6 +56,23 @@
   /* BaseCard. */
   --jnv-card-padding-compact: var(--space-4);
 
+  /* BaseTable: espaciado, tipografía y paginación por tamaño (sm, md, lg). */
+  --jnv-table-sm-cell-padding-block: var(--space-2);
+  --jnv-table-sm-cell-padding-inline: var(--space-4);
+  --jnv-table-sm-font-size: var(--font-size-sm);
+  --jnv-table-sm-header-font-size: var(--font-size-xs);
+  --jnv-table-sm-page-button-size: var(--space-8);
+  --jnv-table-md-cell-padding-block: var(--space-3);
+  --jnv-table-md-cell-padding-inline: var(--space-5);
+  --jnv-table-md-font-size: var(--font-size-md);
+  --jnv-table-md-header-font-size: var(--font-size-xs);
+  --jnv-table-md-page-button-size: calc(var(--space-8) + var(--space-1));
+  --jnv-table-lg-cell-padding-block: var(--space-4);
+  --jnv-table-lg-cell-padding-inline: var(--space-6);
+  --jnv-table-lg-font-size: var(--text-heading-sm-size);
+  --jnv-table-lg-header-font-size: var(--font-size-sm);
+  --jnv-table-lg-page-button-size: var(--control-height-sm);
+
   /* Alias conservados para consumidores existentes. */
   --base-field-gap: var(--jnv-field-gap);
   --base-field-message-min-height: var(--jnv-field-message-min-height);

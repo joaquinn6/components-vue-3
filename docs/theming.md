@@ -143,6 +143,28 @@ Cada tono define fondo, borde y texto con `--jnv-alert-{tono}-{background,border
 `--jnv-alert-close-hover-background` controla el fondo al pasar sobre el botón de cierre. Los temas
 JNV oscuro y claro incluyen los valores de referencia; los temas propios deben definir estos tokens.
 
+## Tokens de BaseTable
+
+`BaseTable` aplica un grupo de tokens según su prop `size` (`sm` por defecto, `md` o `lg`). Los temas
+JNV oscuro y claro comparten estos valores de referencia:
+
+| Token                                    | `sm`                  | `md`                                    | `lg`                          | Uso                                       |
+| ---------------------------------------- | --------------------- | --------------------------------------- | ----------------------------- | ----------------------------------------- |
+| `--jnv-table-{size}-cell-padding-block`  | `var(--space-2)`      | `var(--space-3)`                        | `var(--space-4)`              | Padding vertical de celdas y pie          |
+| `--jnv-table-{size}-cell-padding-inline` | `var(--space-4)`      | `var(--space-5)`                        | `var(--space-6)`              | Padding horizontal de celdas y pie        |
+| `--jnv-table-{size}-font-size`           | `var(--font-size-sm)` | `var(--font-size-md)`                   | `var(--text-heading-sm-size)` | Texto predeterminado de las celdas        |
+| `--jnv-table-{size}-header-font-size`    | `var(--font-size-xs)` | `var(--font-size-xs)`                   | `var(--font-size-sm)`         | Texto del encabezado                      |
+| `--jnv-table-{size}-page-button-size`    | `var(--space-8)`      | `calc(var(--space-8) + var(--space-1))` | `var(--control-height-sm)`    | Ancho y alto de los botones de paginación |
+
+La celda de selección usa `--jnv-table-{size}-cell-padding-block` como padding horizontal. Un tema
+propio puede ajustar un tamaño sin afectar a los demás:
+
+```css
+:root {
+  --jnv-table-sm-cell-padding-block: var(--space-3);
+}
+```
+
 ## Tokens del breadcrumb
 
 | Token                                                                                            | Uso                                     |
