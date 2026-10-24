@@ -12,8 +12,13 @@ defineProps({
   },
   labelPosition: {
     type: String,
-    default: "top",
+    default: "end",
     validator: (value) => ["top", "end"].includes(value),
+  },
+  size: {
+    type: String,
+    default: "sm",
+    validator: (value) => ["sm", "md"].includes(value),
   },
   modelValue: Boolean,
   disabled: Boolean,
@@ -32,6 +37,7 @@ defineEmits(["update:modelValue"]);
       class="base-switch"
       :class="[
         `base-switch--label-${labelPosition}`,
+        `base-switch--${size}`,
         {
           'base-switch--disabled': disabled,
           'base-switch--error': error,
@@ -79,9 +85,9 @@ defineEmits(["update:modelValue"]);
 .base-switch {
   position: relative;
   display: grid;
-  min-height: var(--jnv-choice-field-min-height);
+  min-height: var(--base-choice-field-min-height);
   gap: var(--jnv-field-gap, var(--base-field-gap, var(--space-2)));
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   cursor: pointer;
 }
 
@@ -101,8 +107,10 @@ defineEmits(["update:modelValue"]);
 
 .base-switch--label-end {
   display: inline-flex;
+  min-height: var(--space-0);
   align-items: center;
   gap: var(--space-3);
+  transform: translateY(var(--base-form-row-choice-offset, var(--space-0)));
 }
 
 .base-switch--label-end .base-switch__label {
@@ -114,8 +122,8 @@ defineEmits(["update:modelValue"]);
 }
 
 .base-switch--label-top {
-  height: var(--jnv-choice-field-min-height);
-  grid-template-rows: var(--text-label-leading) 1fr;
+  height: auto;
+  grid-template-rows: var(--text-label-leading) auto;
   align-content: start;
 }
 
@@ -123,8 +131,8 @@ defineEmits(["update:modelValue"]);
   position: absolute;
   top: 50%;
   left: 0;
-  width: var(--switch-width);
-  height: var(--switch-height);
+  width: var(--base-switch-width);
+  height: var(--base-switch-height);
   margin: var(--space-0);
   opacity: 0;
   transform: translateY(-50%);
@@ -132,51 +140,74 @@ defineEmits(["update:modelValue"]);
 
 .base-switch__track {
   display: flex;
-  width: var(--switch-width);
-  height: var(--switch-height);
+  width: var(--base-switch-width);
+  height: var(--base-switch-height);
   align-items: center;
-  padding: calc((var(--switch-height) - var(--switch-thumb-size)) / 2);
+  padding: calc(
+    (var(--base-switch-height) - var(--base-switch-thumb-size)) / 2
+  );
   border-radius: var(--radius-round);
-  background: var(--color-border-strong);
+  background: var(--jnv-control-border);
   transition:
     background-color var(--transition-fast),
     box-shadow var(--transition-fast);
 }
 
 .base-switch__thumb {
-  width: var(--switch-thumb-size);
-  height: var(--switch-thumb-size);
+  width: var(--base-switch-thumb-size);
+  height: var(--base-switch-thumb-size);
   border-radius: var(--radius-round);
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   box-shadow: var(--shadow-sm);
   transition: transform var(--transition-fast);
 }
 
 .base-switch__input:checked + .base-switch__track {
-  background: var(--color-action-primary);
+  background: var(--jnv-color-action-primary);
 }
 
 .base-switch__input:checked + .base-switch__track .base-switch__thumb {
-  transform: translateX(calc(var(--switch-width) - var(--switch-height)));
+  transform: translateX(
+    calc(var(--base-switch-width) - var(--base-switch-height))
+  );
+}
+
+.base-switch--sm {
+  --base-choice-field-min-height: var(--control-height-sm);
+  --base-switch-width: var(--switch-width);
+  --base-switch-height: var(--switch-height);
+  --base-switch-thumb-size: var(--switch-thumb-size);
+}
+
+.base-switch--md {
+  --base-choice-field-min-height: var(--jnv-choice-field-min-height);
+  --base-switch-width: calc(var(--switch-width) + var(--space-2));
+  --base-switch-height: calc(var(--switch-height) + var(--space-1));
+  --base-switch-thumb-size: calc(var(--switch-thumb-size) + var(--space-1));
 }
 
 .base-switch__input:focus-visible + .base-switch__track {
-  box-shadow: 0 0 0 var(--focus-outline-width) var(--color-focus-ring);
+  box-shadow: 0 0 0 var(--focus-outline-width) var(--jnv-color-focus-ring);
 }
 
 .base-switch--disabled {
   cursor: not-allowed;
   opacity: var(--opacity-disabled);
 }
+.base-switch--disabled .base-switch__track {
+  border: var(--border-width-thin) solid var(--jnv-control-disabled-border);
+  background: var(--jnv-control-disabled-background);
+  box-sizing: border-box;
+}
 
 .base-switch--error .base-switch__track {
-  box-shadow: 0 0 0 var(--border-width-thin) var(--color-state-error);
+  box-shadow: 0 0 0 var(--border-width-thin) var(--jnv-color-state-error);
 }
 
 .base-switch__message {
   min-height: var(--jnv-field-message-min-height);
   margin-top: var(--space-0);
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
 }

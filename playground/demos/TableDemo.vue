@@ -65,6 +65,7 @@ const rows = ref<BaseTableRow[]>([
 
 const sizes = ["sm", "md", "lg"] as const;
 const sizeRows = rows.value.slice(0, 2);
+const floatingPage = ref(1);
 
 const t = useMessages({
   en: {
@@ -73,6 +74,11 @@ const t = useMessages({
     title: "Local CRUD · selectable, addable, editable, deletable, slots",
     sizesTitle: "Sizes · size",
     sizeCaption: (size: string) => `Demo shipments, size ${size}`,
+    floatingTitle: 'Floating pagination · paginationStyle="floating"',
+    floatingCaption: "Demo shipments with floating pagination",
+    paginationLabel: "Table pagination",
+    previousPage: "Go to previous page",
+    nextPage: "Go to next page",
     caption: "Demo shipments",
     empty: "There are no items to show.",
     reference: "Reference",
@@ -103,6 +109,11 @@ const t = useMessages({
     title: "CRUD local · selectable, addable, editable, deletable, slots",
     sizesTitle: "Tamaños · size",
     sizeCaption: (size: string) => `Envíos de demostración, tamaño ${size}`,
+    floatingTitle: 'Paginación flotante · paginationStyle="floating"',
+    floatingCaption: "Envíos de demostración con paginación flotante",
+    paginationLabel: "Paginación de la tabla",
+    previousPage: "Ir a la página anterior",
+    nextPage: "Ir a la página siguiente",
     caption: "Envíos de demostración",
     empty: "No hay elementos para mostrar.",
     reference: "Referencia",
@@ -181,6 +192,18 @@ const sizesCode = `<!-- sm is the default; it controls text, cell spacing and pa
 <BaseTable size="sm" :rows="rows" :columns="columns" :total-items="rows.length" :page-size="2" />
 <BaseTable size="md" :rows="rows" :columns="columns" :total-items="rows.length" :page-size="2" />
 <BaseTable size="lg" :rows="rows" :columns="columns" :total-items="rows.length" :page-size="2" />`;
+
+const floatingCode = `<BaseTable
+  v-model:page="page"
+  :rows="rows"
+  :columns="columns"
+  :total-items="rows.length"
+  :page-size="2"
+  pagination-style="floating"
+  pagination-aria-label="Table pagination"
+  previous-page-aria-label="Go to previous page"
+  next-page-aria-label="Go to next page"
+/>`;
 
 const code = `<script setup>
 import { ref } from "vue";
@@ -399,6 +422,23 @@ function handleDelete(row) {
           </template>
         </BaseTable>
       </div>
+    </DemoExample>
+
+    <DemoExample :title="t.floatingTitle" :code="floatingCode">
+      <BaseTable
+        v-model:page="floatingPage"
+        :rows="rows"
+        :columns="columns"
+        :total-items="rows.length"
+        :page-size="2"
+        row-key="id"
+        pagination-style="floating"
+        :caption="t.floatingCaption"
+        :empty-text="t.empty"
+        :pagination-aria-label="t.paginationLabel"
+        :previous-page-aria-label="t.previousPage"
+        :next-page-aria-label="t.nextPage"
+      />
     </DemoExample>
   </DemoSection>
 </template>

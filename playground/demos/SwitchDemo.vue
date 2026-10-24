@@ -7,34 +7,46 @@ import { useMessages } from "../i18n/usePlaygroundLocale";
 
 const notifications = ref(true);
 const newsletter = ref(false);
+const smallSize = ref(true);
+const mediumSize = ref(true);
 
 const t = useMessages({
   en: {
     description:
-      "Boolean toggle with label position, disabled state and error.",
+      "Boolean toggle with label position, size, disabled state and error.",
     title: "States · labelPosition, disabled, error",
+    sizesTitle: "Sizes · size",
     notifications: "Receive notifications",
-    labelEnd: "Label at the end",
+    labelTop: "Label on top",
     disabled: "Disabled switch",
     withError: "Switch with error",
     errorText: "Fix this option before continuing.",
+    small: "Small (sm, default)",
+    medium: "Medium (md)",
   },
   es: {
     description:
-      "Interruptor booleano con posición de etiqueta, estado deshabilitado y error.",
+      "Interruptor booleano con posición de etiqueta, tamaño, estado deshabilitado y error.",
     title: "Estados · labelPosition, disabled, error",
+    sizesTitle: "Tamaños · size",
     notifications: "Recibir notificaciones",
-    labelEnd: "Etiqueta al final",
+    labelTop: "Etiqueta encima",
     disabled: "Switch deshabilitado",
     withError: "Switch con error",
     errorText: "Corrige esta opción antes de continuar.",
+    small: "Pequeño (sm, predeterminado)",
+    medium: "Mediano (md)",
   },
 });
 
-const code = `<BaseSwitch id="notifications" v-model="notifications" label="Receive notifications" />
-<BaseSwitch id="newsletter" v-model="newsletter" label="Label at the end" label-position="end" />
-<BaseSwitch id="disabled-switch" label="Disabled switch" label-position="end" disabled />
+const code = `<!-- labelPosition defaults to "end" -->
+<BaseSwitch id="notifications" v-model="notifications" label="Receive notifications" />
+<BaseSwitch id="newsletter" v-model="newsletter" label="Label on top" label-position="top" />
+<BaseSwitch id="disabled-switch" label="Disabled switch" disabled />
 <BaseSwitch id="error-switch" label="Switch with error" error="Fix this option before continuing." />`;
+
+const sizesCode = `<BaseSwitch id="switch-sm" v-model="smallSize" label="Small (sm, default)" />
+<BaseSwitch id="switch-md" v-model="mediumSize" label="Medium (md)" size="md" />`;
 </script>
 
 <template>
@@ -49,19 +61,26 @@ const code = `<BaseSwitch id="notifications" v-model="notifications" label="Rece
         <BaseSwitch
           id="newsletter"
           v-model="newsletter"
-          :label="t.labelEnd"
-          label-position="end"
+          :label="t.labelTop"
+          label-position="top"
         />
-        <BaseSwitch
-          id="disabled-switch"
-          :label="t.disabled"
-          label-position="end"
-          disabled
-        />
+        <BaseSwitch id="disabled-switch" :label="t.disabled" disabled />
         <BaseSwitch
           id="error-switch"
           :label="t.withError"
           :error="t.errorText"
+        />
+      </div>
+    </DemoExample>
+
+    <DemoExample :title="t.sizesTitle" :code="sizesCode">
+      <div class="demo-stack">
+        <BaseSwitch id="switch-sm" v-model="smallSize" :label="t.small" />
+        <BaseSwitch
+          id="switch-md"
+          v-model="mediumSize"
+          :label="t.medium"
+          size="md"
         />
       </div>
     </DemoExample>

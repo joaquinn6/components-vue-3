@@ -1,14 +1,19 @@
 import {
+  BaseBadge,
   BaseButton,
+  BaseFormColumns,
   BaseBreadcrumb,
   BaseRadio,
   BaseSearchQL,
   BaseSelect,
   BaseStepper,
+  BaseTable,
   BaseTabs,
+  BaseToast,
   loading,
 } from "@joaquinn6/jnv-ui-components";
 import type {
+  BaseBadgeProps,
   BaseButtonProps,
   BaseBreadcrumbItem,
   BaseBreadcrumbProps,
@@ -18,7 +23,9 @@ import type {
   BaseSelectProps,
   BaseStepperProps,
   BaseStepperStep,
+  BaseTableProps,
   BaseTabsProps,
+  BaseToastProps,
   LoadingDirective,
 } from "@joaquinn6/jnv-ui-components";
 
@@ -97,9 +104,35 @@ const stepperProps: BaseStepperProps = {
 };
 void stepperProps;
 
+const badgeProps: BaseBadgeProps = { label: "Entregado", tone: "success" };
+void badgeProps;
+
+const toastProps: BaseToastProps = {
+  open: true,
+  title: "Guardado",
+  tone: "success",
+  duration: 3000,
+  position: "bottom-right",
+};
+void toastProps;
+
+const tableProps: BaseTableProps = {
+  rows: [],
+  columns: [{ key: "name", label: "Nombre" }],
+  totalItems: 0,
+  pageSize: 10,
+  size: "md",
+  paginationStyle: "floating",
+};
+void tableProps;
+
 // @ts-expect-error Component variants are intentionally restricted.
 const invalidButton: BaseButtonProps = { variant: "unknown" };
 void invalidButton;
+
+// @ts-expect-error Badge tones are intentionally restricted.
+const invalidBadge: BaseBadgeProps = { tone: "unknown" };
+void invalidBadge;
 
 // @ts-expect-error BaseRadio requires id, name, value and label.
 const invalidRadio: BaseRadioProps = { id: "missing" };
@@ -119,7 +152,11 @@ void BaseRadio;
 void BaseSearchQL;
 void BaseSelect;
 void BaseStepper;
+void BaseTable;
 void BaseTabs;
+void BaseToast;
+void BaseBadge;
+void BaseFormColumns;
 
 const loadingDirective: LoadingDirective = loading;
 void loadingDirective;

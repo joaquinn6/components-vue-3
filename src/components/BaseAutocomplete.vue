@@ -587,7 +587,7 @@ defineExpose({
   flex-wrap: wrap;
 }
 .base-autocomplete--inverse .base-autocomplete__label {
-  color: var(--color-text-inverse-muted);
+  color: var(--jnv-color-text-inverse-muted);
 }
 .base-autocomplete__control {
   position: relative;
@@ -595,10 +595,11 @@ defineExpose({
 .base-autocomplete__input {
   width: 100%;
   min-width: var(--space-0);
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  box-sizing: border-box;
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
   color: var(--jnv-form-value-color);
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   font: inherit;
   transition:
     border-color var(--transition-fast),
@@ -606,19 +607,21 @@ defineExpose({
     background-color var(--transition-fast);
 }
 .base-autocomplete__input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
 }
-.base-autocomplete__input:hover:not(:disabled):not(:read-only) {
-  border-color: var(--color-text-muted);
+.base-autocomplete__input:hover:not(:disabled):not(:read-only):not(:focus) {
+  border-color: var(--jnv-control-hover-border);
 }
 .base-autocomplete__input:focus {
-  border-color: var(--color-brand-primary);
+  border-color: var(--jnv-control-focus-border);
   outline: none;
-  box-shadow: 0 0 0 var(--space-1) var(--color-focus-shadow);
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 .base-autocomplete__input:disabled {
   cursor: not-allowed;
-  background: var(--color-surface-muted);
+  background: var(--jnv-control-disabled-background);
+  border-color: var(--jnv-control-disabled-border);
 }
 .base-autocomplete__input:read-only {
   cursor: default;
@@ -644,7 +647,7 @@ defineExpose({
   top: 50%;
   left: var(--space-3);
   display: inline-flex;
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -656,7 +659,7 @@ defineExpose({
   position: absolute;
   top: 50%;
   right: var(--space-3);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   transform: translateY(-50%);
 }
 .base-autocomplete__indicator {
@@ -676,11 +679,11 @@ defineExpose({
   cursor: pointer;
 }
 .base-autocomplete__clear:hover {
-  color: var(--color-text-heading);
-  background: var(--color-surface-muted);
+  color: var(--jnv-color-text-heading);
+  background: var(--jnv-color-surface-muted);
 }
 .base-autocomplete__clear:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus-ring);
+  outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
   outline-offset: var(--focus-outline-offset);
 }
 .base-autocomplete__list {
@@ -693,10 +696,10 @@ defineExpose({
   margin: 0;
   padding: var(--space-1);
   overflow-y: auto;
-  border: var(--border-width-thin) solid var(--color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  background: var(--color-surface-page);
+  background: var(--jnv-overlay-background);
   list-style: none;
   bottom: var(--base-menu-bottom, auto);
 }
@@ -708,15 +711,15 @@ defineExpose({
   line-height: var(--line-height-base);
 }
 .base-autocomplete__option {
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   cursor: pointer;
 }
 .base-autocomplete__option--active,
 .base-autocomplete__option:hover {
-  background: var(--color-surface-muted);
+  background: var(--jnv-color-surface-muted);
 }
 .base-autocomplete__option--selected {
-  color: var(--color-brand-primary);
+  color: var(--jnv-color-brand-primary);
   font-weight: var(--font-weight-semibold);
 }
 .base-autocomplete__option--disabled {
@@ -727,18 +730,18 @@ defineExpose({
   background: transparent;
 }
 .base-autocomplete__status {
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
 }
 .base-autocomplete__status--error {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 .base-autocomplete--error .base-autocomplete__input {
-  border-color: var(--color-state-error);
-  background: var(--color-state-error-surface);
+  border-color: var(--jnv-color-state-error);
+  background: var(--jnv-color-state-error-surface);
 }
 .base-autocomplete--success .base-autocomplete__input {
-  border-color: var(--color-state-success);
-  background: var(--color-state-success-surface);
+  border-color: var(--jnv-color-state-success);
+  background: var(--jnv-color-state-success-surface);
 }
 .base-autocomplete__message {
   margin-top: calc(var(--space-2) * -0.5);
@@ -749,7 +752,7 @@ defineExpose({
       calc(var(--font-size-xs) * var(--line-height-heading))
     )
   );
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
   visibility: hidden;
@@ -758,10 +761,10 @@ defineExpose({
   visibility: visible;
 }
 .base-autocomplete--error .base-autocomplete__message {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 .base-autocomplete--success .base-autocomplete__message {
-  color: var(--color-state-success);
+  color: var(--jnv-color-state-success);
 }
 @keyframes base-autocomplete-spin {
   to {

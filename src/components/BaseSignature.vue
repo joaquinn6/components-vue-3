@@ -272,7 +272,7 @@ watch(
 }
 
 .base-signature__label {
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   font-size: var(--jnv-form-label-size);
   font-weight: var(--text-label-weight);
   line-height: var(--text-label-leading);
@@ -289,15 +289,15 @@ watch(
   width: 100%;
   max-width: 100%;
   height: calc(v-bind(height) * 1px);
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  border: var(--border-width-thin) solid var(--jnv-color-border-strong);
   border-radius: var(--radius-md);
-  background: var(--color-surface-page);
+  background: var(--jnv-color-surface-page);
   cursor: crosshair;
   touch-action: none;
 }
 
 .base-signature__canvas:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus-ring);
+  outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
   outline-offset: var(--focus-outline-offset);
 }
 
@@ -311,13 +311,13 @@ watch(
 }
 
 .base-signature--error .base-signature__canvas {
-  border-color: var(--color-state-error);
-  background: var(--color-state-error-surface);
+  border-color: var(--jnv-color-state-error);
+  background: var(--jnv-color-state-error-surface);
 }
 
 .base-signature__message {
   min-height: var(--jnv-field-message-min-height);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
   visibility: hidden;
@@ -328,6 +328,6 @@ watch(
 }
 
 .base-signature--error .base-signature__message {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 </style>

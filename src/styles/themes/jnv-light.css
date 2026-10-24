@@ -63,6 +63,31 @@
   --jnv-alert-secondary-text: var(--jnv-color-brand-secondary);
   --jnv-alert-close-hover-background: var(--jnv-color-surface-muted);
   --jnv-control-background: var(--jnv-color-surface-page);
+  --jnv-control-focus-background: var(--jnv-color-surface-page);
+  --jnv-control-disabled-border: var(--jnv-color-border-strong);
+  --jnv-overlay-background: var(--jnv-color-surface-page);
+  --jnv-dialog-backdrop-background: rgb(0 43 73 / 0.62);
+  --jnv-loading-overlay-background: color-mix(
+    in srgb,
+    var(--jnv-color-surface-page) 72%,
+    transparent
+  );
+  --jnv-tooltip-border: color-mix(
+    in srgb,
+    var(--jnv-color-text-muted) 20%,
+    var(--jnv-color-border-default)
+  );
+  --jnv-tabs-margin-bottom: var(--space-0);
+  --jnv-tabs-border: var(--jnv-color-border-default);
+  --jnv-tabs-text: var(--jnv-color-text-muted);
+  --jnv-tabs-text-active: var(--jnv-color-text-heading);
+  --jnv-card-background: var(--jnv-color-surface-page);
+  --jnv-color-badge-progress: var(--jnv-palette-amber-700);
+  --jnv-color-badge-progress-surface: var(--jnv-palette-amber-50);
+  --jnv-color-badge-violet: var(--jnv-palette-purple-700);
+  --jnv-color-badge-violet-surface: var(--jnv-palette-purple-50);
+  --jnv-badge-info-background: var(--jnv-palette-sky-50);
+  --jnv-badge-warning-background: var(--jnv-palette-amber-50);
   --jnv-color-signature-guide: var(--jnv-palette-gray-400);
   --jnv-color-signature-ink: var(--jnv-palette-gray-900);
   --jnv-field-info-focus-shadow: rgb(107 101 128 / 0.18);

@@ -108,6 +108,11 @@ const showCharacterCount = computed(
   () => props.maxLengthVisible && hasMaxLength.value,
 );
 const characterCount = computed(() => String(input.value ?? "").length);
+const readonlyValue = computed(() =>
+  input.value === "" || input.value === null || input.value === undefined
+    ? "—"
+    : input.value,
+);
 const describedBy = computed(
   () =>
     [
@@ -126,7 +131,11 @@ defineExpose({
 <template>
   <div
     class="base-field"
-    :class="[`base-field--${currentState}`, `base-field--${tone}`]"
+    :class="[
+      `base-field--${currentState}`,
+      `base-field--${tone}`,
+      { 'base-field--read': mode === 'read' },
+    ]"
   >
     <div v-if="label" class="base-field__label-row">
       <label
@@ -175,7 +184,7 @@ defineExpose({
         :variant="size === 'sm' ? 'sm' : size === 'lg' ? 'xl' : 'md'"
         :aria-describedby="describedBy"
       >
-        {{ input }}
+        {{ readonlyValue }}
       </BaseText>
       <button
         v-if="mode === 'edit' && isPassword"
@@ -225,6 +234,10 @@ defineExpose({
   gap: var(--jnv-field-gap, var(--base-field-gap, var(--space-2)));
 }
 
+.base-field--read {
+  gap: var(--space-0);
+}
+
 .base-field__label {
   color: var(--jnv-form-label-color);
   font-size: var(--jnv-form-label-size);
@@ -242,7 +255,7 @@ defineExpose({
 }
 
 .base-field--inverse .base-field__label {
-  color: var(--color-text-inverse-muted);
+  color: var(--jnv-color-text-inverse-muted);
 }
 
 .base-field__control {
@@ -255,7 +268,7 @@ defineExpose({
   top: 50%;
   left: var(--space-3);
   display: inline-flex;
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -271,10 +284,11 @@ defineExpose({
 .base-field__input {
   width: 100%;
   min-width: var(--space-0);
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  box-sizing: border-box;
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
   color: var(--jnv-form-value-color);
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   font: inherit;
   transition:
     border-color var(--transition-fast),
@@ -285,39 +299,38 @@ defineExpose({
 .base-field__readonly-value {
   display: block;
   min-height: var(--control-height-sm);
-  padding: var(--space-2) 0;
-  padding-inline-start: var(--space-2);
+  padding: var(--space-0);
   overflow-wrap: anywhere;
   color: var(--jnv-form-value-color);
 }
 
 .base-field__readonly-value.base-text--md {
   min-height: var(--control-height-md);
-  padding-block: var(--space-3);
 }
 
 .base-field__readonly-value.base-text--xl {
   min-height: var(--control-height-lg);
-  padding-block: var(--space-3);
 }
 
 .base-field__input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
 }
 
-.base-field__input:hover:not(:disabled) {
-  border-color: var(--color-text-muted);
+.base-field__input:hover:not(:disabled):not(:focus) {
+  border-color: var(--jnv-control-hover-border);
 }
 
 .base-field__input:focus {
-  border-color: var(--color-brand-primary);
+  border-color: var(--jnv-control-focus-border);
   outline: none;
-  box-shadow: 0 0 0 var(--space-1) var(--color-focus-shadow);
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 
 .base-field__input:disabled {
   cursor: not-allowed;
-  background: var(--color-surface-muted);
+  background: var(--jnv-control-disabled-background);
+  border-color: var(--jnv-control-disabled-border);
 }
 
 .base-field__input--sm {
@@ -342,7 +355,7 @@ defineExpose({
   position: absolute;
   top: 50%;
   right: var(--space-3);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   transform: translateY(-50%);
   pointer-events: none;
@@ -360,7 +373,7 @@ defineExpose({
   padding: var(--space-0);
   border: var(--space-0);
   border-radius: var(--radius-sm);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   background: transparent;
   cursor: pointer;
   transform: translateY(-50%);
@@ -370,12 +383,12 @@ defineExpose({
 }
 
 .base-field__password-toggle:hover:not(:disabled) {
-  color: var(--color-text-heading);
-  background: var(--color-surface-muted);
+  color: var(--jnv-color-text-heading);
+  background: var(--jnv-color-surface-muted);
 }
 
 .base-field__password-toggle:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus-ring);
+  outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
   outline-offset: var(--focus-outline-offset);
 }
 
@@ -401,13 +414,13 @@ defineExpose({
 }
 
 .base-field--error .base-field__input {
-  border-color: var(--color-state-error);
-  background: var(--color-state-error-surface);
+  border-color: var(--jnv-color-state-error);
+  background: var(--jnv-color-state-error-surface);
 }
 
 .base-field--success .base-field__input {
-  border-color: var(--color-state-success);
-  background: var(--color-state-success-surface);
+  border-color: var(--jnv-color-state-success);
+  background: var(--jnv-color-state-success-surface);
 }
 
 .base-field__message {
@@ -419,7 +432,7 @@ defineExpose({
       calc(var(--font-size-xs) * var(--line-height-heading))
     )
   );
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
   visibility: hidden;
@@ -431,16 +444,16 @@ defineExpose({
 
 .base-field__character-count {
   justify-self: end;
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
 }
 
 .base-field--error .base-field__message {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 
 .base-field--success .base-field__message {
-  color: var(--color-state-success);
+  color: var(--jnv-color-state-success);
 }
 </style>

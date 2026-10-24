@@ -2,9 +2,10 @@
 import BaseHeading from "./BaseHeading.vue";
 import BaseText from "./BaseText.vue";
 
-defineProps({
+const props = defineProps({
   title: { type: String, default: "" },
   description: { type: String, default: "" },
+  stretch: { type: Boolean, default: false },
   titleAs: {
     type: String,
     default: "h3",
@@ -14,7 +15,12 @@ defineProps({
 </script>
 
 <template>
-  <section class="base-form-section">
+  <section
+    class="base-form-section"
+    :class="{
+      'base-form-section--stretch': props.stretch && (title || description),
+    }"
+  >
     <header v-if="title || description" class="base-form-section__header">
       <BaseHeading v-if="title" :as="titleAs" variant="sm">
         {{ title }}
@@ -34,6 +40,10 @@ defineProps({
   display: grid;
   gap: var(--jnv-form-section-gap);
   min-width: var(--space-0);
+}
+
+.base-form-section--stretch {
+  grid-template-rows: auto 1fr;
 }
 
 .base-form-section__header,

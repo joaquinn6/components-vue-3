@@ -14,6 +14,7 @@ const props = defineProps({
         "ghost",
         "inverse",
         "danger",
+        "ghost-danger",
       ].includes(value),
   },
   size: {
@@ -102,78 +103,90 @@ const classes = computed(() => [
 }
 
 .base-button--primary {
-  --base-button-focus-color: var(--color-action-primary);
+  --base-button-focus-color: var(--jnv-color-action-primary);
 
-  color: var(--color-text-on-primary);
-  background: var(--color-action-primary);
+  color: var(--jnv-color-text-on-primary);
+  background: var(--jnv-color-action-primary);
   box-shadow: var(--shadow-sm);
 }
 
 .base-button--primary:hover:not(:disabled) {
-  background: var(--color-action-primary-hover);
+  background: var(--jnv-color-action-primary-hover);
   box-shadow: var(--shadow-md);
 }
 
 .base-button--secondary {
-  --base-button-focus-color: var(--color-action-secondary);
+  --base-button-focus-color: var(--jnv-color-action-secondary);
 
-  color: var(--color-text-inverse);
-  background: var(--color-action-secondary);
+  color: var(--jnv-color-text-inverse);
+  background: var(--jnv-color-action-secondary);
 }
 
 .base-button--secondary:hover:not(:disabled) {
-  background: var(--color-brand-secondary-hover);
+  background: var(--jnv-color-brand-secondary-hover);
 }
 
 .base-button--outline {
-  --base-button-focus-color: var(--color-action-primary);
+  --base-button-focus-color: var(--jnv-color-action-primary);
 
-  color: var(--color-action-primary);
+  color: var(--jnv-color-action-primary);
   background: transparent;
-  border-color: var(--color-action-primary);
+  border-color: var(--jnv-color-action-primary);
 }
 
 .base-button--outline:hover:not(:disabled) {
-  color: var(--color-text-on-primary);
-  background: var(--color-action-primary);
-  border-color: var(--color-action-primary);
+  color: var(--jnv-color-text-on-primary);
+  background: var(--jnv-color-action-primary);
+  border-color: var(--jnv-color-action-primary);
 }
 
 .base-button--danger {
-  --base-button-focus-color: var(--color-action-danger);
+  --base-button-focus-color: var(--jnv-color-action-danger);
 
-  color: var(--color-text-inverse);
-  background: var(--color-action-danger);
+  color: var(--jnv-color-text-inverse);
+  background: var(--jnv-color-action-danger);
   box-shadow: var(--shadow-sm);
 }
 
 .base-button--danger:hover:not(:disabled) {
-  background: var(--color-action-danger-hover);
+  background: var(--jnv-color-action-danger-hover);
   box-shadow: var(--shadow-md);
 }
 
 .base-button--ghost {
-  --base-button-focus-color: var(--color-border-strong);
+  --base-button-focus-color: var(--jnv-color-border-strong);
 
-  color: var(--color-text-heading);
+  color: var(--jnv-color-text-heading);
   background: transparent;
-  border-color: var(--color-border-strong);
+  border-color: var(--jnv-color-border-strong);
 }
 
 .base-button--ghost:hover:not(:disabled) {
-  background: var(--color-surface-muted);
+  background: var(--jnv-color-surface-muted);
+}
+
+.base-button--ghost-danger {
+  --base-button-focus-color: var(--jnv-color-action-danger);
+
+  color: var(--jnv-color-action-danger);
+  background: transparent;
+  border-color: var(--jnv-color-action-danger);
+}
+
+.base-button--ghost-danger:hover:not(:disabled) {
+  background: var(--jnv-color-state-error-surface);
 }
 
 .base-button--inverse {
-  --base-button-focus-color: var(--color-text-inverse);
+  --base-button-focus-color: var(--jnv-color-text-inverse);
 
-  color: var(--color-text-inverse);
+  color: var(--jnv-color-text-inverse);
   background: transparent;
 }
 
 .base-button--inverse:hover:not(:disabled) {
-  color: var(--color-brand-primary);
-  background: var(--color-surface-inverse-hover);
+  color: var(--jnv-color-brand-primary);
+  background: var(--jnv-color-surface-inverse-hover);
 }
 
 .base-button--sm {
@@ -191,7 +204,7 @@ const classes = computed(() => [
 .base-button--lg {
   min-height: var(--control-height-lg);
   padding: var(--space-4) var(--space-8);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
 }
 
 .base-button--icon {

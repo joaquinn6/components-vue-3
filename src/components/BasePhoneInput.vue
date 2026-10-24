@@ -28,6 +28,7 @@ const props = defineProps({
   countrySearchPlaceholder: { type: String, default: "Buscar país..." },
   noResultsText: { type: String, default: "No hay resultados." },
   countrySelectorAriaLabel: { type: String, default: "Seleccionar país" },
+  showFlags: { type: Boolean, default: true },
   required: Boolean,
   disabled: Boolean,
   readonly: Boolean,
@@ -272,22 +273,28 @@ defineExpose({ focus: () => numberInput.value?.focus() });
         @click="toggle"
       >
         <img
-          v-if="isSpain(selectedCountry) && !selectedCountry?.flag"
+          v-if="showFlags && isSpain(selectedCountry) && !selectedCountry?.flag"
           class="base-phone-input__flag"
           :src="spainFlag"
           alt=""
           aria-hidden="true"
         />
         <img
-          v-else-if="selectedCountry?.flag && isFlagUri(selectedCountry.flag)"
+          v-else-if="
+            showFlags &&
+            selectedCountry?.flag &&
+            isFlagUri(selectedCountry.flag)
+          "
           class="base-phone-input__flag"
           :src="selectedCountry.flag"
           alt=""
           aria-hidden="true"
         />
-        <span v-else-if="selectedCountry?.flag" aria-hidden="true">{{
-          selectedCountry.flag
-        }}</span>
+        <span
+          v-else-if="showFlags && selectedCountry?.flag"
+          aria-hidden="true"
+          >{{ selectedCountry.flag }}</span
+        >
         <span class="base-phone-input__prefix">{{
           selectedCountry?.prefix
         }}</span>
@@ -350,20 +357,20 @@ defineExpose({ focus: () => numberInput.value?.focus() });
             @mousedown.prevent="choose(country)"
           >
             <img
-              v-if="isSpain(country) && !country.flag"
+              v-if="showFlags && isSpain(country) && !country.flag"
               class="base-phone-input__flag"
               :src="spainFlag"
               alt=""
               aria-hidden="true"
             />
             <img
-              v-else-if="country.flag && isFlagUri(country.flag)"
+              v-else-if="showFlags && country.flag && isFlagUri(country.flag)"
               class="base-phone-input__flag"
               :src="country.flag"
               alt=""
               aria-hidden="true"
             />
-            <span v-else-if="country.flag" aria-hidden="true">{{
+            <span v-else-if="showFlags && country.flag" aria-hidden="true">{{
               country.flag
             }}</span
             ><span>{{ country.name }}</span
@@ -398,37 +405,39 @@ defineExpose({ focus: () => numberInput.value?.focus() });
 .base-phone-input__label-row {
   display: flex;
   width: 100%;
+  min-width: 0;
   align-items: center;
   gap: var(--space-1);
   flex-wrap: wrap;
 }
 .base-phone-input__label {
-  color: var(--color-text-body);
+  color: var(--jnv-form-label-color);
   font-size: var(--jnv-form-label-size);
   font-weight: var(--text-label-weight);
   line-height: var(--text-label-leading);
 }
 .base-phone-input--inverse .base-phone-input__label {
-  color: var(--color-text-inverse-muted);
+  color: var(--jnv-color-text-inverse-muted);
 }
 .base-phone-input__control {
   position: relative;
   display: flex;
   min-width: 0;
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
 }
-.base-phone-input__control:hover:not(:has(:disabled)) {
-  border-color: var(--color-text-muted);
+.base-phone-input__control:hover:not(:has(:disabled)):not(:focus-within) {
+  border-color: var(--jnv-control-hover-border);
 }
 .base-phone-input__control:focus-within {
-  border-color: var(--color-brand-primary);
+  border-color: var(--jnv-control-focus-border);
   outline: none;
-  box-shadow: 0 0 0 var(--space-1) var(--color-focus-shadow);
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 .base-phone-input__control--sm {
   height: var(--control-height-sm);
@@ -457,15 +466,15 @@ defineExpose({ focus: () => numberInput.value?.focus() });
   gap: var(--space-2);
   padding: 0 var(--space-3);
   border: 0;
-  border-right: var(--border-width-thin) solid var(--color-border-default);
+  border-right: var(--border-width-thin) solid var(--jnv-color-border-default);
   border-radius: var(--radius-md) 0 0 var(--radius-md);
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   background: transparent;
   font: inherit;
   cursor: pointer;
 }
 .base-phone-input__country:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus-ring);
+  outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
   outline-offset: calc(var(--focus-outline-offset) * -1);
 }
 .base-phone-input__country:disabled {
@@ -479,24 +488,25 @@ defineExpose({ focus: () => numberInput.value?.focus() });
   border: 0;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   outline: 0;
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   background: transparent;
   font: inherit;
 }
 .base-phone-input__number::placeholder,
 .base-phone-input__search::placeholder {
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
 }
 .base-phone-input__control:has(:disabled) {
-  background: var(--color-surface-muted);
+  background: var(--jnv-control-disabled-background);
+  border-color: var(--jnv-control-disabled-border);
 }
 .base-phone-input--error .base-phone-input__control {
-  border-color: var(--color-state-error);
-  background: var(--color-state-error-surface);
+  border-color: var(--jnv-color-state-error);
+  background: var(--jnv-color-state-error-surface);
 }
 .base-phone-input--success .base-phone-input__control {
-  border-color: var(--color-state-success);
-  background: var(--color-state-success-surface);
+  border-color: var(--jnv-color-state-success);
+  background: var(--jnv-color-state-success-surface);
 }
 .base-phone-input__menu {
   position: absolute;
@@ -505,10 +515,10 @@ defineExpose({ focus: () => numberInput.value?.focus() });
   left: 0;
   width: min(22rem, 100%);
   padding: var(--space-2);
-  border: var(--border-width-thin) solid var(--color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-color-border-default);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  background: var(--color-surface-page);
+  background: var(--jnv-overlay-background);
 }
 .base-phone-input__menu--above {
   top: auto;
@@ -518,11 +528,24 @@ defineExpose({ focus: () => numberInput.value?.focus() });
   width: 100%;
   height: var(--control-height-sm);
   padding-inline: var(--space-3);
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-sm);
-  color: var(--color-text-body);
-  background: var(--color-surface-page);
+  color: var(--jnv-color-text-body);
+  background: var(--jnv-control-background);
   font: inherit;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
+}
+.base-phone-input__search:hover:not(:disabled):not(:focus) {
+  border-color: var(--jnv-control-hover-border);
+}
+.base-phone-input__search:focus {
+  border-color: var(--jnv-control-focus-border);
+  outline: none;
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 .base-phone-input__list {
   max-height: 16rem;
@@ -537,25 +560,25 @@ defineExpose({ focus: () => numberInput.value?.focus() });
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   font-size: var(--font-size-sm);
   cursor: pointer;
 }
 .base-phone-input__option-prefix {
   margin-left: auto;
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
 }
 .base-phone-input__option:hover,
 .base-phone-input__option--active {
-  background: var(--color-surface-muted);
+  background: var(--jnv-color-surface-muted);
 }
 .base-phone-input__option--selected {
-  color: var(--color-brand-primary);
+  color: var(--jnv-color-brand-primary);
   font-weight: var(--font-weight-semibold);
 }
 .base-phone-input__empty {
   padding: var(--space-2) var(--space-3);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-sm);
 }
 .base-phone-input__message {
@@ -567,7 +590,7 @@ defineExpose({ focus: () => numberInput.value?.focus() });
     )
   );
   margin-top: calc(var(--space-2) * -0.5);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
   visibility: hidden;
@@ -576,9 +599,9 @@ defineExpose({ focus: () => numberInput.value?.focus() });
   visibility: visible;
 }
 .base-phone-input--error .base-phone-input__message {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 .base-phone-input--success .base-phone-input__message {
-  color: var(--color-state-success);
+  color: var(--jnv-color-state-success);
 }
 </style>

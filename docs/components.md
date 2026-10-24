@@ -32,28 +32,57 @@ sistema visual. `href` es obligatorio y el contenido se proporciona mediante el 
 
 No emite eventos propios ni expone modelos, métodos o slots con nombre.
 
-| Componente          | Props principales                                                                                                                                      | Modelo y eventos                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
-| `BaseButton`        | `variant` (`primary`, `secondary`, `outline`, `ghost`, `inverse`, `danger`), `size` (`sm`, `md`, `lg`, `icon`), `type`, `loading`, `disabled`, `block` | `click`; contenido mediante slot predeterminado                                 |
-| `BaseLink`          | `href`, `target`, `rel`, `variant` (`brand`, `body`, `muted`, `inverse`), `size`, `underline` (`always`, `hover`, `none`)                              | Sin eventos propios; contenido mediante slot predeterminado                     |
-| `BaseCard`          | `as`, `surface` (`page`, `inverse`, `primary`), `padding`, `radius`, `elevation`, `outlined`                                                           | Slot predeterminado                                                             |
-| `BaseAlert`         | `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`                                                                                    | `dismiss`; slots predeterminado e `icon`                                        |
-| `BaseDialog`        | `open`, `title`, `description`, `size` (`sm`, `md`), `form`, `loading`, `closeLabel`, `closeDisabled`                                                  | `close`, `submit`; slots predeterminado y `actions`                             |
-| `BaseConfirmDialog` | `open`, `title`, `description`, `confirmLabel`, `cancelLabel`, `loading`, `tone` (`danger`, `primary`)                                                 | `close`, `confirm`                                                              |
-| `BaseHeading`       | `as`, `variant` (`hero`, `lg`, `md`, `sm`, `xs`), `color`, `align`                                                                                     | Slot predeterminado                                                             |
-| `BaseText`          | `as`, `variant` (`md`, `sm`, `label`, `xl`), `color`, `weight`                                                                                         | Slot predeterminado                                                             |
-| `BaseBreadcrumb`    | `value` (`{ name, to? }[]`), `divider`, `size` (`sm`, `md`, `label`, `xl`), `weight`, `ariaLabel`                                                      | Sin eventos ni slots                                                            |
-| `BaseTabs`          | `tabs` (`{ label, value, disabled?, id?, panelId? }`), `ariaLabel`                                                                                     | `v-model`; teclado: flechas, Inicio y Fin                                       |
-| `BaseFieldInfo`     | `text`, `type`, `ariaLabel`                                                                                                                            | Tooltip al foco o hover                                                         |
-| `BaseDropdownMenu`  | `groups` (`{ label, event, color?, disabled?, tooltip? }[][]`)                                                                                         | `select`; menú accesible con teclado                                            |
-| `BaseSearchQL`      | `v-model`, `filters`, `defaultFilters`, rango de fecha opcional, textos y etiquetas accesibles, `disabled`                                             | `update:modelValue`, `change`, `date-change`; emite filtros y el rango aplicado |
-| `BaseIcon`          | `name`, `size` (`sm`, `md`, `lg`, `xl`), `label`, `decorative`                                                                                         | Sin eventos; icono SVG accesible                                                |
-| `BaseFormSection`   | `title`, `description`, `titleAs` (`h2`, `h3`, `h4`)                                                                                                   | Slot predeterminado; sin eventos ni métodos expuestos                           |
-| `BaseFormRow`       | `columns` (`1`, `2`, `3`, `4`), `columnWidths`                                                                                                         | Slot predeterminado; sin eventos ni métodos expuestos                           |
+| Componente          | Props principales                                                                                                                                                      | Modelo y eventos                                                                |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `BaseButton`        | `variant` (`primary`, `secondary`, `outline`, `ghost`, `inverse`, `danger`, `ghost-danger`), `size` (`sm`, `md`, `lg`, `icon`), `type`, `loading`, `disabled`, `block` | `click`; contenido mediante slot predeterminado                                 |
+| `BaseBadge`         | `label`, `tone` (`neutral`, `info`, `success`, `warning`, `error`, `critical`, `progress`, `violet`), `size` (`sm`, `md`), `width` (`auto`, `fixed`)                   | Slot predeterminado opcional; si existe, tiene prioridad sobre `label`          |
+| `BaseLink`          | `href`, `target`, `rel`, `variant` (`brand`, `body`, `muted`, `inverse`), `size`, `underline` (`always`, `hover`, `none`)                                              | Sin eventos propios; contenido mediante slot predeterminado                     |
+| `BaseCard`          | `as`, `surface` (`page`, `inverse`, `primary`), `padding`, `radius`, `elevation`, `outlined`, `title`, `titlePosition` (`inside`, `outside`), `titleIcon`, `titleAs`   | Slot predeterminado                                                             |
+| `BaseAlert`         | `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`                                                                                                    | `dismiss`; slots predeterminado e `icon`                                        |
+| `BaseToast`         | `open`, `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`, `duration`, `pauseOnHover`, `position`                                                    | `v-model:open`, `close`; slots predeterminado e `icon`                          |
+| `BaseDialog`        | `open`, `title`, `description`, `size` (`sm`, `md`), `form`, `loading`, `closeLabel`, `closeDisabled`                                                                  | `close`, `submit`; slots predeterminado y `actions`                             |
+| `BaseConfirmDialog` | `open`, `title`, `description`, `confirmLabel`, `cancelLabel`, `buttonSize` (`sm`, `md`, `lg`, predeterminado `sm`), `loading`, `tone` (`danger`, `primary`)           | `close`, `confirm`                                                              |
+| `BaseHeading`       | `as`, `variant` (`hero`, `lg`, `md`, `sm`, `xs`), `color`, `align`                                                                                                     | Slot predeterminado                                                             |
+| `BaseText`          | `as`, `variant` (`md`, `sm`, `label`, `xl`), `color`, `weight`                                                                                                         | Slot predeterminado                                                             |
+| `BaseBreadcrumb`    | `value` (`{ name, to? }[]`), `divider`, `size` (`sm`, `md`, `label`, `xl`), `weight`, `ariaLabel`                                                                      | Sin eventos ni slots                                                            |
+| `BaseTabs`          | `tabs` (`{ label, value, disabled?, id?, panelId? }`), `ariaLabel`                                                                                                     | `v-model`; teclado: flechas, Inicio y Fin                                       |
+| `BaseFieldInfo`     | `text`, `type`, `ariaLabel`                                                                                                                                            | Tooltip al foco o hover                                                         |
+| `BaseDropdownMenu`  | `groups` (`{ label, event, color?, disabled?, tooltip? }[][]`)                                                                                                         | `select`; menú accesible con teclado                                            |
+| `BaseSearchQL`      | `v-model`, `filters`, `defaultFilters`, rango de fecha opcional, textos y etiquetas accesibles, `disabled`                                                             | `update:modelValue`, `change`, `date-change`; emite filtros y el rango aplicado |
+| `BaseIcon`          | `name`, `size` (`sm`, `md`, `lg`, `xl`), `label`, `decorative`                                                                                                         | Sin eventos; icono SVG accesible                                                |
+| `BaseFormSection`   | `title`, `description`, `stretch`, `titleAs` (`h2`, `h3`, `h4`)                                                                                                        | Slot predeterminado; sin eventos ni métodos expuestos                           |
+| `BaseFormRow`       | `columns` (`1`, `2`, `3`, `4`), `columnWidths`, `alignItems` (`start`, `center`, `end`, `stretch`)                                                                     | Slot predeterminado; sin eventos ni métodos expuestos                           |
+| `BaseFormColumns`   | Sin props                                                                                                                                                              | Slot predeterminado; sin eventos ni métodos expuestos                           |
 
 `BaseDropdownMenu` emite `select` con `{ item, groupIndex, itemIndex }`. Los colores disponibles
 son `default`, `danger`, `success` e `info`. Para usar la directiva `v-tooltip` directamente,
 regístrala opcionalmente en la aplicación:
+
+`ghost-danger` es una variante transparente con texto e icono rojos, pensada para acciones
+destructivas secundarias como eliminar una fila de una tabla.
+
+`BaseConfirmDialog` muestra el botón de cancelar con la variante `outline`, y ambos botones usan
+`buttonSize` (`sm` por defecto; antes tenían tamaño `md`). Indica `button-size="md"` para conservar
+el tamaño anterior.
+
+### BaseCard con título
+
+`BaseCard` acepta un título opcional dentro de la superficie (`titlePosition="inside"`,
+predeterminado) o fuera de ella (`"outside"`). `titleIcon` recibe cualquier nombre disponible en
+`BaseIcon` y `titleAs` (`h3` por defecto) controla el nivel semántico del encabezado. Los atributos
+no declarados se aplican a la superficie de la tarjeta, también cuando el título está fuera.
+
+```vue
+<BaseCard title="Datos del remitente" title-icon="location">
+  <BaseInput label="Nombre completo" />
+</BaseCard>
+
+<BaseCard title="Integraciones" title-position="outside">
+  <BaseInput label="URL de la tienda" />
+</BaseCard>
+```
+
+Sin `title`, `BaseCard` conserva su estructura y comportamiento actuales.
 
 ### BaseButton con solo icono
 
@@ -239,7 +268,8 @@ obligatorios y el chip no muestra el control para quitarlo.
 
 `BaseFormSection` apila el contenido de una sección con los tokens de espaciado del formulario y
 acepta un título y una descripción opcionales. `BaseFormRow` organiza sus controles en una a cuatro
-columnas, permite ajustar el ancho de cada una y pasa a una columna en pantallas estrechas.
+columnas, permite ajustar el ancho de cada una, alinear verticalmente sus celdas y pasa a una columna
+en pantallas estrechas.
 
 ```vue
 <BaseFormSection title="Conexión con Shopify">
@@ -264,13 +294,33 @@ Para ajustar los anchos, pasa un valor CSS por columna. La cantidad de valores d
 
 Ambos componentes solo exponen su slot predeterminado; no tienen modelos, eventos ni métodos.
 
-| Componente        | Prop           | Tipo                   | Predeterminado | Descripción                                              |
-| ----------------- | -------------- | ---------------------- | -------------- | -------------------------------------------------------- |
-| `BaseFormSection` | `title`        | `string`               | `""`           | Título opcional de la sección.                           |
-| `BaseFormSection` | `description`  | `string`               | `""`           | Descripción opcional debajo del título.                  |
-| `BaseFormSection` | `titleAs`      | `"h2" \| "h3" \| "h4"` | `"h3"`         | Nivel semántico del título.                              |
-| `BaseFormRow`     | `columns`      | `1 \| 2 \| 3 \| 4`     | `2`            | Número de columnas antes del breakpoint móvil.           |
-| `BaseFormRow`     | `columnWidths` | `readonly string[]`    | `[]`           | Ancho CSS de cada columna; debe coincidir con `columns`. |
+| Componente        | Prop           | Tipo                                        | Predeterminado | Descripción                                                |
+| ----------------- | -------------- | ------------------------------------------- | -------------- | ---------------------------------------------------------- |
+| `BaseFormSection` | `title`        | `string`                                    | `""`           | Título opcional de la sección.                             |
+| `BaseFormSection` | `description`  | `string`                                    | `""`           | Descripción opcional debajo del título.                    |
+| `BaseFormSection` | `stretch`      | `boolean`                                   | `false`        | Ocupa la altura disponible para igualar columnas vecinas.  |
+| `BaseFormSection` | `titleAs`      | `"h2" \| "h3" \| "h4"`                      | `"h3"`         | Nivel semántico del título.                                |
+| `BaseFormRow`     | `columns`      | `1 \| 2 \| 3 \| 4`                          | `2`            | Número de columnas antes del breakpoint móvil.             |
+| `BaseFormRow`     | `columnWidths` | `readonly string[]`                         | `[]`           | Ancho CSS de cada columna; debe coincidir con `columns`.   |
+| `BaseFormRow`     | `alignItems`   | `"start" \| "center" \| "end" \| "stretch"` | `"stretch"`    | Alineación vertical de los controles dentro de cada celda. |
+
+`alignItems="center"` también centra verticalmente casillas y switches con `labelPosition="end"`
+respecto a los campos vecinos.
+
+## BaseFormColumns
+
+`BaseFormColumns` coloca dos contenidos en columnas con el mismo alto y los apila en pantallas
+estrechas (menos de 62.5rem). Combínalo con `BaseFormSection stretch` para que cada sección ocupe
+la altura completa de su columna:
+
+```vue
+<BaseFormColumns>
+  <BaseFormSection title="Datos de contacto" stretch>...</BaseFormSection>
+  <BaseFormSection title="Preferencias" stretch>...</BaseFormSection>
+</BaseFormColumns>
+```
+
+Solo expone su slot predeterminado; no tiene props, modelos, eventos ni métodos.
 
 ## BaseAlert
 
@@ -302,6 +352,59 @@ combinar con contenido adicional. `danger` y `warning` usan `role="alert"`; los 
 
 El slot predeterminado añade contenido debajo de la descripción. El slot `icon` reemplaza el icono
 de la prop `icon`.
+
+## BaseBadge
+
+`BaseBadge` muestra una etiqueta de estado tematizable. Por defecto usa un ancho fijo
+(`--jnv-badge-fixed-width`) para alinear listas de estados; usa `width="auto"` cuando deba
+ajustarse al contenido. El tono `critical` representa una incidencia de severidad alta.
+
+```vue
+<BaseBadge tone="success" label="Entregado" />
+<BaseBadge tone="info" width="auto">En tránsito</BaseBadge>
+```
+
+| Prop    | Tipo                                                                               | Predeterminado | Descripción                                                           |
+| ------- | ---------------------------------------------------------------------------------- | -------------- | --------------------------------------------------------------------- |
+| `label` | `string`                                                                           | `""`           | Texto de fallback cuando no se usa el slot predeterminado.            |
+| `tone`  | `neutral \| info \| success \| warning \| error \| critical \| progress \| violet` | `neutral`      | Intención visual del estado.                                          |
+| `size`  | `sm \| md`                                                                         | `sm`           | Tamaño de la insignia.                                                |
+| `width` | `auto \| fixed`                                                                    | `fixed`        | `fixed` usa `--jnv-badge-fixed-width`; `auto` se ajusta al contenido. |
+
+No emite eventos ni expone modelos o métodos. Admite el slot predeterminado.
+
+## BaseToast
+
+`BaseToast` muestra una notificación breve en una esquina de la ventana. Se controla con
+`v-model:open`, se cierra automáticamente cuando `duration` es mayor que cero y pausa el
+temporizador al pasar el puntero si `pauseOnHover` está habilitado. Se teletransporta a `body`.
+Los tonos `warning` y `danger` usan `role="alert"`; `success` e `info`, `role="status"`.
+
+```vue
+<BaseToast
+  v-model:open="toastOpen"
+  tone="success"
+  title="Cambios guardados"
+  description="Tu información se actualizó correctamente."
+/>
+```
+
+| Prop           | Tipo                                                           | Predeterminado          | Descripción                                                 |
+| -------------- | -------------------------------------------------------------- | ----------------------- | ----------------------------------------------------------- |
+| `open`         | `boolean`                                                      | `false`                 | Visibilidad mediante `v-model:open`.                        |
+| `title`        | `string`                                                       | `""`                    | Título opcional.                                            |
+| `description`  | `string`                                                       | `""`                    | Descripción opcional.                                       |
+| `tone`         | `"success" \| "info" \| "warning" \| "danger"`                 | `"info"`                | Tono semántico y rol accesible asociado.                    |
+| `icon`         | `string`                                                       | Según el tono           | Nombre de un icono de `BaseIcon`.                           |
+| `dismissible`  | `boolean`                                                      | `true`                  | Muestra el botón de cierre.                                 |
+| `closeLabel`   | `string`                                                       | `"Cerrar notificación"` | Etiqueta accesible del botón de cierre.                     |
+| `duration`     | `number`                                                       | `5000`                  | Milisegundos antes del cierre; `0` desactiva el autocierre. |
+| `pauseOnHover` | `boolean`                                                      | `true`                  | Pausa el autocierre mientras el puntero está encima.        |
+| `position`     | `"top-right" \| "top-left" \| "bottom-right" \| "bottom-left"` | `"top-right"`           | Esquina donde se muestra.                                   |
+
+Emite `update:open` con `false` y `close` (sin payload) al cerrarse con el botón, con `Escape`
+mientras el foco está dentro, o por tiempo. El slot predeterminado añade contenido debajo de la
+descripción y el slot `icon` reemplaza el icono automático. No expone métodos.
 
 ## Breadcrumb
 
@@ -433,30 +536,40 @@ La directiva `v-loading` se registra internamente en `BaseTable`; el consumidor 
 importarla ni registrarla en la aplicación para usar la tabla. Para aplicarla en otros elementos,
 puede importar la exportación pública `loading` como se muestra en la sección de la directiva.
 
-| Prop                         | Tipo                         | Predeterminado                   | Descripción                                                                                                    |
-| ---------------------------- | ---------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `rows`                       | `Array`                      | —                                | Filas. En modo local contiene toda la colección; en modo remoto, solo la página actual.                        |
-| `columns`                    | `Array`                      | —                                | Columnas. Cada una requiere `key` y `label`; admite `field`, `formatter`, `align`, `headerAlign` y `sortable`. |
-| `totalItems`                 | `number`                     | —                                | Total de elementos para calcular páginas y resumen.                                                            |
-| `pageSize`                   | `number`                     | —                                | Elementos por página.                                                                                          |
-| `page`                       | `number`                     | `1`                              | Página controlada actualmente.                                                                                 |
-| `paginationMode`             | `local \| remote`            | `local`                          | Pagina y ordena internamente, o delega esas operaciones al consumidor.                                         |
-| `rowKey`                     | `string \| Function`         | `id`                             | Propiedad o función que identifica cada fila.                                                                  |
-| `loading`                    | `boolean`                    | `false`                          | Deshabilita acciones y muestra la carga.                                                                       |
-| `size`                       | `sm \| md \| lg`             | `sm`                             | Densidad de la tabla: tamaño de texto, espaciado de celdas y botones de paginación.                            |
-| `caption`                    | `string`                     | `Tabla de datos`                 | Descripción accesible de la tabla.                                                                             |
-| `emptyText`                  | `string`                     | `No hay elementos para mostrar.` | Texto del estado vacío.                                                                                        |
-| `sort`                       | `{ key, direction } \| null` | `null`                           | Orden controlado; `direction` puede ser `asc` o `desc`.                                                        |
-| `selectable`                 | `boolean`                    | `false`                          | Muestra selección por fila y selección de filas visibles.                                                      |
-| `selectedRows`               | `Array`                      | `[]`                             | Filas seleccionadas de forma controlada.                                                                       |
-| `clearSelectionOnPageChange` | `boolean`                    | `false`                          | Limpia la selección cuando cambia `page`.                                                                      |
+| Prop                         | Tipo                         | Predeterminado                   | Descripción                                                                                                     |
+| ---------------------------- | ---------------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `rows`                       | `Array`                      | —                                | Filas. En modo local contiene toda la colección; en modo remoto, solo la página actual.                         |
+| `columns`                    | `Array`                      | —                                | Columnas. Cada una requiere `key` y `label`; admite `field`, `formatter`, `align`, `headerAlign` y `sortable`.  |
+| `totalItems`                 | `number`                     | —                                | Total de elementos para calcular páginas y resumen.                                                             |
+| `pageSize`                   | `number`                     | —                                | Elementos por página.                                                                                           |
+| `page`                       | `number`                     | `1`                              | Página controlada actualmente.                                                                                  |
+| `paginationMode`             | `local \| remote`            | `local`                          | Pagina y ordena internamente, o delega esas operaciones al consumidor.                                          |
+| `paginationStyle`            | `default \| floating`        | `default`                        | `floating` sustituye el pie por una pastilla compacta y pegada abajo (‹ 21–40 de 134 ›), sin números de página. |
+| `paginationAriaLabel`        | `string`                     | `Paginación de la tabla`         | Etiqueta accesible de la navegación de páginas.                                                                 |
+| `previousPageAriaLabel`      | `string`                     | `Ir a la página anterior`        | Etiqueta accesible del botón de página anterior.                                                                |
+| `nextPageAriaLabel`          | `string`                     | `Ir a la página siguiente`       | Etiqueta accesible del botón de página siguiente.                                                               |
+| `rowKey`                     | `string \| Function`         | `id`                             | Propiedad o función que identifica cada fila.                                                                   |
+| `loading`                    | `boolean`                    | `false`                          | Deshabilita acciones y muestra la carga.                                                                        |
+| `size`                       | `sm \| md \| lg`             | `sm`                             | Densidad de la tabla: tamaño de texto, espaciado de celdas y botones de paginación.                             |
+| `caption`                    | `string`                     | `Tabla de datos`                 | Descripción accesible de la tabla.                                                                              |
+| `emptyText`                  | `string`                     | `No hay elementos para mostrar.` | Texto del estado vacío.                                                                                         |
+| `sort`                       | `{ key, direction } \| null` | `null`                           | Orden controlado; `direction` puede ser `asc` o `desc`.                                                         |
+| `selectable`                 | `boolean`                    | `false`                          | Muestra selección por fila y selección de filas visibles.                                                       |
+| `selectedRows`               | `Array`                      | `[]`                             | Filas seleccionadas de forma controlada.                                                                        |
+| `clearSelectionOnPageChange` | `boolean`                    | `false`                          | Limpia la selección cuando cambia `page`.                                                                       |
 
 `size` aplica los tokens `--jnv-table-{sm,md,lg}-*`, descritos en
 [Tema y tokens CSS](./theming.md#tokens-de-basetable). Afecta el texto predeterminado de las celdas
 y el encabezado; el contenido de los slots conserva su propia tipografía.
 
 ```vue
-<BaseTable size="md" :rows="rows" :columns="columns" :total-items="rows.length" :page-size="10" />
+<BaseTable
+  size="md"
+  :rows="rows"
+  :columns="columns"
+  :total-items="rows.length"
+  :page-size="10"
+/>
 ```
 
 Cada columna puede definirse así:
@@ -638,18 +751,18 @@ predeterminado) y conserva `totalItems` igual a `rows.length`.
 
 ## Campos y selección
 
-| Componente         | Props principales                                                                                                                                                                                                                     | Modelo y eventos                                                                                                                                                                                                                                                     |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `BaseInput`        | `id`, `label`, `type`, `mode` (`edit`, `read`), `suffix`, `maxLength`, `maxLengthVisible`, `showPasswordAriaLabel`, `hidePasswordAriaLabel`, `info`, `infoAriaLabel`                                                                  | `v-model`, `blur` en modo edición; slot `leading`; expone `focus()`                                                                                                                                                                                                  |
-| `BasePhoneInput`   | `countries` (`{ name, prefix, iso2?, flag? }[]`), `defaultCountry`, `countrySearchPlaceholder`, `countrySelectorAriaLabel`, `noResultsText`, estado común                                                                             | `v-model` E.164 como texto (`+34612345678`); emite `prefixChange` con el objeto del país seleccionado al cambiar de país; genera un campo oculto con `name`; expone `focus()`                                                                                        |
-| `BaseTextarea`     | `id`, `label`, `rows`, `maxLength`, `maxLengthVisible`, estado común                                                                                                                                                                  | `v-model`, `blur`; expone `focus()`                                                                                                                                                                                                                                  |
-| `BaseCheckbox`     | `id`, `name`, `label`, `labelPosition` (`"end"` o `"top"`, predeterminado `"end"`), `type` (`primary`, `secondary`, `success`, `danger`), `size`, `indeterminate`, `invalid`, `info`                                                  | `v-model` booleano; slot `label` para contenido enriquecido en la etiqueta, con `label` como fallback                                                                                                                                                                |
-| `BaseRadio`        | `id`, `name`, `value`, `label` (`""`), `labelPosition` (`"top"` o `"end"`, predeterminado `"top"`), `required`, `disabled`, `invalid`                                                                                                 | `v-model`; `id`, `name` y `value` son obligatorios                                                                                                                                                                                                                   |
-| `BaseRadioGroup`   | `id`, `name`, `label`, `options`, `optionLabelPosition` (`"top"` o `"end"`, predeterminado `"end"`), `orientation` (`"vertical"` o `"horizontal"`, predeterminado `"vertical"`), `bordered` (`true`), `required`, `disabled`, `error` | `v-model`; `name` y `options` son obligatorios; usa un `fieldset` semántico y agrupa el error                                                                                                                                                                        |
-| `BaseSwitch`       | `id`, `label` (`""`), `labelPosition` (`"top"` o `"end"`, predeterminado `"top"`), `error`, `disabled`                                                                                                                                | `v-model` booleano; `id` es obligatorio; `error` muestra un mensaje y marca el control como inválido                                                                                                                                                                 |
-| `BaseSelect`       | `id`, `label`, `name`, `placeholder`, `options` (`valor` u objeto `{ label, value, disabled? }`), `multiple` (`false`), `allowCreate` (`false`), `searchPlaceholder`, `createOptionText`, `removeOptionAriaLabel`, estado común       | `v-model` escalar o array cuando `multiple`; `allowCreate` agrega textos nuevos como strings solo en modo múltiple; genera un campo oculto JSON cuando recibe `name`; slots `leading`, `selected` y `option`; teclado: flechas, Inicio, Fin, Enter, Espacio y Escape |
-| `BaseAutocomplete` | `options`, `fetchOptions`, `labelKey`, `valueKey`, `selectedLabelKey`, `minChars`, `debounceMs`, `maxSuggestions`, `allowCreate`, textos `loadingText`, `noResultsText`, `loadErrorText`, `clearAriaLabel`                            | `v-model`, `select`, `blur`; slot `leading`; expone `focus()`                                                                                                                                                                                                        |
-| `BaseSignature`    | `id`, `label`, `width`, `height`, `clearAriaLabel`, `drawingInstructions`, `help`, `error`                                                                                                                                            | `v-model` con PNG data URL; se opera con puntero táctil, lápiz o ratón                                                                                                                                                                                               |
+| Componente         | Props principales                                                                                                                                                                                                                                        | Modelo y eventos                                                                                                                                                                                                                                                                                                                                                      |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BaseInput`        | `id`, `label`, `type`, `mode` (`edit`, `read`), `suffix`, `maxLength`, `maxLengthVisible`, `showPasswordAriaLabel`, `hidePasswordAriaLabel`, `info`, `infoAriaLabel`                                                                                     | `v-model`, `blur` en modo edición; en modo lectura muestra `—` cuando el valor está vacío; slot `leading`; expone `focus()`                                                                                                                                                                                                                                           |
+| `BasePhoneInput`   | `countries` (`{ name, prefix, iso2?, flag? }[]`), `defaultCountry`, `showFlags` (`true`), `countrySearchPlaceholder`, `countrySelectorAriaLabel`, `noResultsText`, estado común                                                                          | `v-model` E.164 como texto (`+34612345678`); emite `prefixChange` con el objeto del país seleccionado al cambiar de país; genera un campo oculto con `name`; expone `focus()`                                                                                                                                                                                         |
+| `BaseTextarea`     | `id`, `label`, `rows`, `maxLength`, `maxLengthVisible`, estado común                                                                                                                                                                                     | `v-model`, `blur`; expone `focus()`                                                                                                                                                                                                                                                                                                                                   |
+| `BaseCheckbox`     | `id`, `name`, `label`, `labelPosition` (`"end"` o `"top"`, predeterminado `"end"`), `type` (`primary`, `secondary`, `success`, `danger`), `size`, `indeterminate`, `invalid`, `info`                                                                     | `v-model` booleano; slot `label` para contenido enriquecido en la etiqueta, con `label` como fallback                                                                                                                                                                                                                                                                 |
+| `BaseRadio`        | `id`, `name`, `value`, `label` (`""`), `labelPosition` (`"top"` o `"end"`, predeterminado `"end"`), `size` (`sm`, `md`, predeterminado `sm`), `required`, `disabled`, `invalid`                                                                          | `v-model`; `id`, `name` y `value` son obligatorios                                                                                                                                                                                                                                                                                                                    |
+| `BaseRadioGroup`   | `id`, `name`, `label`, `options`, `optionLabelPosition` (`"top"` o `"end"`, predeterminado `"end"`), `orientation` (`"vertical"` o `"horizontal"`, predeterminado `"vertical"`), `bordered` (`true`), `required`, `disabled`, `error`                    | `v-model`; `name` y `options` son obligatorios; usa un `fieldset` semántico y agrupa el error                                                                                                                                                                                                                                                                         |
+| `BaseSwitch`       | `id`, `label` (`""`), `labelPosition` (`"top"` o `"end"`, predeterminado `"end"`), `size` (`sm`, `md`, predeterminado `sm`), `error`, `disabled`                                                                                                         | `v-model` booleano; `id` es obligatorio; `error` muestra un mensaje y marca el control como inválido                                                                                                                                                                                                                                                                  |
+| `BaseSelect`       | `id`, `label`, `name`, `placeholder`, `options` (`valor` u objeto `{ label, value, disabled? }`), `multiple` (`false`), `allowCreate` (`false`), `searchPlaceholder`, `createOptionText`, `removeOptionAriaLabel`, `moreSelectedAriaLabel`, estado común | `v-model` escalar o array cuando `multiple`; `allowCreate` agrega textos nuevos como strings solo en modo múltiple; cuando los chips no caben muestra `+N` con un tooltip para revisar y quitar los valores ocultos; genera un campo oculto JSON cuando recibe `name`; slots `leading`, `selected` y `option`; teclado: flechas, Inicio, Fin, Enter, Espacio y Escape |
+| `BaseAutocomplete` | `options`, `fetchOptions`, `labelKey`, `valueKey`, `selectedLabelKey`, `minChars`, `debounceMs`, `maxSuggestions`, `allowCreate`, textos `loadingText`, `noResultsText`, `loadErrorText`, `clearAriaLabel`                                               | `v-model`, `select`, `blur`; slot `leading`; expone `focus()`                                                                                                                                                                                                                                                                                                         |
+| `BaseSignature`    | `id`, `label`, `width`, `height`, `clearAriaLabel`, `drawingInstructions`, `help`, `error`                                                                                                                                                               | `v-model` con PNG data URL; se opera con puntero táctil, lápiz o ratón                                                                                                                                                                                                                                                                                                |
 
 > **Migración de `BaseCheckbox`:** desde esta versión la etiqueta se muestra por defecto a la
 > derecha de la casilla (`labelPosition="end"`). Para conservar la etiqueta encima, como antes,
@@ -658,6 +771,11 @@ predeterminado) y conserva `totalItems` igual a `rows.length`.
 > ```vue
 > <BaseCheckbox v-model="accepted" label="Acepto" label-position="top" />
 > ```
+
+> **Migración de `BaseRadio` y `BaseSwitch`:** la etiqueta se muestra por defecto a la derecha
+> del control (`labelPosition="end"`). Para conservar la etiqueta encima, indica
+> `label-position="top"` de forma explícita. Ambos aceptan `size="sm"` (predeterminado, usa
+> `--control-height-sm`) y `size="md"` (usa `--jnv-choice-field-min-height`).
 
 ### BaseRadioGroup
 
@@ -686,14 +804,20 @@ comportamiento, el slot `selected` recibe `option` y el slot `option` recibe `op
 `selected` y `active`.
 
 Con `multiple`, el modelo debe ser un array de valores y las opciones elegidas se muestran como
-chips que pueden quitarse. `allowCreate` habilita búsqueda y creación de valores de texto; una
+chips que pueden quitarse; las opciones ya elegidas no vuelven a aparecer en la lista. `allowCreate` habilita búsqueda y creación de valores de texto; una
 coincidencia exacta selecciona la opción disponible. Los valores creados permanecen disponibles
 mientras viva la instancia, aunque se quiten de la selección. `searchPlaceholder` (`Buscar
 opciones...`), `createOptionText` (`Crear opción`) y `removeOptionAriaLabel` (`Quitar opción
 seleccionada`) permiten localizar estos controles. Si se proporciona `name`, el array se serializa
 como JSON en un campo oculto.
 
+Cuando los chips no caben en el ancho disponible, `BaseSelect` muestra los primeros que caben y un
+indicador `+N`. Al pasar el puntero, enfocar o activar el indicador aparece un tooltip con las
+opciones ocultas, que también pueden quitarse. `moreSelectedAriaLabel` (`Ver opciones
+seleccionadas adicionales`) permite localizar su etiqueta accesible.
+
 En `BasePhoneInput`, `countries[].flag` acepta un emoji o una URI de imagen, como la ruta de un SVG.
+`showFlags` permite ocultar las banderas del país seleccionado y del menú; su valor predeterminado es `true`.
 El menú se abre hacia arriba cuando no hay suficiente espacio debajo del campo.
 
 `BasePhoneInput` conserva el texto escrito en el número nacional y compone el modelo con el prefijo

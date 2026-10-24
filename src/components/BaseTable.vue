@@ -37,6 +37,23 @@ const props = defineProps({
     default: "local",
     validator: (value) => ["local", "remote"].includes(value),
   },
+  paginationStyle: {
+    type: String,
+    default: "default",
+    validator: (value) => ["default", "floating"].includes(value),
+  },
+  paginationAriaLabel: {
+    type: String,
+    default: "Paginación de la tabla",
+  },
+  previousPageAriaLabel: {
+    type: String,
+    default: "Ir a la página anterior",
+  },
+  nextPageAriaLabel: {
+    type: String,
+    default: "Ir a la página siguiente",
+  },
   rowKey: {
     type: [String, Function],
     default: "id",
@@ -370,7 +387,10 @@ function absoluteRowIndex(index) {
     class="base-table"
     :class="[
       `base-table--${size}`,
-      { 'base-table--add-row-empty': adding && !visibleRows.length },
+      {
+        'base-table--add-row-empty': adding && !visibleRows.length,
+        'base-table--floating-pagination': paginationStyle === 'floating',
+      },
     ]"
     :aria-busy="loading || undefined"
   >
@@ -608,7 +628,44 @@ function absoluteRowIndex(index) {
       </div>
     </div>
 
-    <footer class="base-table__footer">
+    <nav
+      v-if="paginationStyle === 'floating'"
+      v-show="totalItems"
+      class="base-table__floating-pagination"
+      :aria-label="paginationAriaLabel"
+    >
+      <button
+        class="base-table__floating-button"
+        type="button"
+        :disabled="loading || currentPage === 1"
+        :aria-label="previousPageAriaLabel"
+        @click="goToPage(currentPage - 1)"
+      >
+        <BaseIcon name="chevronLeft" size="sm" decorative />
+      </button>
+      <p class="base-table__floating-summary" aria-live="polite">
+        <slot
+          name="pagination-summary"
+          :start="summaryStart"
+          :end="summaryEnd"
+          :visible-count="visibleCount"
+          :total-items="totalItems"
+        >
+          {{ summaryStart }}–{{ summaryEnd }} de {{ totalItems }}
+        </slot>
+      </p>
+      <button
+        class="base-table__floating-button"
+        type="button"
+        :disabled="loading || currentPage === totalPages"
+        :aria-label="nextPageAriaLabel"
+        @click="goToPage(currentPage + 1)"
+      >
+        <BaseIcon name="chevronRight" size="sm" decorative />
+      </button>
+    </nav>
+
+    <footer v-else class="base-table__footer">
       <div class="base-table__summaries">
         <p class="base-table__summary" aria-live="polite">
           <slot
@@ -636,13 +693,13 @@ function absoluteRowIndex(index) {
       <nav
         v-if="totalItems"
         class="base-table__pagination"
-        aria-label="Paginación de la tabla"
+        :aria-label="paginationAriaLabel"
       >
         <button
           class="base-table__page-button"
           type="button"
           :disabled="loading || currentPage === 1"
-          aria-label="Ir a la página anterior"
+          :aria-label="previousPageAriaLabel"
           @click="goToPage(currentPage - 1)"
         >
           <BaseIcon name="chevronLeft" size="sm" decorative />
@@ -676,7 +733,7 @@ function absoluteRowIndex(index) {
           class="base-table__page-button"
           type="button"
           :disabled="loading || currentPage === totalPages"
-          aria-label="Ir a la página siguiente"
+          :aria-label="nextPageAriaLabel"
           @click="goToPage(currentPage + 1)"
         >
           <BaseIcon name="chevronRight" size="sm" decorative />

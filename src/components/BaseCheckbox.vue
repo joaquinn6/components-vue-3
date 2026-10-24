@@ -61,8 +61,16 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
     ]"
   >
     <label class="base-checkbox__field" :for="inputId">
-      <span v-if="label || $slots.label" class="base-checkbox__label">
-        <slot name="label">{{ label }}</slot>
+      <span class="base-checkbox__label-row">
+        <span v-if="label || $slots.label" class="base-checkbox__label">
+          <slot name="label">{{ label }}</slot>
+        </span>
+        <BaseFieldInfo
+          v-if="hasInfo"
+          :text="info"
+          :type="infoType"
+          :aria-label="infoAriaLabel"
+        />
       </span>
       <span class="base-checkbox__option">
         <input
@@ -81,12 +89,6 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
         <span class="base-checkbox__control" aria-hidden="true">✓</span>
       </span>
     </label>
-    <BaseFieldInfo
-      v-if="hasInfo"
-      :text="info"
-      :type="infoType"
-      :aria-label="infoAriaLabel"
-    />
     <span
       :id="error ? messageId : undefined"
       class="base-checkbox__message"
@@ -100,37 +102,35 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
 
 <style scoped>
 .base-checkbox {
-  --checkbox-color: var(--color-brand-primary);
+  --checkbox-color: var(--jnv-color-brand-primary);
 
-  display: inline-flex;
+  display: grid;
   min-width: 0;
-  align-items: center;
-  gap: var(--space-2);
-  flex-wrap: wrap;
+  gap: var(--jnv-field-gap, var(--base-field-gap, var(--space-2)));
 }
 
 .base-checkbox--secondary {
-  --checkbox-color: var(--color-brand-secondary);
+  --checkbox-color: var(--jnv-color-brand-secondary);
 }
 
 .base-checkbox--success {
-  --checkbox-color: var(--color-state-success);
+  --checkbox-color: var(--jnv-color-state-success);
 }
 
 .base-checkbox--danger {
-  --checkbox-color: var(--color-state-error);
+  --checkbox-color: var(--jnv-color-state-error);
 }
 
 .base-checkbox--error {
-  --checkbox-color: var(--color-state-error);
+  --checkbox-color: var(--jnv-color-state-error);
 }
 
 .base-checkbox__field {
   display: grid;
-  min-height: var(--jnv-choice-field-min-height);
+  min-height: var(--base-choice-field-min-height);
   min-width: 0;
   gap: var(--jnv-field-gap, var(--base-field-gap, var(--space-2)));
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   cursor: pointer;
 }
 
@@ -139,6 +139,12 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
   font-size: var(--jnv-form-label-size);
   font-weight: var(--text-label-weight);
   line-height: var(--text-label-leading);
+}
+
+.base-checkbox__label-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .base-checkbox__option {
@@ -153,9 +159,10 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
   min-height: var(--space-0);
   align-items: center;
   gap: var(--space-3);
+  transform: translateY(var(--base-form-row-choice-offset, var(--space-0)));
 }
 
-.base-checkbox--label-end .base-checkbox__label {
+.base-checkbox--label-end .base-checkbox__label-row {
   order: 2;
 }
 
@@ -164,8 +171,8 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
 }
 
 .base-checkbox--label-top .base-checkbox__field {
-  height: var(--jnv-choice-field-min-height);
-  grid-template-rows: var(--text-label-leading) 1fr;
+  height: auto;
+  grid-template-rows: var(--text-label-leading) auto;
   align-content: start;
 }
 
@@ -186,10 +193,10 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
   flex: 0 0 var(--space-4);
   align-items: center;
   justify-content: center;
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-sm);
   color: transparent;
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   font-size: var(--font-size-2xs);
   font-weight: var(--font-weight-bold);
   line-height: 1;
@@ -204,6 +211,14 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
   flex-basis: var(--space-5);
 }
 
+.base-checkbox--sm {
+  --base-choice-field-min-height: var(--control-height-sm);
+}
+
+.base-checkbox--md {
+  --base-choice-field-min-height: var(--jnv-choice-field-min-height);
+}
+
 .base-checkbox__field:hover .base-checkbox__control {
   border-color: var(--checkbox-color);
 }
@@ -211,7 +226,7 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
 .base-checkbox__input:checked + .base-checkbox__control,
 .base-checkbox__input:indeterminate + .base-checkbox__control {
   border-color: var(--checkbox-color);
-  color: var(--color-text-on-primary);
+  color: var(--jnv-color-text-on-primary);
   background: var(--checkbox-color);
 }
 
@@ -227,26 +242,27 @@ const hasError = computed(() => Boolean(props.error) || props.invalid);
 }
 
 .base-checkbox__input:focus-visible + .base-checkbox__control {
-  outline: var(--focus-outline-width) solid var(--color-focus-ring);
+  outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
   outline-offset: var(--focus-outline-offset);
 }
 
 .base-checkbox__input:disabled + .base-checkbox__control {
-  background: var(--color-surface-muted);
+  background: var(--jnv-control-disabled-background);
+  border-color: var(--jnv-control-disabled-border);
 }
 
 .base-checkbox--error
   .base-checkbox__input:not(:checked, :indeterminate)
   + .base-checkbox__control {
-  border-color: var(--color-state-error);
-  background: var(--color-state-error-surface);
+  border-color: var(--jnv-color-state-error);
+  background: var(--jnv-color-state-error-surface);
 }
 
 .base-checkbox__message {
   flex-basis: 100%;
   min-height: var(--jnv-field-message-min-height);
-  margin-top: var(--space-0);
-  color: var(--color-state-error);
+  margin-top: calc(var(--space-2) * -0.5);
+  color: var(--jnv-color-state-error);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
 }

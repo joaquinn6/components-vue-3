@@ -8,8 +8,13 @@ defineProps({
   label: { type: String, default: "" },
   labelPosition: {
     type: String,
-    default: "top",
+    default: "end",
     validator: (value) => ["top", "end"].includes(value),
+  },
+  size: {
+    type: String,
+    default: "sm",
+    validator: (value) => ["sm", "md"].includes(value),
   },
   required: Boolean,
   disabled: Boolean,
@@ -24,6 +29,7 @@ const model = defineModel({ type: [String, Number, Boolean], default: "" });
     class="base-radio"
     :class="[
       `base-radio--label-${labelPosition}`,
+      `base-radio--${size}`,
       { 'base-radio--disabled': disabled },
     ]"
   >
@@ -50,10 +56,10 @@ const model = defineModel({ type: [String, Number, Boolean], default: "" });
 .base-radio {
   position: relative;
   display: grid;
-  min-height: var(--jnv-choice-field-min-height);
+  min-height: var(--base-choice-field-min-height);
   min-width: 0;
   gap: var(--jnv-field-gap, var(--base-field-gap, var(--space-2)));
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   cursor: pointer;
 }
 
@@ -86,8 +92,8 @@ const model = defineModel({ type: [String, Number, Boolean], default: "" });
 }
 
 .base-radio--label-top {
-  height: var(--jnv-choice-field-min-height);
-  grid-template-rows: var(--text-label-leading) 1fr;
+  height: auto;
+  grid-template-rows: var(--text-label-leading) auto;
   align-content: start;
 }
 
@@ -103,24 +109,24 @@ const model = defineModel({ type: [String, Number, Boolean], default: "" });
 
 .base-radio__control {
   display: inline-flex;
-  width: var(--space-5);
-  height: var(--space-5);
-  flex: 0 0 var(--space-5);
+  width: var(--base-radio-control-size);
+  height: var(--base-radio-control-size);
+  flex: 0 0 var(--base-radio-control-size);
   align-items: center;
   justify-content: center;
-  border: var(--border-width-thin) solid var(--color-text-muted);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-round);
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   transition:
     border-color var(--transition-fast),
     background-color var(--transition-fast);
 }
 
 .base-radio__control::after {
-  width: var(--space-3);
-  height: var(--space-3);
+  width: var(--base-radio-dot-size);
+  height: var(--base-radio-dot-size);
   border-radius: var(--radius-round);
-  background: var(--color-brand-primary);
+  background: var(--jnv-color-brand-primary);
   content: "";
   opacity: 0;
   transform: scale(0.5);
@@ -129,12 +135,24 @@ const model = defineModel({ type: [String, Number, Boolean], default: "" });
     transform var(--transition-fast);
 }
 
+.base-radio--sm {
+  --base-choice-field-min-height: var(--control-height-sm);
+  --base-radio-control-size: var(--space-5);
+  --base-radio-dot-size: var(--space-3);
+}
+
+.base-radio--md {
+  --base-choice-field-min-height: var(--jnv-choice-field-min-height);
+  --base-radio-control-size: calc(var(--space-5) + var(--space-1));
+  --base-radio-dot-size: calc(var(--space-3) + var(--space-1));
+}
+
 .base-radio:hover:not(.base-radio--disabled) .base-radio__control {
-  border-color: var(--color-text-heading);
+  border-color: var(--jnv-color-text-heading);
 }
 
 .base-radio__input:checked + .base-radio__control {
-  border-color: var(--color-brand-secondary);
+  border-color: var(--jnv-color-brand-secondary);
 }
 
 .base-radio__input:checked + .base-radio__control::after {
@@ -143,12 +161,16 @@ const model = defineModel({ type: [String, Number, Boolean], default: "" });
 }
 
 .base-radio__input:focus-visible + .base-radio__control {
-  outline: var(--focus-outline-width) solid var(--color-focus-ring);
+  outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
   outline-offset: var(--focus-outline-offset);
 }
 
 .base-radio--disabled {
   cursor: not-allowed;
   opacity: var(--opacity-disabled);
+}
+.base-radio--disabled .base-radio__control {
+  border-color: var(--jnv-control-disabled-border);
+  background: var(--jnv-control-disabled-background);
 }
 </style>

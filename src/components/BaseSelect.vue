@@ -3,9 +3,11 @@ import {
   computed,
   onBeforeUnmount,
   onMounted,
+  nextTick,
   ref,
   useId,
   useSlots,
+  watch,
 } from "vue";
 import BaseFieldInfo from "./BaseFieldInfo.vue";
 import BaseIcon from "./BaseIcon.vue";
@@ -31,6 +33,10 @@ const props = defineProps({
   removeOptionAriaLabel: {
     type: String,
     default: "Quitar opción seleccionada",
+  },
+  moreSelectedAriaLabel: {
+    type: String,
+    default: "Ver opciones seleccionadas adicionales",
   },
   size: {
     type: String,
@@ -67,6 +73,13 @@ const selectId = computed(() => props.id || `select-${generatedId}`);
 const listboxId = computed(() => `${selectId.value}-listbox`);
 const messageId = computed(() => `${selectId.value}-message`);
 const rootElement = ref(null);
+const multipleControl = ref(null);
+const searchInput = ref(null);
+const measurementChips = ref([]);
+const visibleSelectedCount = ref(0);
+const showCollapsedTooltip = ref(false);
+let resizeObserver;
+let collapsedTooltipTimer;
 const isOpen = ref(false);
 const activeIndex = ref(-1);
 const searchQuery = ref("");
@@ -79,6 +92,27 @@ const selectedValues = computed(() =>
       : []
     : [model.value],
 );
+const visibleSelectedValues = computed(() =>
+  selectedValues.value.slice(0, visibleSelectedCount.value),
+);
+const collapsedSelectedValues = computed(() =>
+  selectedValues.value.slice(visibleSelectedCount.value),
+);
+const hasCollapsedSelectedValues = computed(
+  () => collapsedSelectedValues.value.length > 0,
+);
+
+function openCollapsedTooltip() {
+  clearTimeout(collapsedTooltipTimer);
+  showCollapsedTooltip.value = true;
+}
+
+function scheduleCloseCollapsedTooltip() {
+  clearTimeout(collapsedTooltipTimer);
+  collapsedTooltipTimer = setTimeout(() => {
+    showCollapsedTooltip.value = false;
+  }, 180);
+}
 const availableOptions = computed(() => {
   const options = [...props.options];
   for (const value of createdOptions.value) {
@@ -88,7 +122,9 @@ const availableOptions = computed(() => {
   return options;
 });
 const filteredOptions = computed(() => {
-  const options = availableOptions.value;
+  const options = props.multiple
+    ? availableOptions.value.filter((option) => !isOptionSelected(option))
+    : availableOptions.value;
   if (!canCreate.value || !searchQuery.value.trim()) return options;
   const query = searchQuery.value.trim().toLocaleLowerCase();
   return options.filter((option) =>
@@ -111,6 +147,11 @@ const canCreateCurrentOption = computed(
     canCreate.value &&
     Boolean(searchQuery.value.trim()) &&
     !matchingOption.value,
+);
+const hasSelectableOptions = computed(
+  () =>
+    filteredOptions.value.some((option) => !option?.disabled) ||
+    canCreateCurrentOption.value,
 );
 
 const currentState = computed(() => {
@@ -178,6 +219,11 @@ function toggle() {
     );
 }
 
+function toggleMultipleControl() {
+  toggle();
+  if (isOpen.value && canCreate.value) focusSearchInput();
+}
+
 function closeList() {
   isOpen.value = false;
   activeIndex.value = -1;
@@ -194,6 +240,7 @@ function selectOption(option) {
       ? current.filter((value) => !isSameValue(value, nextValue))
       : [...current, nextValue];
     searchQuery.value = "";
+    focusSearchInput();
     return;
   }
   model.value = nextValue;
@@ -211,6 +258,7 @@ function createOption() {
   model.value = [...selectedValues.value, value];
   searchQuery.value = "";
   activeIndex.value = -1;
+  focusSearchInput();
 }
 
 function removeValue(value) {
@@ -218,6 +266,14 @@ function removeValue(value) {
   model.value = selectedValues.value.filter(
     (selected) => !isSameValue(selected, value),
   );
+  focusSearchInput();
+}
+
+function focusSearchInput() {
+  nextTick(() => {
+    searchInput.value?.focus();
+    requestAnimationFrame(() => searchInput.value?.focus());
+  });
 }
 
 function handleKeydown(event) {
@@ -270,12 +326,64 @@ function handleDocumentPointerDown(event) {
   if (!rootElement.value?.contains(event.target)) closeList();
 }
 
-onMounted(() =>
-  document.addEventListener("pointerdown", handleDocumentPointerDown),
+function setMeasurementChipRef(element, index) {
+  if (element) {
+    measurementChips.value[index] = element;
+    nextTick(updateVisibleSelectedCount);
+  }
+}
+
+function updateVisibleSelectedCount() {
+  const control = multipleControl.value;
+  if (!control) return;
+  const chips = selectedValues.value
+    .map((_, index) => measurementChips.value[index])
+    .filter(Boolean);
+  if (!selectedValues.value.length) {
+    visibleSelectedCount.value = selectedValues.value.length;
+    return;
+  }
+  if (chips.length !== selectedValues.value.length) return;
+
+  const chipGap = 4;
+  const reservedWidth = 112;
+  const availableWidth = control.clientWidth - reservedWidth;
+  let usedWidth = 0;
+  let count = 0;
+
+  for (const chip of chips) {
+    const nextWidth = chip.offsetWidth + (count ? chipGap : 0);
+    if (usedWidth + nextWidth > availableWidth) break;
+    usedWidth += nextWidth;
+    count += 1;
+  }
+
+  visibleSelectedCount.value = Math.max(
+    0,
+    Math.min(count, selectedValues.value.length),
+  );
+}
+
+onMounted(() => {
+  document.addEventListener("pointerdown", handleDocumentPointerDown);
+  if (props.multiple) {
+    nextTick(updateVisibleSelectedCount);
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(updateVisibleSelectedCount);
+      if (multipleControl.value) resizeObserver.observe(multipleControl.value);
+    }
+  }
+});
+watch(
+  [selectedValues, availableOptions],
+  () => nextTick(updateVisibleSelectedCount),
+  { deep: true },
 );
-onBeforeUnmount(() =>
-  document.removeEventListener("pointerdown", handleDocumentPointerDown),
-);
+onBeforeUnmount(() => {
+  document.removeEventListener("pointerdown", handleDocumentPointerDown);
+  resizeObserver?.disconnect();
+  clearTimeout(collapsedTooltipTimer);
+});
 </script>
 
 <template>
@@ -304,12 +412,13 @@ onBeforeUnmount(() =>
       </span>
       <div
         v-if="multiple"
+        ref="multipleControl"
         class="base-select__multiple-control"
         :class="`base-select__input--${size}`"
-        @click="toggle"
+        @click="toggleMultipleControl"
       >
         <span
-          v-for="value in selectedValues"
+          v-for="value in visibleSelectedValues"
           :key="String(value)"
           class="base-select__chip"
         >
@@ -324,7 +433,60 @@ onBeforeUnmount(() =>
             <span aria-hidden="true">×</span>
           </button>
         </span>
+        <span
+          v-if="hasCollapsedSelectedValues"
+          class="base-select__collapsed"
+          @mouseleave="scheduleCloseCollapsedTooltip"
+        >
+          <button
+            type="button"
+            class="base-select__collapsed-trigger"
+            :aria-label="`${moreSelectedAriaLabel}: ${collapsedSelectedValues.length}`"
+            :aria-expanded="showCollapsedTooltip"
+            @click.stop="showCollapsedTooltip = !showCollapsedTooltip"
+            @mouseenter="openCollapsedTooltip"
+            @focus="openCollapsedTooltip"
+          >
+            +{{ collapsedSelectedValues.length }}
+          </button>
+          <span
+            v-if="showCollapsedTooltip"
+            class="base-select__collapsed-tooltip"
+            role="tooltip"
+            @mouseenter="openCollapsedTooltip"
+          >
+            <span
+              v-for="value in collapsedSelectedValues"
+              :key="`collapsed-${String(value)}`"
+              class="base-select__chip"
+            >
+              {{ getOptionLabel(value) }}
+              <button
+                type="button"
+                class="base-select__chip-remove"
+                :aria-label="`${removeOptionAriaLabel}: ${getOptionLabel(value)}`"
+                :disabled="disabled"
+                @click.stop="removeValue(value)"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </span>
+          </span>
+        </span>
+        <span
+          v-for="(value, index) in selectedValues"
+          :key="`measurement-${String(value)}`"
+          :ref="(element) => setMeasurementChipRef(element, index)"
+          class="base-select__chip base-select__chip--measurement"
+          aria-hidden="true"
+        >
+          {{ getOptionLabel(value) }}
+          <span class="base-select__chip-remove" aria-hidden="true"
+            >&times;</span
+          >
+        </span>
         <input
+          ref="searchInput"
           :id="selectId"
           v-model="searchQuery"
           class="base-select__search"
@@ -375,6 +537,7 @@ onBeforeUnmount(() =>
       </button>
       <input v-if="name" type="hidden" :name="name" :value="formValue" />
       <BaseIcon
+        v-if="hasSelectableOptions"
         class="base-select__icon"
         name="chevronDown"
         size="sm"
@@ -382,7 +545,7 @@ onBeforeUnmount(() =>
       />
 
       <ul
-        v-if="isOpen"
+        v-if="isOpen && hasSelectableOptions"
         :id="listboxId"
         class="base-select__list"
         role="listbox"
@@ -400,7 +563,7 @@ onBeforeUnmount(() =>
           }"
           role="option"
           :aria-selected="isOptionSelected(option)"
-          @click.prevent="selectOption(option)"
+          @mousedown.prevent="selectOption(option)"
         >
           <slot
             name="option"
@@ -418,7 +581,7 @@ onBeforeUnmount(() =>
           class="base-select__option base-select__option--create"
           role="option"
           aria-selected="false"
-          @click.prevent="createOption"
+          @mousedown.prevent="createOption"
         >
           {{ createOptionText }}: {{ searchQuery.trim() }}
         </li>
@@ -457,18 +620,19 @@ onBeforeUnmount(() =>
   flex-wrap: wrap;
 }
 .base-select--inverse .base-select__label {
-  color: var(--color-text-inverse-muted);
+  color: var(--jnv-color-text-inverse-muted);
 }
 .base-select__control {
   position: relative;
+  min-width: 0;
 }
 .base-select__input {
   width: 100%;
   text-align: left;
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
   color: var(--jnv-form-value-color);
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   font: inherit;
   transition:
     border-color var(--transition-fast),
@@ -477,23 +641,28 @@ onBeforeUnmount(() =>
 .base-select__multiple-control {
   display: flex;
   width: 100%;
-  min-height: var(--control-height-sm);
+  min-width: 0;
+  height: var(--control-height-sm);
+  max-height: var(--control-height-sm);
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--space-1);
   padding: var(--space-1) var(--space-10) var(--space-1) var(--space-2);
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  overflow: visible;
+  box-sizing: border-box;
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
-  color: var(--color-text-body);
-  background: var(--color-surface-page);
+  color: var(--jnv-color-text-body);
+  background: var(--jnv-control-background);
 }
 .base-select__multiple-control:focus-within {
-  border-color: var(--color-brand-primary);
-  box-shadow: 0 0 0 var(--space-1) var(--color-focus-shadow);
+  border-color: var(--jnv-control-focus-border);
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 .base-select__search {
   min-width: 4rem;
-  flex: 1 1 4rem;
+  flex: 0 0 4rem;
   padding: var(--space-1);
   border: 0;
   outline: 0;
@@ -506,12 +675,54 @@ onBeforeUnmount(() =>
 }
 .base-select__chip {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: var(--space-1);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
-  background: var(--color-surface-muted);
+  background: var(--jnv-color-surface-muted);
   font-size: var(--font-size-xs);
+}
+.base-select__chip--measurement {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.base-select__collapsed-trigger {
+  flex: 0 0 auto;
+  padding: var(--space-1) var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--jnv-color-text-muted);
+  background: var(--jnv-color-surface-muted);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+.base-select__collapsed {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+.base-select__collapsed-trigger:focus-visible {
+  outline: var(--border-width-medium) solid var(--jnv-color-brand-primary);
+  outline-offset: var(--space-px);
+}
+.base-select__collapsed-tooltip {
+  position: absolute;
+  z-index: 3;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  display: flex;
+  max-width: min(24rem, calc(100vw - var(--space-4)));
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  background: var(--jnv-control-background);
 }
 .base-select__chip-remove {
   display: inline-grid;
@@ -525,28 +736,50 @@ onBeforeUnmount(() =>
   cursor: pointer;
 }
 .base-select__chip-remove:focus-visible {
-  outline: var(--border-width-medium) solid var(--color-brand-primary);
+  outline: var(--border-width-medium) solid var(--jnv-color-brand-primary);
   outline-offset: var(--space-px);
 }
 .base-select__chip-remove:disabled {
   cursor: not-allowed;
 }
-.base-select__input:hover:not(:disabled) {
-  border-color: var(--color-text-muted);
+.base-select__input:hover:not(:disabled):not(:focus) {
+  border-color: var(--jnv-control-hover-border);
+}
+.base-select__multiple-control:hover:not(:focus-within):not(:has(:disabled)) {
+  border-color: var(--jnv-control-hover-border);
 }
 .base-select__input:focus {
-  border-color: var(--color-brand-primary);
+  border-color: var(--jnv-control-focus-border);
   outline: none;
-  box-shadow: 0 0 0 var(--space-1) var(--color-focus-shadow);
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 .base-select__input:disabled {
   cursor: not-allowed;
-  background: var(--color-surface-muted);
+  background: var(--jnv-control-disabled-background);
+  border-color: var(--jnv-control-disabled-border);
+}
+.base-select--error .base-select__input,
+.base-select--error .base-select__multiple-control {
+  border-color: var(--jnv-color-state-error);
+  background: var(--jnv-color-state-error-surface);
+}
+.base-select__multiple-control:has(:disabled) {
+  background: var(--jnv-control-disabled-background);
+  border-color: var(--jnv-control-disabled-border);
 }
 .base-select__input--sm {
   height: var(--control-height-sm);
   padding-inline: var(--space-3) var(--space-10);
   font-size: var(--font-size-xs);
+}
+.base-select__multiple-control.base-select__input--md {
+  height: var(--control-height-md);
+  max-height: var(--control-height-md);
+}
+.base-select__multiple-control.base-select__input--lg {
+  height: var(--control-height-lg);
+  max-height: var(--control-height-lg);
 }
 .base-select__input--md {
   height: var(--control-height-md);
@@ -575,10 +808,10 @@ onBeforeUnmount(() =>
   margin: 0;
   padding: var(--space-1);
   overflow-y: auto;
-  border: var(--border-width-thin) solid var(--color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  background: var(--color-surface-page);
+  background: var(--jnv-overlay-background);
   list-style: none;
   bottom: var(--base-menu-bottom, auto);
 }
@@ -587,18 +820,23 @@ onBeforeUnmount(() =>
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-base);
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
   cursor: pointer;
 }
 .base-select__option:hover {
-  background: var(--color-surface-muted);
+  background: var(--jnv-color-surface-muted);
 }
 .base-select__option--active {
-  background: var(--color-surface-muted);
+  background: var(--jnv-color-surface-muted);
 }
 .base-select__option--selected {
-  color: var(--color-brand-primary);
+  background: transparent;
+  color: var(--jnv-color-brand-primary);
   font-weight: var(--font-weight-semibold);
+}
+.base-select__option--selected:hover,
+.base-select__option--selected.base-select__option--active {
+  background: transparent;
 }
 .base-select__option--disabled {
   cursor: not-allowed;
@@ -616,7 +854,7 @@ onBeforeUnmount(() =>
       calc(var(--font-size-xs) * var(--line-height-heading))
     )
   );
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
   visibility: hidden;
@@ -625,9 +863,9 @@ onBeforeUnmount(() =>
   visibility: visible;
 }
 .base-select--error .base-select__message {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 .base-select--success .base-select__message {
-  color: var(--color-state-success);
+  color: var(--jnv-color-state-success);
 }
 </style>

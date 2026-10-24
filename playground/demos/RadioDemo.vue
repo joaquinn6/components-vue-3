@@ -14,7 +14,8 @@ const t = useMessages({
     description:
       "Group of mutually exclusive options (recommended) or individual radios for custom layouts.",
     groupTitle: "Group · options, orientation, bordered, error",
-    radioTitle: "Individual radios · value, labelPosition",
+    radioTitle:
+      "Individual radios · value, labelPosition (end by default), size",
     channel: "Notification channel",
     horizontal: "Horizontal, bordered, with error",
     channelError: "Select a channel to continue.",
@@ -28,7 +29,8 @@ const t = useMessages({
     description:
       "Grupo de opciones excluyentes (recomendado) o radios individuales para layouts propios.",
     groupTitle: "Grupo · options, orientation, bordered, error",
-    radioTitle: "Radios individuales · value, labelPosition",
+    radioTitle:
+      "Radios individuales · value, labelPosition (end por defecto), size",
     channel: "Canal de notificación",
     horizontal: "Horizontal, con borde y error",
     channelError: "Selecciona un canal para continuar.",
@@ -73,7 +75,6 @@ const radioCode = `<BaseRadio
   name="shipping"
   value="standard"
   label="Standard shipping"
-  label-position="end"
 />
 <BaseRadio
   id="shipping-express"
@@ -81,7 +82,7 @@ const radioCode = `<BaseRadio
   name="shipping"
   value="express"
   label="Express shipping"
-  label-position="end"
+  size="md"
 />`;
 </script>
 
@@ -121,7 +122,6 @@ const radioCode = `<BaseRadio
           name="shipping"
           value="standard"
           :label="t.standard"
-          label-position="end"
         />
         <BaseRadio
           id="shipping-express"
@@ -129,7 +129,7 @@ const radioCode = `<BaseRadio
           name="shipping"
           value="express"
           :label="t.express"
-          label-position="end"
+          size="md"
         />
       </div>
       <pre class="demo-model">shipping: {{ JSON.stringify(shipping) }}</pre>

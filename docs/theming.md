@@ -124,8 +124,69 @@ tipografÃ­a, transiciones y `--layer-loading`, que controla la superposiciÃ³
 tipografía y transiciones. El portal solo proporciona los valores visuales y las variantes de
 componente que correspondan a su identidad.
 
+## Alturas de control
+
+`--control-height-sm` (`2.25rem`), `--control-height-md` (`2.75rem`) y `--control-height-lg`
+(`3.25rem`) definen la altura de inputs, selects y botones por tamaño. Las dos primeras eran
+`2.5rem` y `3rem` en versiones anteriores; un portal que necesite la densidad anterior puede
+restaurarlas en su tema:
+
+```css
+:root {
+  --control-height-sm: 2.5rem;
+  --control-height-md: 3rem;
+}
+```
+
+## Tokens de controles de formulario
+
+Inputs, textareas, selects, autocompletes, selectores de fecha y teléfono, casillas, radios,
+switches y la barra de `BaseSearchQL` comparten estos tokens. Los estados de error y éxito siguen
+usando `--jnv-color-state-{error,success}` y sus superficies.
+
+| Token                                                                | Uso                                   |
+| -------------------------------------------------------------------- | ------------------------------------- |
+| `--jnv-control-background`, `--jnv-control-border`                   | Fondo y borde en reposo               |
+| `--jnv-control-hover-border`                                         | Borde al pasar el puntero             |
+| `--jnv-control-focus-border`, `--jnv-control-focus-background`       | Borde y fondo con foco                |
+| `--jnv-control-focus-shadow`                                         | Halo de foco                          |
+| `--jnv-control-disabled-background`, `--jnv-control-disabled-border` | Control deshabilitado                 |
+| `--jnv-overlay-background`                                           | Menús desplegables, listas y tooltips |
+| `--jnv-dialog-backdrop-background`                                   | Fondo detrás de `BaseDialog`          |
+| `--jnv-loading-overlay-background`                                   | Velo de la directiva `v-loading`      |
+| `--jnv-tooltip-border`                                               | Borde del tooltip de la directiva     |
+
+`--jnv-dialog-backdrop-background`, `--jnv-loading-overlay-background` y `--jnv-tooltip-border`
+suelen necesitar transparencia o mezcla; declara esos valores en el tema, nunca en un componente.
+
+## Tokens de BaseTabs
+
+| Token                      | Uso                                  |
+| -------------------------- | ------------------------------------ |
+| `--jnv-tabs-margin-bottom` | Separación bajo la lista de pestañas |
+| `--jnv-tabs-border`        | Línea inferior de la lista           |
+| `--jnv-tabs-text`          | Texto de las pestañas inactivas      |
+| `--jnv-tabs-text-active`   | Texto de la pestaña activa y hover   |
+
+Para colocar las pestañas sobre una superficie invertida, sobrescribe estos tokens en el contenedor,
+por ejemplo con `--jnv-color-text-inverse-muted`, `--jnv-color-text-inverse` y
+`--jnv-color-border-inverse`.
+
+## Tokens de BaseBadge
+
+| Token                                                                  | Uso                                    |
+| ---------------------------------------------------------------------- | -------------------------------------- |
+| `--jnv-badge-{sm,md}-padding-block`, `-padding-inline`, `-line-height` | Espaciado y altura de línea por tamaño |
+| `--jnv-badge-fixed-width`                                              | Ancho con `width="fixed"` (`9.25rem`)  |
+| `--jnv-badge-{tono}-{text,background,border}`                          | Colores de cada tono                   |
+| `--jnv-color-badge-progress`, `--jnv-color-badge-progress-surface`     | Color base del tono `progress`         |
+| `--jnv-color-badge-violet`, `--jnv-color-badge-violet-surface`         | Color base del tono `violet`           |
+
+Los tonos son `neutral`, `info`, `success`, `warning`, `error`, `critical`, `progress` y `violet`.
+
 ## Tokens de BaseCard
 
+`--jnv-card-background` define el fondo de `BaseCard` con `surface="page"`.
 `--jnv-card-padding-compact` controla el padding de `BaseCard` cuando `padding="compact"`.
 Los temas JNV oscuro y claro lo establecen en `var(--space-4)`; en pantallas pequeñas el componente
 mantiene `var(--space-5)` como ajuste responsive. Un tema propio puede sobrescribir el token, por

@@ -3,8 +3,10 @@ import type { Directive } from "vue";
 
 import _BaseAutocomplete from "./components/BaseAutocomplete.vue";
 import _BaseAlert from "./components/BaseAlert.vue";
+import _BaseToast from "./components/BaseToast.vue";
 import _BaseBreadcrumb from "./components/BaseBreadcrumb.vue";
 import _BaseButton from "./components/BaseButton.vue";
+import _BaseBadge from "./components/BaseBadge.vue";
 import _BaseCard from "./components/BaseCard.vue";
 import _BaseCheckbox from "./components/BaseCheckbox.vue";
 import _BaseConfirmDialog from "./components/BaseConfirmDialog.vue";
@@ -15,6 +17,7 @@ import _BaseDropdownMenu from "./components/BaseDropdownMenu.vue";
 import _BaseDialog from "./components/BaseDialog.vue";
 import _BaseFieldInfo from "./components/BaseFieldInfo.vue";
 import _BaseFormRow from "./components/BaseFormRow.vue";
+import _BaseFormColumns from "./components/BaseFormColumns.vue";
 import _BaseFormSection from "./components/BaseFormSection.vue";
 import _BaseHeading from "./components/BaseHeading.vue";
 import _BaseInput from "./components/BaseInput.vue";
@@ -39,8 +42,10 @@ import { loading as loadingDirective } from "./directives/loading";
 import type {
   BaseAutocompleteProps,
   BaseAlertProps,
+  BaseToastProps,
   BaseBreadcrumbProps,
   BaseButtonProps,
+  BaseBadgeProps,
   BaseCardProps,
   BaseCheckboxProps,
   BaseConfirmDialogProps,
@@ -50,6 +55,7 @@ import type {
   BaseDialogProps,
   BaseFieldInfoProps,
   BaseFormRowProps,
+  BaseFormColumnsProps,
   BaseFormSectionProps,
   BaseHeadingProps,
   BaseInputProps,
@@ -80,9 +86,11 @@ import type {
 export const BaseAutocomplete =
   _BaseAutocomplete as TypedComponent<BaseAutocompleteProps>;
 export const BaseAlert = _BaseAlert as TypedComponent<BaseAlertProps>;
+export const BaseToast = _BaseToast as TypedComponent<BaseToastProps>;
 export const BaseBreadcrumb =
   _BaseBreadcrumb as TypedComponent<BaseBreadcrumbProps>;
 export const BaseButton = _BaseButton as TypedComponent<BaseButtonProps>;
+export const BaseBadge = _BaseBadge as TypedComponent<BaseBadgeProps>;
 export const BaseCard = _BaseCard as TypedComponent<BaseCardProps>;
 export const BaseCheckbox = _BaseCheckbox as TypedComponent<BaseCheckboxProps>;
 export const BaseDialog = _BaseDialog as TypedComponent<BaseDialogProps>;
@@ -99,6 +107,8 @@ export const BaseDropdownMenu =
 export const BaseFieldInfo =
   _BaseFieldInfo as TypedComponent<BaseFieldInfoProps>;
 export const BaseFormRow = _BaseFormRow as TypedComponent<BaseFormRowProps>;
+export const BaseFormColumns =
+  _BaseFormColumns as TypedComponent<BaseFormColumnsProps>;
 export const BaseFormSection =
   _BaseFormSection as TypedComponent<BaseFormSectionProps>;
 export const BaseHeading = _BaseHeading as TypedComponent<BaseHeadingProps>;

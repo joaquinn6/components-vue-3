@@ -11,7 +11,13 @@ export type SelectValue =
 export type DateValue = Date | string | number | Record<string, unknown> | null;
 export type DateRangeValue = [Date | string, Date | string] | null;
 export type ButtonVariant =
-  "primary" | "secondary" | "outline" | "ghost" | "inverse" | "danger";
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "inverse"
+  | "danger"
+  | "ghost-danger";
 export type ButtonSize = Size | "icon";
 
 export interface CommonFieldProps {
@@ -56,11 +62,14 @@ export interface BaseIconProps {
 export interface BaseFormSectionProps {
   title?: string;
   description?: string;
+  stretch?: boolean;
   titleAs?: "h2" | "h3" | "h4";
 }
+export interface BaseFormColumnsProps {}
 export interface BaseFormRowProps {
   columns?: 1 | 2 | 3 | 4;
   columnWidths?: readonly string[];
+  alignItems?: "start" | "center" | "end" | "stretch";
 }
 export interface BaseCardProps {
   as?: "div" | "section" | "article" | "aside" | "details";
@@ -69,6 +78,10 @@ export interface BaseCardProps {
   radius?: "md" | "lg";
   elevation?: "none" | "sm" | "md";
   outlined?: boolean;
+  title?: string;
+  titlePosition?: "inside" | "outside";
+  titleIcon?: string;
+  titleAs?: "h2" | "h3" | "h4";
 }
 export interface BaseAlertProps {
   title?: string;
@@ -77,6 +90,18 @@ export interface BaseAlertProps {
   icon?: string;
   dismissible?: boolean;
   closeLabel?: string;
+}
+export interface BaseToastProps {
+  open?: boolean;
+  title?: string;
+  description?: string;
+  tone?: "success" | "info" | "warning" | "danger";
+  icon?: string;
+  dismissible?: boolean;
+  closeLabel?: string;
+  duration?: number;
+  pauseOnHover?: boolean;
+  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
 }
 export interface BaseDialogProps {
   open?: boolean;
@@ -94,6 +119,7 @@ export interface BaseConfirmDialogProps {
   description: string;
   confirmLabel?: string;
   cancelLabel?: string;
+  buttonSize?: Size;
   loading?: boolean;
   tone?: "danger" | "primary";
 }
@@ -117,6 +143,21 @@ export interface BaseTextProps {
     | "warning"
     | "inherit";
   weight?: "regular" | "medium" | "semibold" | "bold";
+}
+export type BaseBadgeTone =
+  | "neutral"
+  | "info"
+  | "success"
+  | "warning"
+  | "error"
+  | "critical"
+  | "progress"
+  | "violet";
+export interface BaseBadgeProps {
+  label?: string;
+  tone?: BaseBadgeTone;
+  size?: "sm" | "md";
+  width?: "auto" | "fixed";
 }
 export type BaseBreadcrumbRouteLocation = string | object;
 export interface BaseBreadcrumbItem {
@@ -278,6 +319,10 @@ export interface BaseTableProps {
   pageSize: number;
   page?: number;
   paginationMode?: "local" | "remote";
+  paginationStyle?: "default" | "floating";
+  paginationAriaLabel?: string;
+  previousPageAriaLabel?: string;
+  nextPageAriaLabel?: string;
   rowKey?: string | ((row: BaseTableRow, index?: number) => string | number);
   loading?: boolean;
   size?: Size;
@@ -318,6 +363,7 @@ export interface BasePhoneInputProps extends CommonFieldProps {
   countrySearchPlaceholder?: string;
   noResultsText?: string;
   countrySelectorAriaLabel?: string;
+  showFlags?: boolean;
   modelValue?: string;
 }
 export interface BaseTextareaProps extends CommonFieldProps {
@@ -339,6 +385,7 @@ export interface BaseRadioProps {
   value: string | number | boolean;
   label?: string;
   labelPosition?: "top" | "end";
+  size?: "sm" | "md";
   required?: boolean;
   disabled?: boolean;
   invalid?: boolean;
@@ -367,6 +414,7 @@ export interface BaseSwitchProps {
   id: string;
   label?: string;
   labelPosition?: "top" | "end";
+  size?: "sm" | "md";
   modelValue?: boolean;
   disabled?: boolean;
   error?: string;
@@ -385,6 +433,7 @@ export interface BaseSelectProps extends CommonFieldProps {
   searchPlaceholder?: string;
   createOptionText?: string;
   removeOptionAriaLabel?: string;
+  moreSelectedAriaLabel?: string;
   options: Array<SelectValue | SelectOption>;
   modelValue?: SelectValue | SelectValue[];
 }

@@ -9,6 +9,7 @@
  * --jnv-color-{brand,action,text,surface,border,state,focus}-*
  * --jnv-shadow-*, --jnv-radius-*, --jnv-space-*, --jnv-font-*, --jnv-text-*
  * --jnv-control-*, --jnv-switch-*, --jnv-signature-*, --jnv-tabs-*
+ * --jnv-overlay-*, --jnv-dialog-*, --jnv-loading-*, --jnv-tooltip-*, --jnv-badge-*
  * --jnv-date-picker-menu-* (fondo, texto, hover, selección, borde, foco,
  * deshabilitado, rango, tooltip, scrollbar y cargador del calendario externo)
  * --jnv-breadcrumb-* (espaciado, transición y foco del breadcrumb)
@@ -53,8 +54,80 @@
     var(--font-size-xs) * var(--line-height-heading)
   );
 
+  /* Controles de formulario: fondo, borde y estados compartidos. */
+  --jnv-control-background: var(--jnv-color-surface-page);
+  --jnv-control-border: var(--jnv-color-border-strong);
+  --jnv-control-hover-border: var(--jnv-color-text-muted);
+  --jnv-control-focus-border: var(--jnv-color-brand-primary);
+  --jnv-control-focus-background: var(--jnv-color-surface-muted);
+  --jnv-control-focus-shadow: var(--jnv-color-focus-shadow);
+  --jnv-control-disabled-background: var(--jnv-color-surface-muted);
+  --jnv-control-disabled-border: var(--jnv-color-border-strong);
+
+  /* Superficies flotantes: menús, diálogos, cargador y tooltips. */
+  --jnv-overlay-background: var(--jnv-color-surface-page);
+  --jnv-dialog-backdrop-background: color-mix(
+    in srgb,
+    var(--jnv-color-surface-footer) 62%,
+    transparent
+  );
+  --jnv-loading-overlay-background: color-mix(
+    in srgb,
+    var(--jnv-color-surface-page) 72%,
+    transparent
+  );
+  --jnv-tooltip-border: color-mix(
+    in srgb,
+    var(--jnv-color-text-muted) 20%,
+    var(--jnv-color-border-default)
+  );
+
+  /* BaseTabs. */
+  --jnv-tabs-margin-bottom: var(--space-0);
+  --jnv-tabs-border: var(--jnv-color-border-default);
+  --jnv-tabs-text: var(--jnv-color-text-muted);
+  --jnv-tabs-text-active: var(--jnv-color-text-heading);
+
   /* BaseCard. */
   --jnv-card-padding-compact: var(--space-4);
+  --jnv-card-background: var(--jnv-color-surface-page);
+
+  /* BaseBadge: tamaños, ancho fijo y colores por tono. */
+  --jnv-badge-sm-padding-block: 0.125rem;
+  --jnv-badge-sm-padding-inline: var(--space-2);
+  --jnv-badge-sm-line-height: 1.4;
+  --jnv-badge-md-padding-block: var(--space-1);
+  --jnv-badge-md-padding-inline: var(--space-3);
+  --jnv-badge-md-line-height: var(--line-height-heading);
+  --jnv-badge-fixed-width: 9.25rem;
+  --jnv-color-badge-progress: var(--jnv-color-state-warning);
+  --jnv-color-badge-progress-surface: var(--jnv-color-surface-highlight);
+  --jnv-color-badge-violet: var(--jnv-color-brand-secondary);
+  --jnv-color-badge-violet-surface: var(--jnv-color-surface-muted);
+  --jnv-badge-neutral-text: var(--jnv-color-text-muted);
+  --jnv-badge-neutral-background: var(--jnv-color-surface-muted);
+  --jnv-badge-neutral-border: var(--jnv-color-border-strong);
+  --jnv-badge-info-text: var(--jnv-color-status-info-text);
+  --jnv-badge-info-background: var(--jnv-color-surface-subtle);
+  --jnv-badge-info-border: var(--jnv-color-status-info-text);
+  --jnv-badge-success-text: var(--jnv-color-state-success);
+  --jnv-badge-success-background: var(--jnv-color-state-success-surface);
+  --jnv-badge-success-border: var(--jnv-color-state-success);
+  --jnv-badge-warning-text: var(--jnv-color-state-warning);
+  --jnv-badge-warning-background: var(--jnv-color-surface-highlight);
+  --jnv-badge-warning-border: var(--jnv-color-state-warning);
+  --jnv-badge-error-text: var(--jnv-color-state-error);
+  --jnv-badge-error-background: var(--jnv-color-state-error-surface);
+  --jnv-badge-error-border: var(--jnv-color-state-error);
+  --jnv-badge-critical-text: var(--jnv-color-action-danger);
+  --jnv-badge-critical-background: var(--jnv-color-state-error-surface);
+  --jnv-badge-critical-border: var(--jnv-color-action-danger);
+  --jnv-badge-progress-text: var(--jnv-color-badge-progress);
+  --jnv-badge-progress-background: var(--jnv-color-badge-progress-surface);
+  --jnv-badge-progress-border: var(--jnv-color-badge-progress);
+  --jnv-badge-violet-text: var(--jnv-color-badge-violet);
+  --jnv-badge-violet-background: var(--jnv-color-badge-violet-surface);
+  --jnv-badge-violet-border: var(--jnv-color-badge-violet);
 
   /* BaseTable: espaciado, tipografía y paginación por tamaño (sm, md, lg). */
   --jnv-table-sm-cell-padding-block: var(--space-2);

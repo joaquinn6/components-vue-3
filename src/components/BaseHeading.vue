@@ -74,19 +74,19 @@ defineProps({
 }
 
 .base-heading--heading {
-  color: var(--color-text-heading);
+  color: var(--jnv-color-text-heading);
 }
 
 .base-heading--body {
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
 }
 
 .base-heading--inverse {
-  color: var(--color-text-inverse);
+  color: var(--jnv-color-text-inverse);
 }
 
 .base-heading--brand {
-  color: var(--color-brand-primary);
+  color: var(--jnv-color-brand-primary);
 }
 
 .base-heading--align-left {

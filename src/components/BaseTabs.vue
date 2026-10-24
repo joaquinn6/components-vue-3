@@ -94,16 +94,16 @@ function handleKeydown(event, index) {
 .base-tabs {
   display: flex;
   gap: var(--space-5);
-  padding-bottom: var(--space-3);
-  margin-bottom: var(--space-5);
-  border-bottom: var(--border-width-thin) solid var(--jnv-color-border-default);
+  padding-bottom: var(--space-1);
+  margin-bottom: var(--jnv-tabs-margin-bottom);
+  border-bottom: var(--border-width-thin) solid var(--jnv-tabs-border);
 }
 
 .base-tabs__tab {
   position: relative;
   padding: var(--space-2) var(--space-0);
   border: var(--space-0);
-  color: var(--jnv-color-text-muted);
+  color: var(--jnv-tabs-text);
   background: transparent;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
@@ -114,7 +114,7 @@ function handleKeydown(event, index) {
 .base-tabs__tab::after {
   position: absolute;
   right: var(--space-0);
-  bottom: calc(var(--space-3) * -1);
+  bottom: calc(var(--space-1) * -1);
   left: var(--space-0);
   height: var(--border-width-accent);
   border-radius: var(--radius-round);
@@ -124,7 +124,7 @@ function handleKeydown(event, index) {
 
 .base-tabs__tab:hover,
 .base-tabs__tab--active {
-  color: var(--jnv-color-text-heading);
+  color: var(--jnv-tabs-text-active);
 }
 
 .base-tabs__tab--active {

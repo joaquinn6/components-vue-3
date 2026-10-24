@@ -6,6 +6,7 @@ import DemoSection from "../components/DemoSection.vue";
 import { useMessages } from "../i18n/usePlaygroundLocale";
 
 const phone = ref("+34612345678");
+const phoneWithoutFlags = ref("+50588881234");
 
 const t = useMessages({
   en: {
@@ -20,6 +21,8 @@ const t = useMessages({
     spain: "Spain",
     nicaragua: "Nicaragua",
     usa: "United States",
+    noFlagsTitle: "No flags · showFlags",
+    noFlagsLabel: "Phone without flags",
   },
   es: {
     description:
@@ -33,6 +36,8 @@ const t = useMessages({
     spain: "España",
     nicaragua: "Nicaragua",
     usa: "Estados Unidos",
+    noFlagsTitle: "Sin banderas · showFlags",
+    noFlagsLabel: "Teléfono sin banderas",
   },
 });
 
@@ -64,6 +69,13 @@ const countries = [
     help="Search the country by name or prefix."
   />
 </template>`;
+
+const noFlagsCode = `<BasePhoneInput
+  v-model="phone"
+  label="Phone without flags"
+  :countries="countries"
+  :show-flags="false"
+/>`;
 </script>
 
 <template>
@@ -84,6 +96,19 @@ const countries = [
         :help="t.help"
       />
       <pre class="demo-model">phone: {{ JSON.stringify(phone) }}</pre>
+    </DemoExample>
+
+    <DemoExample :title="t.noFlagsTitle" :code="noFlagsCode">
+      <BasePhoneInput
+        id="phone-no-flags"
+        v-model="phoneWithoutFlags"
+        :label="t.noFlagsLabel"
+        :countries="phoneCountries"
+        :country-selector-aria-label="t.selector"
+        :country-search-placeholder="t.search"
+        :no-results-text="t.noResults"
+        :show-flags="false"
+      />
     </DemoExample>
   </DemoSection>
 </template>

@@ -665,16 +665,17 @@ onBeforeUnmount(() =>
               @update:model-value="updateDateDraft(1, $event)"
             />
           </div>
-          <BaseButton
-            type="button"
-            variant="primary"
-            size="sm"
-            class="base-search-ql__date-accept"
-            :disabled="disabled || !canAcceptDateRange"
-            @click="acceptDateRange"
-          >
-            {{ textLabels.acceptDateRangeLabel }}
-          </BaseButton>
+          <div class="base-search-ql__date-actions">
+            <BaseButton
+              type="button"
+              variant="primary"
+              size="sm"
+              :disabled="disabled || !canAcceptDateRange"
+              @click="acceptDateRange"
+            >
+              {{ textLabels.acceptDateRangeLabel }}
+            </BaseButton>
+          </div>
         </div>
       </div>
     </div>
@@ -687,8 +688,7 @@ onBeforeUnmount(() =>
     .base-search-ql__remove,
     .base-search-ql__filter-trigger,
     .base-search-ql__filter-option,
-    .base-search-ql__date-trigger,
-    .base-search-ql__date-accept
+    .base-search-ql__date-trigger
   ) {
   min-width: 0;
   min-height: 0;
@@ -703,8 +703,7 @@ onBeforeUnmount(() =>
     .base-search-ql__remove,
     .base-search-ql__filter-trigger,
     .base-search-ql__filter-option,
-    .base-search-ql__date-trigger,
-    .base-search-ql__date-accept
+    .base-search-ql__date-trigger
   ):hover:not(:disabled) {
   transform: none;
   box-shadow: none;
@@ -741,9 +740,9 @@ onBeforeUnmount(() =>
   align-items: center;
   gap: var(--space-2);
   padding: 0 var(--space-3);
-  border: var(--border-width-thin) solid var(--jnv-color-border-strong);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
-  background: var(--jnv-color-surface-page);
+  background: var(--jnv-control-background);
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
@@ -763,9 +762,15 @@ onBeforeUnmount(() =>
   padding-left: var(--space-4);
 }
 
-.base-search-ql__bar:focus-within {
-  border-color: var(--jnv-color-brand-primary);
-  box-shadow: 0 0 0 var(--space-1) var(--jnv-color-focus-shadow);
+.base-search-ql__bar:hover:not(:focus-within):not(:has(:disabled)) {
+  border-color: var(--jnv-control-hover-border);
+}
+
+.base-search-ql__bar:focus-within,
+.base-search-ql__bar:focus-within:hover {
+  border-color: var(--jnv-control-focus-border);
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 
 .base-search-ql__search-icon {
@@ -820,7 +825,7 @@ onBeforeUnmount(() =>
   align-items: center;
   gap: var(--space-1);
   padding: var(--space-1) var(--space-2);
-  border: var(--border-width-thin) solid var(--jnv-color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-sm);
   background: var(--jnv-color-surface-subtle);
   font-size: var(--font-size-xs);
@@ -881,8 +886,7 @@ onBeforeUnmount(() =>
 .base-search-ql .base-search-ql__remove:focus-visible,
 .base-search-ql .base-search-ql__filter-trigger:focus-visible,
 .base-search-ql .base-search-ql__filter-option:focus-visible,
-.base-search-ql .base-search-ql__date-trigger:focus-visible,
-.base-search-ql .base-search-ql__date-accept:focus-visible {
+.base-search-ql .base-search-ql__date-trigger:focus-visible {
   outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
   outline-offset: var(--focus-outline-offset);
 }
@@ -890,8 +894,7 @@ onBeforeUnmount(() =>
 .base-search-ql .base-search-ql__remove:disabled,
 .base-search-ql .base-search-ql__filter-trigger:disabled,
 .base-search-ql .base-search-ql__filter-option:disabled,
-.base-search-ql .base-search-ql__date-trigger:disabled,
-.base-search-ql .base-search-ql__date-accept:disabled {
+.base-search-ql .base-search-ql__date-trigger:disabled {
   cursor: not-allowed;
   opacity: var(--opacity-disabled);
 }
@@ -975,9 +978,9 @@ onBeforeUnmount(() =>
   z-index: var(--layer-dropdown, 70);
   margin: 0;
   padding: var(--space-1);
-  border: var(--border-width-thin) solid var(--jnv-color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
-  background: var(--jnv-color-surface-page);
+  background: var(--jnv-overlay-background);
   box-shadow: var(--shadow-md);
 }
 
@@ -990,9 +993,9 @@ onBeforeUnmount(() =>
   max-height: min(75vh, 42rem);
   overflow: auto;
   padding: var(--space-2);
-  border: var(--border-width-thin) solid var(--jnv-color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
-  background: var(--jnv-color-surface-page);
+  background: var(--jnv-overlay-background);
   box-shadow: var(--shadow-md);
 }
 
@@ -1004,26 +1007,9 @@ onBeforeUnmount(() =>
   margin-top: var(--space-2);
 }
 
-.base-search-ql .base-search-ql__date-accept {
-  display: block;
-  min-height: var(--control-height-sm);
-  margin: var(--space-2) 0 0 auto;
-  padding: var(--space-1) var(--space-3);
-  border: 0;
-  border-radius: var(--radius-sm);
-  color: var(--jnv-color-text-inverse);
-  background: var(--jnv-color-brand-primary);
-  font: inherit;
-  cursor: pointer;
-}
-
-.base-search-ql .base-search-ql__date-accept:disabled {
-  opacity: var(--opacity-disabled);
-  cursor: not-allowed;
-}
-
-.base-search-ql .base-search-ql__date-accept:hover:not(:disabled) {
-  background: var(--jnv-color-brand-primary);
+.base-search-ql__date-actions {
+  margin-top: var(--space-2);
+  text-align: right;
 }
 
 .base-search-ql__suggestions {

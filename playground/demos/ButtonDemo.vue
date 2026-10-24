@@ -22,6 +22,7 @@ const t = useMessages({
     outline: "Outline",
     ghost: "Ghost",
     delete: "Delete",
+    ghostDanger: "Remove",
     inverse: "Inverse button",
     small: "Small",
     medium: "Medium",
@@ -59,6 +60,7 @@ const t = useMessages({
     outline: "Outline",
     ghost: "Ghost",
     delete: "Eliminar",
+    ghostDanger: "Quitar",
     inverse: "Botón inverso",
     small: "Pequeño",
     medium: "Mediano",
@@ -120,6 +122,7 @@ const variantsCode = `<BaseButton variant="primary">Primary</BaseButton>
 <BaseButton variant="outline">Outline</BaseButton>
 <BaseButton variant="ghost">Ghost</BaseButton>
 <BaseButton variant="danger">Delete</BaseButton>
+<BaseButton variant="ghost-danger">Remove</BaseButton>
 
 <!-- inverse: on inverted surfaces -->
 <BaseCard surface="inverse" padding="compact">
@@ -168,6 +171,9 @@ const iconCode = `<!-- size="icon" requires an accessible label -->
         </BaseButton>
         <BaseButton variant="danger" @click="recordAction(t.delete)">
           {{ t.delete }}
+        </BaseButton>
+        <BaseButton variant="ghost-danger" @click="recordAction(t.ghostDanger)">
+          {{ t.ghostDanger }}
         </BaseButton>
       </div>
       <BaseCard class="inverse-sample" surface="inverse" padding="compact">

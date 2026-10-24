@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BaseCard, BaseHeading, BaseText } from "../../src/index";
+import { BaseCard, BaseHeading, BaseInput, BaseText } from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
 import { useMessages } from "../i18n/usePlaygroundLocale";
@@ -15,6 +15,11 @@ const t = useMessages({
     primaryText: "Useful to highlight relevant content.",
     inverseTitle: "Inverse card",
     inverseText: "Contrast for highlighted backgrounds.",
+    titledTitle: "With title · title, titlePosition, titleIcon, titleAs",
+    senderTitle: "Sender details",
+    integrationsTitle: "Integrations",
+    fullName: "Full name",
+    storeUrl: "Store URL",
   },
   es: {
     description:
@@ -26,8 +31,21 @@ const t = useMessages({
     primaryText: "Útil para destacar contenido relevante.",
     inverseTitle: "Tarjeta inversa",
     inverseText: "Contraste para fondos destacados.",
+    titledTitle: "Con título · title, titlePosition, titleIcon, titleAs",
+    senderTitle: "Datos del remitente",
+    integrationsTitle: "Integraciones",
+    fullName: "Nombre completo",
+    storeUrl: "URL de la tienda",
   },
 });
+
+const titledCode = `<BaseCard title="Sender details" title-icon="location" outlined>
+  <BaseInput label="Full name" />
+</BaseCard>
+
+<BaseCard title="Integrations" title-position="outside" title-icon="settings" outlined>
+  <BaseInput label="Store URL" />
+</BaseCard>`;
 
 const surfacesCode = `<BaseCard padding="comfortable" elevation="sm" outlined>
   <BaseHeading as="h3" variant="md">Page card</BaseHeading>
@@ -62,6 +80,22 @@ const surfacesCode = `<BaseCard padding="comfortable" elevation="sm" outlined>
             {{ t.inverseTitle }}
           </BaseHeading>
           <BaseText color="inverse-muted">{{ t.inverseText }}</BaseText>
+        </BaseCard>
+      </div>
+    </DemoExample>
+
+    <DemoExample :title="t.titledTitle" :code="titledCode">
+      <div class="demo-grid demo-grid--two">
+        <BaseCard :title="t.senderTitle" title-icon="location" outlined>
+          <BaseInput id="card-full-name" :label="t.fullName" />
+        </BaseCard>
+        <BaseCard
+          :title="t.integrationsTitle"
+          title-position="outside"
+          title-icon="settings"
+          outlined
+        >
+          <BaseInput id="card-store-url" :label="t.storeUrl" />
         </BaseCard>
       </div>
     </DemoExample>

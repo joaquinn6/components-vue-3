@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import BaseIcon from "./BaseIcon.vue";
+
+defineOptions({ inheritAttrs: false });
+
 defineProps({
   as: {
     type: String,
@@ -30,12 +34,55 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  title: {
+    type: String,
+    default: "",
+  },
+  titlePosition: {
+    type: String,
+    default: "inside",
+    validator: (value) => ["inside", "outside"].includes(value),
+  },
+  titleIcon: {
+    type: String,
+    default: "",
+  },
+  titleAs: {
+    type: String,
+    default: "h3",
+    validator: (value) => ["h2", "h3", "h4"].includes(value),
+  },
 });
 </script>
 
 <template>
+  <div
+    v-if="title && titlePosition === 'outside'"
+    class="base-card-frame base-card-frame--title-outside"
+  >
+    <div class="base-card__outside-title">
+      <BaseIcon v-if="titleIcon" :name="titleIcon" size="sm" decorative />
+      <component :is="titleAs" class="base-card__title">{{ title }}</component>
+    </div>
+    <component
+      :is="as"
+      v-bind="$attrs"
+      class="base-card"
+      :class="[
+        `base-card--surface-${surface}`,
+        `base-card--padding-${padding}`,
+        `base-card--radius-${radius}`,
+        `base-card--elevation-${elevation}`,
+        { 'base-card--outlined': outlined },
+      ]"
+    >
+      <slot />
+    </component>
+  </div>
   <component
+    v-else
     :is="as"
+    v-bind="$attrs"
     class="base-card"
     :class="[
       `base-card--surface-${surface}`,
@@ -45,40 +92,88 @@ defineProps({
       { 'base-card--outlined': outlined },
     ]"
   >
+    <div v-if="title" class="base-card__inside-title">
+      <BaseIcon v-if="titleIcon" :name="titleIcon" size="sm" decorative />
+      <component :is="titleAs" class="base-card__title">{{ title }}</component>
+    </div>
     <slot />
   </component>
 </template>
 
 <style scoped>
+.base-card-frame {
+  min-width: var(--space-0);
+}
+
+.base-card-frame--title-outside {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: var(--jnv-form-section-gap);
+}
+
 .base-card {
   min-width: var(--space-0);
 }
 
+.base-card-frame--title-outside > .base-card {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.base-card__outside-title,
+.base-card__inside-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: inherit;
+}
+
+.base-card__outside-title {
+  padding-inline: var(--space-0);
+}
+
+.base-card__inside-title {
+  margin-bottom: calc(var(--jnv-form-section-gap) + var(--space-1));
+}
+
+.base-card__title {
+  margin: var(--space-0);
+  color: inherit;
+  font-size: var(--text-heading-sm-size);
+  font-weight: var(--text-heading-sm-weight);
+  line-height: var(--text-heading-sm-leading);
+}
+
+.base-card__outside-title :deep(.base-icon),
+.base-card__inside-title :deep(.base-icon) {
+  color: var(--jnv-color-brand-primary);
+}
+
 .base-card--surface-page {
-  color: var(--color-text-body);
-  background: var(--color-surface-page);
+  color: var(--jnv-color-text-body);
+  background: var(--jnv-card-background);
 }
 
 .base-card--surface-inverse {
-  color: var(--color-text-inverse);
-  background: var(--color-surface-inverse);
+  color: var(--jnv-color-text-inverse);
+  background: var(--jnv-color-surface-inverse);
 }
 
 .base-card--surface-primary {
-  color: var(--color-text-on-primary);
-  background: var(--color-brand-primary);
+  color: var(--jnv-color-text-on-primary);
+  background: var(--jnv-color-brand-primary);
 }
 
 .base-card--surface-page.base-card--outlined {
-  border: var(--border-width-thin) solid var(--color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-color-border-default);
 }
 
 .base-card--surface-inverse.base-card--outlined {
-  border: var(--border-width-thin) solid var(--color-border-inverse);
+  border: var(--border-width-thin) solid var(--jnv-color-border-inverse);
 }
 
 .base-card--surface-primary.base-card--outlined {
-  border: var(--border-width-thin) solid var(--color-brand-primary);
+  border: var(--border-width-thin) solid var(--jnv-color-brand-primary);
 }
 
 .base-card--padding-comfortable {

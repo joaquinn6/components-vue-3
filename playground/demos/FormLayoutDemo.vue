@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { BaseFormRow, BaseFormSection, BaseInput } from "../../src/index";
+import {
+  BaseCheckbox,
+  BaseFormColumns,
+  BaseFormRow,
+  BaseFormSection,
+  BaseInput,
+  BaseSwitch,
+} from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
 import { useMessages } from "../i18n/usePlaygroundLocale";
@@ -23,6 +30,17 @@ const t = useMessages({
     half2: "Column 2 of 2",
     left: "Left",
     right: "Right",
+    alignTitle:
+      "Alignment and equal columns · alignItems, BaseFormColumns, stretch",
+    reference: "Reference",
+    notify: "Notify by email",
+    urgent: "Urgent",
+    contactTitle: "Contact",
+    contactDescription: "Stretched section to match its neighbour.",
+    email: "Email",
+    phone: "Phone",
+    preferencesTitle: "Preferences",
+    newsletter: "Receive newsletter",
   },
   es: {
     description:
@@ -42,8 +60,35 @@ const t = useMessages({
     half2: "Columna 2 de 2",
     left: "Izquierda",
     right: "Derecha",
+    alignTitle:
+      "Alineación y columnas iguales · alignItems, BaseFormColumns, stretch",
+    reference: "Referencia",
+    notify: "Avisar por correo",
+    urgent: "Urgente",
+    contactTitle: "Contacto",
+    contactDescription: "Sección estirada para igualar a su vecina.",
+    email: "Correo",
+    phone: "Teléfono",
+    preferencesTitle: "Preferencias",
+    newsletter: "Recibir boletín",
   },
 });
+
+const alignCode = `<BaseFormRow :columns="3" align-items="center">
+  <BaseInput label="Reference" model-value="REF-1042" />
+  <BaseCheckbox label="Notify by email" label-position="end" />
+  <BaseSwitch id="urgent" label="Urgent" />
+</BaseFormRow>
+
+<BaseFormColumns>
+  <BaseFormSection title="Contact" description="Stretched section…" stretch>
+    <BaseInput label="Email" />
+    <BaseInput label="Phone" />
+  </BaseFormSection>
+  <BaseFormSection title="Preferences" stretch>
+    <BaseSwitch id="newsletter" label="Receive newsletter" />
+  </BaseFormSection>
+</BaseFormColumns>`;
 
 const code = `<BaseFormSection
   title="Shipping details"
@@ -68,7 +113,7 @@ const code = `<BaseFormSection
 <template>
   <DemoSection
     id="base-form-layout"
-    name="BaseFormSection · BaseFormRow"
+    name="BaseFormSection · BaseFormRow · BaseFormColumns"
     :description="t.description"
   >
     <DemoExample :title="t.title" :code="code">
@@ -112,6 +157,37 @@ const code = `<BaseFormSection
           />
         </BaseFormRow>
       </BaseFormSection>
+    </DemoExample>
+
+    <DemoExample :title="t.alignTitle" :code="alignCode">
+      <div class="demo-stack">
+        <BaseFormRow :columns="3" align-items="center">
+          <BaseInput
+            id="layout-align-reference"
+            :label="t.reference"
+            model-value="REF-1042"
+          />
+          <BaseCheckbox
+            id="layout-align-notify"
+            :label="t.notify"
+            label-position="end"
+          />
+          <BaseSwitch id="layout-align-urgent" :label="t.urgent" />
+        </BaseFormRow>
+        <BaseFormColumns>
+          <BaseFormSection
+            :title="t.contactTitle"
+            :description="t.contactDescription"
+            stretch
+          >
+            <BaseInput id="layout-columns-email" :label="t.email" />
+            <BaseInput id="layout-columns-phone" :label="t.phone" />
+          </BaseFormSection>
+          <BaseFormSection :title="t.preferencesTitle" stretch>
+            <BaseSwitch id="layout-columns-newsletter" :label="t.newsletter" />
+          </BaseFormSection>
+        </BaseFormColumns>
+      </div>
     </DemoExample>
   </DemoSection>
 </template>

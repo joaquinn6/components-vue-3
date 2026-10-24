@@ -18,6 +18,10 @@ const iconPaths = {
     "M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z",
   ],
   clipboard: ["M9 5h6", "M9 3h6v4H9z", "M6 5h2", "M16 5h2v16H6V5"],
+  copy: [
+    "M9 9h11v12H9z",
+    "M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1",
+  ],
   printer: ["M7 9V3h10v6", "M7 17H4V9h16v8h-3", "M7 14h10v7H7z"],
   send: ["m3 11 18-8-8 18-2-8-8-2Z", "m11 13 10-10"],
   support: [
@@ -79,6 +83,11 @@ const iconPaths = {
     "m9 12 2 2 4-4",
   ],
   user: ["M20 21a8 8 0 0 0-16 0", "M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"],
+  circleUser: [
+    "M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
+    "M15 9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z",
+    "M6.8 19a5.7 5.7 0 0 1 10.4 0",
+  ],
   bolt: ["m13 2-9 12h7l-1 8 9-12h-7l1-8Z"],
   clock: ["M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z", "M12 7v5l3 2"],
   package: ["m4 7 8-4 8 4-8 4-8-4Z", "M4 7v10l8 4 8-4V7", "M12 11v10"],
@@ -160,6 +169,7 @@ const props = defineProps({
         "close",
         "search",
         "clipboard",
+        "copy",
         "printer",
         "send",
         "support",
@@ -186,6 +196,7 @@ const props = defineProps({
         "list",
         "shield",
         "user",
+        "circleUser",
         "bolt",
         "clock",
         "package",

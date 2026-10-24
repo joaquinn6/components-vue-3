@@ -77,35 +77,35 @@ defineProps({
 }
 
 .base-text--body {
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
 }
 
 .base-text--muted {
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
 }
 
 .base-text--heading {
-  color: var(--color-text-heading);
+  color: var(--jnv-color-text-heading);
 }
 
 .base-text--inverse {
-  color: var(--color-text-inverse);
+  color: var(--jnv-color-text-inverse);
 }
 
 .base-text--inverse-muted {
-  color: var(--color-text-inverse-muted);
+  color: var(--jnv-color-text-inverse-muted);
 }
 
 .base-text--brand {
-  color: var(--color-brand-primary);
+  color: var(--jnv-color-brand-primary);
 }
 
 .base-text--danger {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 
 .base-text--warning {
-  color: var(--color-state-warning);
+  color: var(--jnv-color-state-warning);
 }
 
 .base-text--inherit {

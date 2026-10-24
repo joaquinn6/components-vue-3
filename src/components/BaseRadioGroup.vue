@@ -136,13 +136,13 @@ const errorId = computed(() => `${groupId.value}-error`);
   min-height: var(--jnv-field-message-min-height);
   margin-top: var(--space-0);
   padding: var(--space-0) var(--space-3) var(--space-3);
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
 }
 
 .base-radio-group--error {
-  border-color: var(--color-state-error);
+  border-color: var(--jnv-color-state-error);
 }
 
 .base-radio-group--borderless {

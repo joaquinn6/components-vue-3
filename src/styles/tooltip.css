@@ -8,12 +8,11 @@
   min-width: 0;
   max-width: 16rem;
   padding: var(--space-2) var(--space-3);
-  border: var(--border-width-thin) solid
-    color-mix(in srgb, var(--color-text-muted) 20%, var(--color-border-default));
+  border: var(--border-width-thin) solid var(--jnv-tooltip-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  color: var(--color-text-body);
-  background: var(--color-surface-page);
+  color: var(--jnv-color-text-body);
+  background: var(--jnv-color-surface-page);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-base);
@@ -40,11 +39,9 @@
   left: 50%;
   width: var(--space-2);
   height: var(--space-2);
-  background: var(--color-surface-page);
-  border-right: var(--border-width-thin) solid
-    color-mix(in srgb, var(--color-text-muted) 20%, var(--color-border-default));
-  border-bottom: var(--border-width-thin) solid
-    color-mix(in srgb, var(--color-text-muted) 20%, var(--color-border-default));
+  background: var(--jnv-color-surface-page);
+  border-right: var(--border-width-thin) solid var(--jnv-tooltip-border);
+  border-bottom: var(--border-width-thin) solid var(--jnv-tooltip-border);
   transform: translate(-50%, -50%) rotate(45deg);
 }
 

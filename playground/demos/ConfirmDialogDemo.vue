@@ -13,7 +13,7 @@ const t = useMessages({
   en: {
     description:
       "Action confirmation with destructive or primary tone and configurable texts.",
-    title: "Tones · tone, confirmLabel, cancelLabel",
+    title: "Tones and size · tone, confirmLabel, cancelLabel, buttonSize",
     deleteItem: "Delete item",
     deleteDescription: "This action cannot be undone.",
     confirmDelete: "Yes, delete",
@@ -28,7 +28,7 @@ const t = useMessages({
   es: {
     description:
       "Confirmación de acciones con tono destructivo o primario y textos configurables.",
-    title: "Tonos · tone, confirmLabel, cancelLabel",
+    title: "Tonos y tamaño · tone, confirmLabel, cancelLabel, buttonSize",
     deleteItem: "Eliminar elemento",
     deleteDescription: "Esta acción no se puede deshacer.",
     confirmDelete: "Sí, eliminar",
@@ -61,7 +61,7 @@ const code = `<BaseButton variant="danger" @click="open = true">Delete item</Bas
   @confirm="remove"
 />
 
-<!-- tone="primary" for non-destructive confirmations -->
+<!-- tone="primary" for non-destructive confirmations; buttonSize defaults to "sm" -->
 <BaseConfirmDialog
   :open="publishOpen"
   title="Publish changes"
@@ -69,6 +69,7 @@ const code = `<BaseButton variant="danger" @click="open = true">Delete item</Bas
   confirm-label="Publish"
   cancel-label="Cancel"
   tone="primary"
+  button-size="md"
   @close="publishOpen = false"
   @confirm="publish"
 />`;
@@ -111,6 +112,7 @@ const code = `<BaseButton variant="danger" @click="open = true">Delete item</Bas
       :confirm-label="t.confirmPublish"
       :cancel-label="t.cancel"
       tone="primary"
+      button-size="md"
       @close="primaryOpen = false"
       @confirm="confirm('published')"
     />

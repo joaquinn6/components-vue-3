@@ -1,8 +1,8 @@
 .base-table {
   overflow: hidden;
-  border: var(--border-width-thin) solid var(--color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-color-border-default);
   border-radius: var(--radius-lg);
-  background: var(--color-surface-page);
+  background: var(--jnv-color-surface-page);
   box-shadow: var(--shadow-sm);
   --base-menu-top: auto;
   --base-menu-bottom: calc(100% + var(--space-1));
@@ -37,6 +37,66 @@
   overflow-x: auto;
 }
 
+/* clip recorta las esquinas como hidden, pero sin crear un contenedor de scroll: la paginación
+   flotante puede quedarse pegada (sticky) abajo mientras se recorre la tabla. */
+.base-table--floating-pagination {
+  overflow: clip;
+}
+
+.base-table__floating-pagination {
+  position: sticky;
+  bottom: var(--space-3);
+  z-index: 1;
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: var(--space-1);
+  margin: var(--space-3) auto;
+  padding: var(--space-1);
+  border: var(--border-width-thin) solid var(--jnv-color-border-default);
+  border-radius: var(--radius-round);
+  background: var(--jnv-color-surface-subtle);
+  box-shadow: var(--shadow-md);
+}
+
+.base-table__floating-button {
+  display: inline-flex;
+  width: var(--base-table-page-button-size);
+  height: var(--base-table-page-button-size);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-0);
+  border: var(--space-0);
+  border-radius: var(--radius-round);
+  color: var(--jnv-color-brand-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.base-table__floating-button:hover:not(:disabled) {
+  background: var(--jnv-color-surface-highlight);
+}
+
+.base-table__floating-button:focus-visible {
+  outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.base-table__floating-button:disabled {
+  cursor: not-allowed;
+  opacity: var(--opacity-disabled);
+}
+
+.base-table__floating-summary {
+  margin: var(--space-0);
+  padding-inline: var(--space-2);
+  color: var(--jnv-color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
 .base-table--add-row-empty {
   overflow: visible;
 }
@@ -65,14 +125,14 @@
   min-width: 48rem;
   border-spacing: var(--space-0);
   border-collapse: collapse;
-  color: var(--color-text-body);
+  color: var(--jnv-color-text-body);
 }
 
 .base-table__table th,
 .base-table__table td {
   padding: var(--base-table-cell-padding-block)
     var(--base-table-cell-padding-inline);
-  border-bottom: var(--border-width-thin) solid var(--color-border-default);
+  border-bottom: var(--border-width-thin) solid var(--jnv-color-border-default);
   vertical-align: middle;
 }
 
@@ -87,8 +147,8 @@
 }
 
 .base-table__table th {
-  color: var(--color-text-muted);
-  background: var(--color-surface-subtle);
+  color: var(--jnv-color-text-muted);
+  background: var(--jnv-color-surface-subtle);
   font-size: var(--base-table-header-font-size);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-label);
@@ -114,17 +174,17 @@
 }
 
 .base-table__sort-icon--none {
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   opacity: var(--opacity-disabled);
 }
 
 .base-table__sort-icon--ascending {
-  color: var(--color-brand-primary);
+  color: var(--jnv-color-brand-primary);
   transform: rotate(180deg);
 }
 
 .base-table__sort-icon--descending {
-  color: var(--color-brand-primary);
+  color: var(--jnv-color-brand-primary);
 }
 
 .base-table__table td {
@@ -136,12 +196,12 @@
 }
 
 .base-table__table tbody tr:hover {
-  background: var(--color-surface-subtle);
+  background: var(--jnv-color-surface-subtle);
 }
 
 .base-table__add-row,
 .base-table__add-row:hover {
-  background: var(--color-surface-highlight);
+  background: var(--jnv-color-surface-highlight);
 }
 
 .base-table__add-row > td,
@@ -172,14 +232,14 @@
   padding: var(--space-1);
   border: var(--space-0);
   border-radius: var(--radius-sm);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   background: transparent;
   cursor: pointer;
 }
 
 .base-table__icon-button:hover:not(:disabled) {
-  color: var(--color-brand-secondary-hover);
-  background: var(--color-surface-highlight);
+  color: var(--jnv-color-brand-secondary-hover);
+  background: var(--jnv-color-surface-highlight);
 }
 
 .base-table__table tbody tr:last-child td {
@@ -200,7 +260,7 @@
 
 .base-table__state {
   height: 9rem;
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   text-align: center;
 }
 
@@ -211,8 +271,8 @@
   gap: var(--space-4);
   padding: var(--base-table-cell-padding-block)
     var(--base-table-cell-padding-inline);
-  border-top: var(--border-width-thin) solid var(--color-border-default);
-  background: var(--color-surface-subtle);
+  border-top: var(--border-width-thin) solid var(--jnv-color-border-default);
+  background: var(--jnv-color-surface-subtle);
 }
 
 .base-table__summaries {
@@ -224,13 +284,13 @@
 
 .base-table__summary {
   margin: var(--space-0);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
 }
 
 .base-table__selection-summary {
   margin: var(--space-0);
-  color: var(--color-text-heading);
+  color: var(--jnv-color-text-heading);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
 }
@@ -248,10 +308,10 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-0);
-  border: var(--border-width-thin) solid var(--color-border-default);
+  border: var(--border-width-thin) solid var(--jnv-color-border-default);
   border-radius: var(--radius-md);
-  color: var(--color-text-heading);
-  background: var(--color-surface-page);
+  color: var(--jnv-color-text-heading);
+  background: var(--jnv-color-surface-page);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
@@ -263,14 +323,14 @@
 .base-table__page-button:hover:not(:disabled):not(
     .base-table__page-button--active
   ) {
-  border-color: var(--color-brand-primary);
-  background: var(--color-surface-highlight);
+  border-color: var(--jnv-color-brand-primary);
+  background: var(--jnv-color-surface-highlight);
 }
 
 .base-table__page-button--active {
-  border-color: var(--color-brand-primary);
-  color: var(--color-text-on-primary);
-  background: var(--color-brand-primary);
+  border-color: var(--jnv-color-brand-primary);
+  color: var(--jnv-color-text-on-primary);
+  background: var(--jnv-color-brand-primary);
 }
 
 .base-table__page-button:disabled {
@@ -280,7 +340,7 @@
 
 .base-table__ellipsis {
   min-width: var(--space-4);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   text-align: center;
 }
 

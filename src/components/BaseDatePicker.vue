@@ -261,7 +261,7 @@ defineExpose({
   flex-wrap: wrap;
 }
 .base-date-picker--inverse .base-date-picker__label {
-  color: var(--color-text-inverse-muted);
+  color: var(--jnv-color-text-inverse-muted);
 }
 .base-date-picker__control {
   position: relative;
@@ -273,10 +273,10 @@ defineExpose({
 .base-date-picker__input {
   width: 100%;
   min-width: var(--space-0);
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
   color: var(--jnv-form-value-color);
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   font: inherit;
   transition:
     border-color var(--transition-fast),
@@ -284,19 +284,21 @@ defineExpose({
     background-color var(--transition-fast);
 }
 .base-date-picker__input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
 }
 .base-date-picker__input:hover:not(:disabled):not(:read-only) {
-  border-color: var(--color-text-muted);
+  border-color: var(--jnv-control-hover-border);
 }
 .base-date-picker__input:focus {
-  border-color: var(--color-brand-primary);
+  border-color: var(--jnv-control-focus-border);
   outline: none;
-  box-shadow: 0 0 0 var(--space-1) var(--color-focus-shadow);
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 .base-date-picker__input:disabled {
   cursor: not-allowed;
-  background: var(--color-surface-muted);
+  background: var(--jnv-control-disabled-background);
+  border-color: var(--jnv-control-disabled-border);
 }
 .base-date-picker__input:read-only {
   cursor: default;
@@ -330,7 +332,7 @@ defineExpose({
   z-index: 1;
   top: 50%;
   left: var(--space-3);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -342,21 +344,21 @@ defineExpose({
   padding: var(--space-0);
   border: 0;
   border-radius: var(--radius-sm);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   background: transparent;
   cursor: pointer;
 }
 .base-date-picker__clear:hover {
-  color: var(--color-text-heading);
-  background: var(--color-surface-muted);
+  color: var(--jnv-color-text-heading);
+  background: var(--jnv-color-surface-muted);
 }
 .base-date-picker__clear:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus-ring);
+  outline: var(--focus-outline-width) solid var(--jnv-color-focus-ring);
   outline-offset: var(--focus-outline-offset);
 }
 .base-date-picker__message {
   min-height: var(--jnv-field-message-min-height);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
   visibility: hidden;
@@ -365,18 +367,18 @@ defineExpose({
   visibility: visible;
 }
 .base-date-picker--error .base-date-picker__input {
-  border-color: var(--color-state-error);
-  background: var(--color-state-error-surface);
+  border-color: var(--jnv-color-state-error);
+  background: var(--jnv-color-state-error-surface);
 }
 .base-date-picker--success .base-date-picker__input {
-  border-color: var(--color-state-success);
-  background: var(--color-state-success-surface);
+  border-color: var(--jnv-color-state-success);
+  background: var(--jnv-color-state-success-surface);
 }
 .base-date-picker--error .base-date-picker__message {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 .base-date-picker--success .base-date-picker__message {
-  color: var(--color-state-success);
+  color: var(--jnv-color-state-success);
 }
 .base-date-picker__arrow-up {
   transform: rotate(180deg);
@@ -423,6 +425,6 @@ defineExpose({
   box-shadow: var(--shadow-md);
 }
 .base-date-picker__menu .dp__today {
-  border-color: var(--color-brand-primary);
+  border-color: var(--jnv-control-focus-border);
 }
 </style>

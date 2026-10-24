@@ -14,6 +14,11 @@ const props = defineProps({
     validator: (value) =>
       value.every((width) => typeof width === "string" && width.trim()),
   },
+  alignItems: {
+    type: String,
+    default: "stretch",
+    validator: (value) => ["start", "center", "end", "stretch"].includes(value),
+  },
 });
 
 const gridTemplateColumns = computed(() => {
@@ -28,6 +33,9 @@ const gridTemplateColumns = computed(() => {
     :class="`base-form-row--columns-${columns}`"
     :style="{
       '--base-form-row-template': gridTemplateColumns || undefined,
+      '--base-form-row-align-items': alignItems,
+      '--base-form-row-choice-offset':
+        alignItems === 'center' ? 'var(--space-3)' : undefined,
     }"
   >
     <slot />
@@ -38,6 +46,7 @@ const gridTemplateColumns = computed(() => {
 .base-form-row {
   display: grid;
   gap: var(--jnv-form-field-gap);
+  align-items: var(--base-form-row-align-items, stretch);
   grid-template-columns: var(
     --base-form-row-template,
     repeat(var(--base-form-row-columns, 2), minmax(0, 1fr))

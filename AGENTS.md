@@ -31,6 +31,11 @@ aplican a todo el proyecto y deben respetarse al crear o modificar componentes.
   su ejemplo cuando cambien su apariencia, variantes, estados, props o interacciones observables.
   Si el cambio no aplica al playground, no añadas ejemplos artificiales y deja constancia de ello
   en la entrega.
+- Todo texto visible del playground (descripciones, títulos de ejemplos, etiquetas, mensajes y
+  textos pasados a las props de los componentes) debe estar disponible en inglés (`en`) y español
+  (`es`) mediante `useMessages` de `playground/i18n/usePlaygroundLocale.ts`. No escribas textos
+  fijos en la plantilla de una demo. Las demos nuevas se registran en `playground/demos/registry.ts`.
+  Los fragmentos de código mostrados en `DemoExample` pueden quedar en inglés.
 - Documenta las props nuevas, los valores o variantes aceptados, los eventos y sus payloads, los
   modelos, los slots y los métodos expuestos.
 - La documentación de un componente nuevo debe incluir su propósito, un ejemplo mínimo, props con

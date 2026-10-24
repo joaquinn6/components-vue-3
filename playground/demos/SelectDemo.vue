@@ -6,14 +6,15 @@ import DemoSection from "../components/DemoSection.vue";
 import { useMessages } from "../i18n/usePlaygroundLocale";
 
 const country = ref("ni");
-const selectedCountries = ref<string[]>(["ni"]);
+const selectedCountries = ref<string[]>(["ni", "cr", "hn", "sv", "pa", "mx"]);
 
 const t = useMessages({
   en: {
     description:
       "Single or multiple option selector with disabled options and value creation.",
     singleTitle: "Single selection · options, info",
-    multipleTitle: "Multiple selection · multiple, allowCreate",
+    multipleTitle:
+      "Multiple selection · multiple, allowCreate, moreSelectedAriaLabel",
     country: "Country",
     countryPlaceholder: "Select a country",
     countryInfo: "Guatemala is disabled to show that state.",
@@ -23,12 +24,14 @@ const t = useMessages({
     searchPlaceholder: "Search options...",
     createOption: "Create option",
     removeOption: "Remove selected option",
+    moreSelected: "Show more selected options",
   },
   es: {
     description:
       "Selector de opciones simple o múltiple, con opciones deshabilitadas y creación de valores.",
     singleTitle: "Selección simple · options, info",
-    multipleTitle: "Selección múltiple · multiple, allowCreate",
+    multipleTitle:
+      "Selección múltiple · multiple, allowCreate, moreSelectedAriaLabel",
     country: "País",
     countryPlaceholder: "Selecciona un país",
     countryInfo: "Guatemala está deshabilitada para mostrar ese estado.",
@@ -38,6 +41,7 @@ const t = useMessages({
     searchPlaceholder: "Buscar opciones...",
     createOption: "Crear opción",
     removeOption: "Quitar opción seleccionada",
+    moreSelected: "Ver opciones seleccionadas adicionales",
   },
 });
 
@@ -45,6 +49,11 @@ const countries = computed(() => [
   { label: "Nicaragua", value: "ni" },
   { label: "Costa Rica", value: "cr" },
   { label: "Guatemala", value: "gt", disabled: true },
+  { label: "Honduras", value: "hn" },
+  { label: "El Salvador", value: "sv" },
+  { label: "Panamá", value: "pa" },
+  { label: "México", value: "mx" },
+  { label: "Colombia", value: "co" },
 ]);
 
 const singleCode = `<script setup>
@@ -79,6 +88,7 @@ const multipleCode = `<BaseSelect
   search-placeholder="Search options..."
   create-option-text="Create option"
   remove-option-aria-label="Remove selected option"
+  more-selected-aria-label="Show more selected options"
 />`;
 </script>
 
@@ -109,6 +119,7 @@ const multipleCode = `<BaseSelect
         :search-placeholder="t.searchPlaceholder"
         :create-option-text="t.createOption"
         :remove-option-aria-label="t.removeOption"
+        :more-selected-aria-label="t.moreSelected"
       />
       <pre class="demo-model">
 selectedCountries: {{ JSON.stringify(selectedCountries) }}</pre>

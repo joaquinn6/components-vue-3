@@ -45,7 +45,7 @@ const infoType = computed(() => props.type || "default");
 
 <style scoped>
 .base-field-info {
-  --field-info-color: var(--color-text-muted);
+  --field-info-color: var(--jnv-color-text-muted);
 
   position: relative;
   display: inline-flex;
@@ -55,19 +55,19 @@ const infoType = computed(() => props.type || "default");
 }
 
 .base-field-info--primary {
-  --field-info-color: var(--color-brand-primary);
+  --field-info-color: var(--jnv-color-brand-primary);
 }
 
 .base-field-info--secondary {
-  --field-info-color: var(--color-brand-secondary);
+  --field-info-color: var(--jnv-color-brand-secondary);
 }
 
 .base-field-info--success {
-  --field-info-color: var(--color-state-success);
+  --field-info-color: var(--jnv-color-state-success);
 }
 
 .base-field-info--danger {
-  --field-info-color: var(--color-state-error);
+  --field-info-color: var(--jnv-color-state-error);
 }
 
 .base-field-info__trigger {
@@ -119,8 +119,8 @@ const infoType = computed(() => props.type || "default");
   border: var(--border-width-thin) solid var(--jnv-field-info-tooltip-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  color: var(--color-text-body);
-  background: var(--color-surface-page);
+  color: var(--jnv-color-text-body);
+  background: var(--jnv-color-surface-page);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-base);
@@ -143,7 +143,7 @@ const infoType = computed(() => props.type || "default");
   left: 50%;
   width: var(--space-2);
   height: var(--space-2);
-  background: var(--color-surface-page);
+  background: var(--jnv-color-surface-page);
   border-right: var(--border-width-thin) solid
     var(--jnv-field-info-tooltip-border);
   border-bottom: var(--border-width-thin) solid

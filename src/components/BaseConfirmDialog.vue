@@ -8,6 +8,11 @@ const props = defineProps({
   description: { type: String, required: true },
   confirmLabel: { type: String, default: "Confirmar" },
   cancelLabel: { type: String, default: "Cancelar" },
+  buttonSize: {
+    type: String,
+    default: "sm",
+    validator: (value) => ["sm", "md", "lg"].includes(value),
+  },
   loading: Boolean,
   tone: {
     type: String,
@@ -36,15 +41,20 @@ function confirm() {
   >
     <template #actions>
       <BaseButton
-        variant="ghost"
-        size="md"
+        variant="outline"
+        :size="buttonSize"
         :disabled="loading"
         autofocus
         @click="emit('close')"
       >
         {{ cancelLabel }}
       </BaseButton>
-      <BaseButton type="submit" size="md" :variant="tone" :loading="loading">
+      <BaseButton
+        type="submit"
+        :size="buttonSize"
+        :variant="tone"
+        :loading="loading"
+      >
         {{ confirmLabel }}
       </BaseButton>
     </template>

@@ -112,10 +112,10 @@ defineExpose({ focus: () => textareaElement.value?.focus() });
   min-width: var(--space-0);
   padding: var(--space-3) var(--space-4);
   resize: vertical;
-  border: var(--border-width-thin) solid var(--color-border-strong);
+  border: var(--border-width-thin) solid var(--jnv-control-border);
   border-radius: var(--radius-md);
   color: var(--jnv-form-value-color);
-  background: var(--color-surface-page);
+  background: var(--jnv-control-background);
   font: inherit;
   font-size: var(--font-size-sm);
   transition:
@@ -125,37 +125,39 @@ defineExpose({ focus: () => textareaElement.value?.focus() });
 }
 
 .base-textarea__input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
 }
 
 .base-textarea__input:hover:not(:disabled) {
-  border-color: var(--color-text-muted);
+  border-color: var(--jnv-control-hover-border);
 }
 
 .base-textarea__input:focus {
-  border-color: var(--color-brand-primary);
+  border-color: var(--jnv-control-focus-border);
   outline: none;
-  box-shadow: 0 0 0 var(--space-1) var(--color-focus-shadow);
+  background: var(--jnv-control-focus-background);
+  box-shadow: 0 0 0 var(--space-1) var(--jnv-control-focus-shadow);
 }
 
 .base-textarea__input:disabled {
   cursor: not-allowed;
-  background: var(--color-surface-muted);
+  background: var(--jnv-control-disabled-background);
+  border-color: var(--jnv-control-disabled-border);
 }
 
 .base-textarea--error .base-textarea__input {
-  border-color: var(--color-state-error);
-  background: var(--color-state-error-surface);
+  border-color: var(--jnv-color-state-error);
+  background: var(--jnv-color-state-error-surface);
 }
 
 .base-textarea--success .base-textarea__input {
-  border-color: var(--color-state-success);
-  background: var(--color-state-success-surface);
+  border-color: var(--jnv-color-state-success);
+  background: var(--jnv-color-state-success-surface);
 }
 
 .base-textarea__message {
   min-height: var(--jnv-field-message-min-height);
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
   visibility: hidden;
@@ -167,16 +169,16 @@ defineExpose({ focus: () => textareaElement.value?.focus() });
 
 .base-textarea__character-count {
   justify-self: end;
-  color: var(--color-text-muted);
+  color: var(--jnv-color-text-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-heading);
 }
 
 .base-textarea--error .base-textarea__message {
-  color: var(--color-state-error);
+  color: var(--jnv-color-state-error);
 }
 
 .base-textarea--success .base-textarea__message {
-  color: var(--color-state-success);
+  color: var(--jnv-color-state-success);
 }
 </style>

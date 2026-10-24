@@ -4,6 +4,7 @@ import type { DemoCategory } from "../i18n/ui";
 
 import AlertDemo from "./AlertDemo.vue";
 import AutocompleteDemo from "./AutocompleteDemo.vue";
+import BadgeDemo from "./BadgeDemo.vue";
 import BreadcrumbDemo from "./BreadcrumbDemo.vue";
 import ButtonDemo from "./ButtonDemo.vue";
 import CardDemo from "./CardDemo.vue";
@@ -33,6 +34,7 @@ import TableDemo from "./TableDemo.vue";
 import TabsDemo from "./TabsDemo.vue";
 import TextareaDemo from "./TextareaDemo.vue";
 import TextDemo from "./TextDemo.vue";
+import ToastDemo from "./ToastDemo.vue";
 import YearInputDemo from "./YearInputDemo.vue";
 
 export interface DemoEntry {
@@ -68,6 +70,18 @@ export const demos: readonly DemoEntry[] = [
     name: "BaseAlert",
     category: "content",
     component: AlertDemo,
+  },
+  {
+    id: "base-badge",
+    name: "BaseBadge",
+    category: "content",
+    component: BadgeDemo,
+  },
+  {
+    id: "base-toast",
+    name: "BaseToast",
+    category: "content",
+    component: ToastDemo,
   },
   {
     id: "base-field-info",
@@ -122,7 +136,7 @@ export const demos: readonly DemoEntry[] = [
 
   {
     id: "base-form-layout",
-    name: "BaseFormSection · BaseFormRow",
+    name: "BaseFormSection · BaseFormRow · BaseFormColumns",
     category: "forms",
     component: FormLayoutDemo,
   },
