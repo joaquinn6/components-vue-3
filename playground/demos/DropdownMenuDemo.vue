@@ -1,42 +1,73 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { BaseDropdownMenu, BaseText } from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
+import { useMessages } from "../i18n/usePlaygroundLocale";
 
-const lastSelection = ref("Todavía no se ha elegido ninguna opción.");
+const t = useMessages({
+  en: {
+    description:
+      "Grouped action menu with semantic colors, tooltips and disabled options.",
+    title: "Groups and colors · groups, icon, @select",
+    noSelection: "No option selected yet.",
+    selected: (label: string, event: string) =>
+      `select event: ${label} (${event})`,
+    edit: "Edit",
+    duplicate: "Duplicate",
+    archive: "Archive",
+    delete: "Delete",
+    irreversible: "Irreversible action",
+    unavailable: "Unavailable",
+  },
+  es: {
+    description:
+      "Menú de acciones agrupadas con colores semánticos, tooltips y opciones deshabilitadas.",
+    title: "Grupos y colores · groups, icon, @select",
+    noSelection: "Todavía no se ha elegido ninguna opción.",
+    selected: (label, event) => `Evento select: ${label} (${event})`,
+    edit: "Editar",
+    duplicate: "Duplicar",
+    archive: "Archivar",
+    delete: "Eliminar",
+    irreversible: "Acción irreversible",
+    unavailable: "No disponible",
+  },
+});
 
-const menuGroups = [
+const lastSelection = ref<{ label: string; event: string } | null>(null);
+
+const menuGroups = computed(() => [
   [
-    { label: "Editar", event: "edit" },
-    { label: "Duplicar", event: "duplicate", color: "info" as const },
+    { label: t.value.edit, event: "edit" },
+    { label: t.value.duplicate, event: "duplicate", color: "info" as const },
   ],
   [
-    { label: "Archivar", event: "archive", color: "success" as const },
+    { label: t.value.archive, event: "archive", color: "success" as const },
     {
-      label: "Eliminar",
+      label: t.value.delete,
       event: "delete",
       color: "danger" as const,
-      tooltip: "Acción irreversible",
+      tooltip: t.value.irreversible,
     },
-    { label: "No disponible", event: "disabled", disabled: true },
+    { label: t.value.unavailable, event: "disabled", disabled: true },
   ],
-];
+]);
 
 function handleSelect(payload: { item: { label: string; event: string } }) {
-  lastSelection.value = `Evento select: ${payload.item.label} (${payload.item.event})`;
+  lastSelection.value = payload.item;
 }
 
 const code = `<script setup>
 const menuGroups = [
   [
-    { label: "Editar", event: "edit" },
-    { label: "Duplicar", event: "duplicate", color: "info" },
+    { label: "Edit", event: "edit" },
+    { label: "Duplicate", event: "duplicate", color: "info" },
   ],
   [
-    { label: "Archivar", event: "archive", color: "success" },
-    { label: "Eliminar", event: "delete", color: "danger", tooltip: "Acción irreversible" },
-    { label: "No disponible", event: "disabled", disabled: true },
+    { label: "Archive", event: "archive", color: "success" },
+    { label: "Delete", event: "delete", color: "danger", tooltip: "Irreversible action" },
+    { label: "Unavailable", event: "disabled", disabled: true },
   ],
 ];
 
@@ -54,9 +85,9 @@ function handleSelect({ item }) {
   <DemoSection
     id="base-dropdown-menu"
     name="BaseDropdownMenu"
-    description="Menú de acciones agrupadas con colores semánticos, tooltips y opciones deshabilitadas."
+    :description="t.description"
   >
-    <DemoExample title="Grupos y colores · groups, icon, @select" :code="code">
+    <DemoExample :title="t.title" :code="code">
       <div class="demo-row">
         <BaseDropdownMenu
           icon="menu"
@@ -69,9 +100,13 @@ function handleSelect({ item }) {
           @select="handleSelect"
         />
       </div>
-      <BaseText variant="sm" color="muted" aria-live="polite">{{
-        lastSelection
-      }}</BaseText>
+      <BaseText variant="sm" color="muted" aria-live="polite">
+        {{
+          lastSelection
+            ? t.selected(lastSelection.label, lastSelection.event)
+            : t.noSelection
+        }}
+      </BaseText>
     </DemoExample>
   </DemoSection>
 </template>

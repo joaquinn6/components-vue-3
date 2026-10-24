@@ -1,5 +1,7 @@
 import type { Component } from "vue";
 
+import type { DemoCategory } from "../i18n/ui";
+
 import AlertDemo from "./AlertDemo.vue";
 import AutocompleteDemo from "./AutocompleteDemo.vue";
 import BreadcrumbDemo from "./BreadcrumbDemo.vue";
@@ -37,7 +39,7 @@ export interface DemoEntry {
   /** Debe coincidir con el id de la DemoSection del componente. */
   id: string;
   name: string;
-  category: string;
+  category: DemoCategory;
   component: Component;
 }
 
@@ -46,199 +48,199 @@ export const demos: readonly DemoEntry[] = [
   {
     id: "base-heading",
     name: "BaseHeading",
-    category: "Contenido",
+    category: "content",
     component: HeadingDemo,
   },
   {
     id: "base-text",
     name: "BaseText",
-    category: "Contenido",
+    category: "content",
     component: TextDemo,
   },
   {
     id: "base-card",
     name: "BaseCard",
-    category: "Contenido",
+    category: "content",
     component: CardDemo,
   },
   {
     id: "base-alert",
     name: "BaseAlert",
-    category: "Contenido",
+    category: "content",
     component: AlertDemo,
   },
   {
     id: "base-field-info",
     name: "BaseFieldInfo",
-    category: "Contenido",
+    category: "content",
     component: FieldInfoDemo,
   },
   {
     id: "base-icon",
     name: "BaseIcon",
-    category: "Contenido",
+    category: "content",
     component: IconDemo,
   },
 
   {
     id: "base-button",
     name: "BaseButton",
-    category: "Acciones",
+    category: "actions",
     component: ButtonDemo,
   },
   {
     id: "base-link",
     name: "BaseLink",
-    category: "Acciones",
+    category: "actions",
     component: LinkDemo,
   },
   {
     id: "base-dropdown-menu",
     name: "BaseDropdownMenu",
-    category: "Acciones",
+    category: "actions",
     component: DropdownMenuDemo,
   },
   {
     id: "v-loading",
     name: "v-loading",
-    category: "Acciones",
+    category: "actions",
     component: LoadingDirectiveDemo,
   },
 
   {
     id: "base-dialog",
     name: "BaseDialog",
-    category: "Diálogos",
+    category: "dialogs",
     component: DialogDemo,
   },
   {
     id: "base-confirm-dialog",
     name: "BaseConfirmDialog",
-    category: "Diálogos",
+    category: "dialogs",
     component: ConfirmDialogDemo,
   },
 
   {
     id: "base-form-layout",
     name: "BaseFormSection · BaseFormRow",
-    category: "Formularios",
+    category: "forms",
     component: FormLayoutDemo,
   },
   {
     id: "base-input",
     name: "BaseInput",
-    category: "Formularios",
+    category: "forms",
     component: InputDemo,
   },
   {
     id: "base-phone-input",
     name: "BasePhoneInput",
-    category: "Formularios",
+    category: "forms",
     component: PhoneInputDemo,
   },
   {
     id: "base-textarea",
     name: "BaseTextarea",
-    category: "Formularios",
+    category: "forms",
     component: TextareaDemo,
   },
   {
     id: "base-select",
     name: "BaseSelect",
-    category: "Formularios",
+    category: "forms",
     component: SelectDemo,
   },
   {
     id: "base-autocomplete",
     name: "BaseAutocomplete",
-    category: "Formularios",
+    category: "forms",
     component: AutocompleteDemo,
   },
   {
     id: "base-checkbox",
     name: "BaseCheckbox",
-    category: "Formularios",
+    category: "forms",
     component: CheckboxDemo,
   },
   {
     id: "base-radio",
     name: "BaseRadioGroup · BaseRadio",
-    category: "Formularios",
+    category: "forms",
     component: RadioDemo,
   },
   {
     id: "base-switch",
     name: "BaseSwitch",
-    category: "Formularios",
+    category: "forms",
     component: SwitchDemo,
   },
   {
     id: "base-signature",
     name: "BaseSignature",
-    category: "Formularios",
+    category: "forms",
     component: SignatureDemo,
   },
 
   {
     id: "base-date-input",
     name: "BaseDateInput",
-    category: "Fecha y hora",
+    category: "dates",
     component: DateInputDemo,
   },
   {
     id: "base-date-time-input",
     name: "BaseDateTimeInput",
-    category: "Fecha y hora",
+    category: "dates",
     component: DateTimeInputDemo,
   },
   {
     id: "base-month-input",
     name: "BaseMonthInput",
-    category: "Fecha y hora",
+    category: "dates",
     component: MonthInputDemo,
   },
   {
     id: "base-year-input",
     name: "BaseYearInput",
-    category: "Fecha y hora",
+    category: "dates",
     component: YearInputDemo,
   },
   {
     id: "base-date-picker",
     name: "BaseDatePicker",
-    category: "Fecha y hora",
+    category: "dates",
     component: DatePickerDemo,
   },
 
   {
     id: "base-breadcrumb",
     name: "BaseBreadcrumb",
-    category: "Navegación",
+    category: "navigation",
     component: BreadcrumbDemo,
   },
   {
     id: "base-tabs",
     name: "BaseTabs",
-    category: "Navegación",
+    category: "navigation",
     component: TabsDemo,
   },
   {
     id: "base-stepper",
     name: "BaseStepper",
-    category: "Navegación",
+    category: "navigation",
     component: StepperDemo,
   },
 
   {
     id: "base-table",
     name: "BaseTable",
-    category: "Datos",
+    category: "data",
     component: TableDemo,
   },
   {
     id: "base-search-ql",
     name: "BaseSearchQL",
-    category: "Datos",
+    category: "data",
     component: SearchQLDemo,
   },
 ];

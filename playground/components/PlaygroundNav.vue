@@ -3,6 +3,7 @@ import { computed, ref, type PropType } from "vue";
 import { BaseInput, BaseText } from "../../src/index";
 import { displayName } from "../demos/displayName";
 import type { DemoEntry } from "../demos/registry";
+import { useUiMessages } from "../i18n/ui";
 
 const props = defineProps({
   items: { type: Array as PropType<readonly DemoEntry[]>, required: true },
@@ -11,6 +12,7 @@ const props = defineProps({
 
 const emit = defineEmits<{ navigate: [id: string] }>();
 
+const ui = useUiMessages();
 const query = ref("");
 
 function normalize(value: string) {
@@ -19,18 +21,19 @@ function normalize(value: string) {
 
 const groups = computed(() => {
   const term = normalize(query.value);
-  const result: { category: string; items: DemoEntry[] }[] = [];
+  const result: { category: string; label: string; items: DemoEntry[] }[] = [];
 
   props.items.forEach((item) => {
+    const label = ui.value.categories[item.category];
     const matches =
       !term ||
       normalize(item.name).includes(term) ||
-      normalize(item.category).includes(term);
+      normalize(label).includes(term);
     if (!matches) return;
 
     let group = result.find((entry) => entry.category === item.category);
     if (!group) {
-      group = { category: item.category, items: [] };
+      group = { category: item.category, label, items: [] };
       result.push(group);
     }
     group.items.push(item);
@@ -41,13 +44,13 @@ const groups = computed(() => {
 </script>
 
 <template>
-  <nav class="playground-nav" aria-label="Índice de componentes">
+  <nav class="playground-nav" :aria-label="ui.indexNavLabel">
     <div class="playground-nav__search" role="search">
       <BaseInput
         id="playground-nav-search"
         v-model="query"
-        label="Buscar componente"
-        placeholder="Ej. button, fecha…"
+        :label="ui.searchLabel"
+        :placeholder="ui.searchPlaceholder"
         type="search"
         size="sm"
       />
@@ -59,7 +62,7 @@ const groups = computed(() => {
       class="playground-nav__group"
     >
       <BaseText as="span" variant="label" color="muted" weight="bold">
-        {{ group.category }}
+        {{ group.label }}
       </BaseText>
       <ul class="playground-nav__list">
         <li v-for="item in group.items" :key="item.id">
@@ -82,7 +85,7 @@ const groups = computed(() => {
       color="muted"
       aria-live="polite"
     >
-      No hay componentes que coincidan con «{{ query }}».
+      {{ ui.noMatches(query) }}
     </BaseText>
   </nav>
 </template>

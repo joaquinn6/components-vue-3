@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 
-import { BaseButton, BaseIcon, BaseSwitch, BaseText } from "../src/index";
+import {
+  BaseButton,
+  BaseIcon,
+  BaseSelect,
+  BaseSwitch,
+  BaseText,
+} from "../src/index";
 import PlaygroundNav from "./components/PlaygroundNav.vue";
 import { useActiveSection } from "./composables/useActiveSection";
 import { usePlaygroundTheme } from "./composables/usePlaygroundTheme";
 import { demos } from "./demos/registry";
+import { useUiMessages } from "./i18n/ui";
+import {
+  PLAYGROUND_LOCALES,
+  usePlaygroundLocale,
+} from "./i18n/usePlaygroundLocale";
 
 const MENU_TOGGLE_ID = "playground-menu-toggle";
 // Debe coincidir con el breakpoint de teléfono de playground.css.
@@ -14,8 +25,11 @@ const MENU_OPEN_CLASS = "playground-menu-open";
 let phoneMedia: MediaQueryList | null = null;
 
 const { isDark } = usePlaygroundTheme();
+const { locale } = usePlaygroundLocale();
+const ui = useUiMessages();
 const { activeId, setActive } = useActiveSection(demos.map((demo) => demo.id));
 const menuOpen = ref(false);
+const isPhone = ref(false);
 
 function handleNavigate(id: string) {
   setActive(id);
@@ -38,6 +52,7 @@ function handleKeydown(event: KeyboardEvent) {
 
 // Si la pantalla deja de tener tamaño de teléfono, el panel deja de existir y se cierra.
 function handlePhoneChange(event: MediaQueryListEvent) {
+  isPhone.value = event.matches;
   if (!event.matches) closeMenu({ restoreFocus: false });
 }
 
@@ -55,6 +70,7 @@ watch(menuOpen, (open) => {
 
 onMounted(() => {
   phoneMedia = window.matchMedia(PHONE_QUERY);
+  isPhone.value = phoneMedia.matches;
   phoneMedia.addEventListener("change", handlePhoneChange);
 });
 
@@ -67,12 +83,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <a class="skip-link" href="#playground-main">Saltar al contenido</a>
+  <a class="skip-link" href="#playground-main">{{ ui.skipToContent }}</a>
 
   <!-- Con el panel móvil abierto, el resto de la página queda inerte para que el foco no escape. -->
   <header class="playground-topbar" :inert="menuOpen">
     <div class="playground-topbar__brand">
-      <BaseText as="span" variant="label" color="brand" weight="bold"
+      <BaseText
+        as="span"
+        variant="label"
+        color="brand"
+        weight="bold"
+        class="playground-topbar__mark"
         >JNV UI</BaseText
       >
       <BaseText as="span" color="heading" weight="semibold"
@@ -84,16 +105,32 @@ onUnmounted(() => {
         color="muted"
         class="playground-topbar__count"
       >
-        {{ demos.length }} secciones
+        {{ ui.sections(demos.length) }}
       </BaseText>
     </div>
 
     <div class="playground-topbar__actions">
+      <!--
+        BaseSelect no reenvía aria-label, pero su id llega al botón del combobox:
+        un <label for> nativo le da nombre accesible sin ocupar espacio en la barra.
+      -->
+      <span class="playground-topbar__locale">
+        <label class="visually-hidden" for="playground-locale">{{
+          ui.language
+        }}</label>
+        <BaseSelect
+          id="playground-locale"
+          v-model="locale"
+          :options="PLAYGROUND_LOCALES"
+          size="sm"
+        />
+      </span>
       <span class="playground-topbar__theme">
         <BaseSwitch
           id="dark-theme"
           v-model="isDark"
-          label="Tema oscuro"
+          :label="isPhone ? '' : ui.darkTheme"
+          :aria-label="ui.darkTheme"
           label-position="end"
         />
       </span>
@@ -103,7 +140,7 @@ onUnmounted(() => {
           :id="MENU_TOGGLE_ID"
           variant="ghost"
           size="icon"
-          aria-label="Abrir índice de componentes"
+          :aria-label="ui.openIndex"
           :aria-expanded="menuOpen ? 'true' : 'false'"
           aria-controls="playground-index"
           @click="menuOpen = true"
@@ -147,12 +184,12 @@ onUnmounted(() => {
           color="heading"
           weight="bold"
         >
-          Componentes
+          {{ ui.indexTitle }}
         </BaseText>
         <BaseButton
           variant="ghost"
           size="icon"
-          aria-label="Cerrar índice de componentes"
+          :aria-label="ui.closeIndex"
           @click="closeMenu()"
         >
           <BaseIcon name="close" size="sm" decorative />

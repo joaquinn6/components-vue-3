@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import {
   BaseTable,
   BaseText,
@@ -9,44 +9,106 @@ import {
 } from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
+import { useMessages } from "../i18n/usePlaygroundLocale";
+
+type ShipmentStatus = "transit" | "delivered" | "pending";
+type TableAction = "added" | "edited" | "deleted";
 
 const page = ref(1);
 const sort = ref<BaseTableSort | null>(null);
 const selectedRows = ref<BaseTableRow[]>([]);
-const lastAction = ref("Todavía no hay cambios.");
+const lastAction = ref<TableAction | null>(null);
+// El estado se guarda como clave y se traduce al mostrarlo, así los datos no dependen del idioma.
 const rows = ref<BaseTableRow[]>([
-  {
-    id: 1,
-    reference: "HTK-1042",
-    customer: "María López",
-    status: "En tránsito",
-  },
+  { id: 1, reference: "HTK-1042", customer: "María López", status: "transit" },
   {
     id: 2,
     reference: "HTK-1043",
     customer: "Carlos Pérez",
-    status: "Entregado",
+    status: "delivered",
   },
-  { id: 3, reference: "HTK-1044", customer: "Ana Ruiz", status: "Pendiente" },
-  {
-    id: 4,
-    reference: "HTK-1045",
-    customer: "Luis Gómez",
-    status: "En tránsito",
-  },
-  { id: 5, reference: "HTK-1046", customer: "Elena Díaz", status: "Entregado" },
+  { id: 3, reference: "HTK-1044", customer: "Ana Ruiz", status: "pending" },
+  { id: 4, reference: "HTK-1045", customer: "Luis Gómez", status: "transit" },
+  { id: 5, reference: "HTK-1046", customer: "Elena Díaz", status: "delivered" },
 ]);
 
-const columns: BaseTableColumn[] = [
-  { key: "reference", label: "Referencia", sortable: true, required: true },
-  { key: "customer", label: "Cliente", sortable: true, required: true },
-  { key: "status", label: "Estado", sortable: true },
-];
+const t = useMessages({
+  en: {
+    description:
+      "Semantic table with sorting, local or remote pagination, selection, slots and CRUD.",
+    title: "Local CRUD · selectable, addable, editable, deletable, slots",
+    caption: "Demo shipments",
+    empty: "There are no items to show.",
+    reference: "Reference",
+    customer: "Customer",
+    status: "Status",
+    required: "This field is required.",
+    statuses: {
+      transit: "In transit",
+      delivered: "Delivered",
+      pending: "Pending",
+    } as Record<ShipmentStatus, string>,
+    selected: (count: number) => `${count} rows selected`,
+    noChanges: "No changes yet.",
+    actions: {
+      added: "add event: row added.",
+      edited: "edit event: row edited.",
+      deleted: "delete event: row deleted.",
+    } as Record<TableAction, string>,
+  },
+  es: {
+    description:
+      "Tabla semántica con ordenamiento, paginación local o remota, selección, slots y CRUD.",
+    title: "CRUD local · selectable, addable, editable, deletable, slots",
+    caption: "Envíos de demostración",
+    empty: "No hay elementos para mostrar.",
+    reference: "Referencia",
+    customer: "Cliente",
+    status: "Estado",
+    required: "Este campo es obligatorio.",
+    statuses: {
+      transit: "En tránsito",
+      delivered: "Entregado",
+      pending: "Pendiente",
+    },
+    selected: (count) => `${count} filas seleccionadas`,
+    noChanges: "Todavía no hay cambios.",
+    actions: {
+      added: "Evento add: fila agregada.",
+      edited: "Evento edit: fila editada.",
+      deleted: "Evento delete: fila eliminada.",
+    },
+  },
+});
+
+const columns = computed<BaseTableColumn[]>(() => [
+  {
+    key: "reference",
+    label: t.value.reference,
+    sortable: true,
+    required: true,
+    requiredMessage: t.value.required,
+  },
+  {
+    key: "customer",
+    label: t.value.customer,
+    sortable: true,
+    required: true,
+    requiredMessage: t.value.required,
+  },
+  {
+    key: "status",
+    label: t.value.status,
+    sortable: true,
+    formatter: (value) =>
+      t.value.statuses[value as ShipmentStatus] ?? value ?? "",
+  },
+]);
 
 function handleAdd(row: BaseTableRow, resetDraft: () => void) {
   rows.value = [...rows.value, { ...row, id: Date.now() }];
   resetDraft();
-  lastAction.value = "Evento add: fila agregada.";
+  lastAction.value = "added";
 }
 
 function handleEdit(row: BaseTableRow, finishEditing: () => void) {
@@ -54,7 +116,7 @@ function handleEdit(row: BaseTableRow, finishEditing: () => void) {
     current.id === row.id ? row : current,
   );
   finishEditing();
-  lastAction.value = "Evento edit: fila editada.";
+  lastAction.value = "edited";
 }
 
 function handleDelete(rowToDelete: BaseTableRow) {
@@ -62,7 +124,7 @@ function handleDelete(rowToDelete: BaseTableRow) {
   selectedRows.value = selectedRows.value.filter(
     (row) => row.id !== rowToDelete.id,
   );
-  lastAction.value = "Evento delete: fila eliminada.";
+  lastAction.value = "deleted";
 }
 
 const code = `<script setup>
@@ -72,13 +134,14 @@ const page = ref(1);
 const sort = ref(null);
 const selectedRows = ref([]);
 const rows = ref([
-  { id: 1, reference: "HTK-1042", customer: "María López", status: "En tránsito" },
+  { id: 1, reference: "HTK-1042", customer: "María López", status: "transit" },
   // …
 ]);
+const statusLabels = { transit: "In transit", delivered: "Delivered", pending: "Pending" };
 const columns = [
-  { key: "reference", label: "Referencia", sortable: true, required: true },
-  { key: "customer", label: "Cliente", sortable: true, required: true },
-  { key: "status", label: "Estado", sortable: true },
+  { key: "reference", label: "Reference", sortable: true, required: true },
+  { key: "customer", label: "Customer", sortable: true, required: true },
+  { key: "status", label: "Status", sortable: true, formatter: (value) => statusLabels[value] },
 ];
 
 function handleAdd(row, resetDraft) {
@@ -104,7 +167,8 @@ function handleDelete(row) {
     :total-items="rows.length"
     :page-size="3"
     row-key="id"
-    caption="Envíos de demostración"
+    caption="Demo shipments"
+    empty-text="There are no items to show."
     selectable
     addable
     editable
@@ -117,22 +181,15 @@ function handleDelete(row) {
       <BaseText color="heading" weight="bold">{{ value }}</BaseText>
     </template>
     <template #selection-summary="{ selectedCount }">
-      <BaseText variant="label" color="heading">{{ selectedCount }} filas seleccionadas</BaseText>
+      <BaseText variant="label" color="heading">{{ selectedCount }} rows selected</BaseText>
     </template>
   </BaseTable>
 </template>`;
 </script>
 
 <template>
-  <DemoSection
-    id="base-table"
-    name="BaseTable"
-    description="Tabla semántica con ordenamiento, paginación local o remota, selección, slots y CRUD."
-  >
-    <DemoExample
-      title="CRUD local · selectable, addable, editable, deletable, slots"
-      :code="code"
-    >
+  <DemoSection id="base-table" name="BaseTable" :description="t.description">
+    <DemoExample :title="t.title" :code="code">
       <BaseTable
         v-model:page="page"
         v-model:sort="sort"
@@ -142,7 +199,8 @@ function handleDelete(row) {
         :total-items="rows.length"
         :page-size="3"
         row-key="id"
-        caption="Envíos de demostración"
+        :caption="t.caption"
+        :empty-text="t.empty"
         selectable
         addable
         editable
@@ -156,13 +214,13 @@ function handleDelete(row) {
         </template>
         <template #selection-summary="{ selectedCount }">
           <BaseText variant="label" color="heading">
-            {{ selectedCount }} filas seleccionadas
+            {{ t.selected(selectedCount) }}
           </BaseText>
         </template>
       </BaseTable>
-      <BaseText variant="sm" color="muted" aria-live="polite">{{
-        lastAction
-      }}</BaseText>
+      <BaseText variant="sm" color="muted" aria-live="polite">
+        {{ lastAction ? t.actions[lastAction] : t.noChanges }}
+      </BaseText>
       <pre class="demo-model">{{
         JSON.stringify({ page, sort, selected: selectedRows.length })
       }}</pre>

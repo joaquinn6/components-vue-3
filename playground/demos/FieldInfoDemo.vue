@@ -2,23 +2,41 @@
 import { BaseFieldInfo, BaseText } from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
+import { useMessages } from "../i18n/usePlaygroundLocale";
 
 const types = ["", "primary", "secondary", "success", "danger"] as const;
 
-const typesCode = `<BaseFieldInfo text="Ayuda contextual." aria-label="Más información" />
-<BaseFieldInfo type="primary" text="Ayuda contextual." aria-label="Más información" />
-<BaseFieldInfo type="secondary" text="Ayuda contextual." aria-label="Más información" />
-<BaseFieldInfo type="success" text="Ayuda contextual." aria-label="Más información" />
-<BaseFieldInfo type="danger" text="Ayuda contextual." aria-label="Más información" />`;
+const t = useMessages({
+  en: {
+    description:
+      "Help icon with an accessible tooltip that opens on hover and with the keyboard.",
+    typesTitle: "Types · type",
+    text: (type: string) => `Contextual help of type ${type}.`,
+    ariaLabel: (type: string) => `More information (${type})`,
+  },
+  es: {
+    description:
+      "Icono de ayuda con tooltip accesible: se abre con hover y con el teclado.",
+    typesTitle: "Tipos · type",
+    text: (type) => `Ayuda contextual de tipo ${type}.`,
+    ariaLabel: (type) => `Más información (${type})`,
+  },
+});
+
+const typesCode = `<BaseFieldInfo text="Contextual help." aria-label="More information" />
+<BaseFieldInfo type="primary" text="Contextual help." aria-label="More information" />
+<BaseFieldInfo type="secondary" text="Contextual help." aria-label="More information" />
+<BaseFieldInfo type="success" text="Contextual help." aria-label="More information" />
+<BaseFieldInfo type="danger" text="Contextual help." aria-label="More information" />`;
 </script>
 
 <template>
   <DemoSection
     id="base-field-info"
     name="BaseFieldInfo"
-    description="Icono de ayuda con tooltip accesible: se abre con hover y con el teclado."
+    :description="t.description"
   >
-    <DemoExample title="Tipos · type" :code="typesCode">
+    <DemoExample :title="t.typesTitle" :code="typesCode">
       <div class="demo-row">
         <span
           v-for="type in types"
@@ -28,8 +46,8 @@ const typesCode = `<BaseFieldInfo text="Ayuda contextual." aria-label="Más info
           <BaseText as="span" variant="label">{{ type || "default" }}</BaseText>
           <BaseFieldInfo
             :type="type"
-            :text="`Ayuda contextual de tipo ${type || 'default'}.`"
-            :aria-label="`Más información (${type || 'default'})`"
+            :text="t.text(type || 'default')"
+            :aria-label="t.ariaLabel(type || 'default')"
           />
         </span>
       </div>

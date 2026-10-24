@@ -1,16 +1,51 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { BaseSelect } from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
+import { useMessages } from "../i18n/usePlaygroundLocale";
 
 const country = ref("ni");
 const selectedCountries = ref<string[]>(["ni"]);
-const countries = [
+
+const t = useMessages({
+  en: {
+    description:
+      "Single or multiple option selector with disabled options and value creation.",
+    singleTitle: "Single selection · options, info",
+    multipleTitle: "Multiple selection · multiple, allowCreate",
+    country: "Country",
+    countryPlaceholder: "Select a country",
+    countryInfo: "Guatemala is disabled to show that state.",
+    favorites: "Favorite countries",
+    favoritesPlaceholder: "Select countries",
+    infoAriaLabel: "More information",
+    searchPlaceholder: "Search options...",
+    createOption: "Create option",
+    removeOption: "Remove selected option",
+  },
+  es: {
+    description:
+      "Selector de opciones simple o múltiple, con opciones deshabilitadas y creación de valores.",
+    singleTitle: "Selección simple · options, info",
+    multipleTitle: "Selección múltiple · multiple, allowCreate",
+    country: "País",
+    countryPlaceholder: "Selecciona un país",
+    countryInfo: "Guatemala está deshabilitada para mostrar ese estado.",
+    favorites: "Países favoritos",
+    favoritesPlaceholder: "Selecciona países",
+    infoAriaLabel: "Más información",
+    searchPlaceholder: "Buscar opciones...",
+    createOption: "Crear opción",
+    removeOption: "Quitar opción seleccionada",
+  },
+});
+
+const countries = computed(() => [
   { label: "Nicaragua", value: "ni" },
   { label: "Costa Rica", value: "cr" },
   { label: "Guatemala", value: "gt", disabled: true },
-];
+]);
 
 const singleCode = `<script setup>
 import { ref } from "vue";
@@ -26,53 +61,54 @@ const countries = [
 <template>
   <BaseSelect
     v-model="country"
-    label="País"
-    placeholder="Selecciona un país"
+    label="Country"
+    placeholder="Select a country"
     :options="countries"
-    info="Guatemala está deshabilitada para mostrar ese estado."
+    info="Guatemala is disabled to show that state."
+    info-aria-label="More information"
   />
 </template>`;
 
 const multipleCode = `<BaseSelect
   v-model="selectedCountries"
-  label="Países favoritos"
-  placeholder="Selecciona países"
+  label="Favorite countries"
+  placeholder="Select countries"
   :options="countries"
   multiple
   allow-create
+  search-placeholder="Search options..."
+  create-option-text="Create option"
+  remove-option-aria-label="Remove selected option"
 />`;
 </script>
 
 <template>
-  <DemoSection
-    id="base-select"
-    name="BaseSelect"
-    description="Selector de opciones simple o múltiple, con opciones deshabilitadas y creación de valores."
-  >
-    <DemoExample title="Selección simple · options, info" :code="singleCode">
+  <DemoSection id="base-select" name="BaseSelect" :description="t.description">
+    <DemoExample :title="t.singleTitle" :code="singleCode">
       <BaseSelect
         id="select-country"
         v-model="country"
-        label="País"
-        placeholder="Selecciona un país"
+        :label="t.country"
+        :placeholder="t.countryPlaceholder"
         :options="countries"
-        info="Guatemala está deshabilitada para mostrar ese estado."
+        :info="t.countryInfo"
+        :info-aria-label="t.infoAriaLabel"
       />
       <pre class="demo-model">country: {{ JSON.stringify(country) }}</pre>
     </DemoExample>
 
-    <DemoExample
-      title="Selección múltiple · multiple, allowCreate"
-      :code="multipleCode"
-    >
+    <DemoExample :title="t.multipleTitle" :code="multipleCode">
       <BaseSelect
         id="select-countries"
         v-model="selectedCountries"
-        label="Países favoritos"
-        placeholder="Selecciona países"
+        :label="t.favorites"
+        :placeholder="t.favoritesPlaceholder"
         :options="countries"
         multiple
         allow-create
+        :search-placeholder="t.searchPlaceholder"
+        :create-option-text="t.createOption"
+        :remove-option-aria-label="t.removeOption"
       />
       <pre class="demo-model">
 selectedCountries: {{ JSON.stringify(selectedCountries) }}</pre>

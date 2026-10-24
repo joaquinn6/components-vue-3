@@ -3,36 +3,71 @@ import { ref } from "vue";
 import { BaseButton, BaseConfirmDialog, BaseText } from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
+import { useMessages } from "../i18n/usePlaygroundLocale";
 
 const dangerOpen = ref(false);
 const primaryOpen = ref(false);
-const status = ref("");
+const result = ref<"deleted" | "published" | null>(null);
 
-function confirm(message: string) {
+const t = useMessages({
+  en: {
+    description:
+      "Action confirmation with destructive or primary tone and configurable texts.",
+    title: "Tones · tone, confirmLabel, cancelLabel",
+    deleteItem: "Delete item",
+    deleteDescription: "This action cannot be undone.",
+    confirmDelete: "Yes, delete",
+    keep: "Keep",
+    publish: "Publish changes",
+    publishDescription: "The changes will be visible to everyone.",
+    confirmPublish: "Publish",
+    cancel: "Cancel",
+    deleted: "Item deleted (confirm event).",
+    published: "Changes published (confirm event).",
+  },
+  es: {
+    description:
+      "Confirmación de acciones con tono destructivo o primario y textos configurables.",
+    title: "Tonos · tone, confirmLabel, cancelLabel",
+    deleteItem: "Eliminar elemento",
+    deleteDescription: "Esta acción no se puede deshacer.",
+    confirmDelete: "Sí, eliminar",
+    keep: "Conservar",
+    publish: "Publicar cambios",
+    publishDescription: "Los cambios serán visibles para todos.",
+    confirmPublish: "Publicar",
+    cancel: "Cancelar",
+    deleted: "Elemento eliminado (evento confirm).",
+    published: "Cambios publicados (evento confirm).",
+  },
+});
+
+function confirm(value: "deleted" | "published") {
   dangerOpen.value = false;
   primaryOpen.value = false;
-  status.value = message;
+  result.value = value;
 }
 
-const code = `<BaseButton variant="danger" @click="open = true">Eliminar elemento</BaseButton>
+const code = `<BaseButton variant="danger" @click="open = true">Delete item</BaseButton>
 
 <BaseConfirmDialog
   :open="open"
-  title="Eliminar elemento"
-  description="Esta acción no se puede deshacer."
-  confirm-label="Sí, eliminar"
-  cancel-label="Conservar"
+  title="Delete item"
+  description="This action cannot be undone."
+  confirm-label="Yes, delete"
+  cancel-label="Keep"
   tone="danger"
   @close="open = false"
   @confirm="remove"
 />
 
-<!-- tone="primary" para confirmaciones no destructivas -->
+<!-- tone="primary" for non-destructive confirmations -->
 <BaseConfirmDialog
   :open="publishOpen"
-  title="Publicar cambios"
-  description="Los cambios serán visibles para todos."
-  confirm-label="Publicar"
+  title="Publish changes"
+  description="The changes will be visible to everyone."
+  confirm-label="Publish"
+  cancel-label="Cancel"
   tone="primary"
   @close="publishOpen = false"
   @confirm="publish"
@@ -43,40 +78,41 @@ const code = `<BaseButton variant="danger" @click="open = true">Eliminar element
   <DemoSection
     id="base-confirm-dialog"
     name="BaseConfirmDialog"
-    description="Confirmación de acciones con tono destructivo o primario y textos configurables."
+    :description="t.description"
   >
-    <DemoExample title="Tonos · tone, confirmLabel, cancelLabel" :code="code">
+    <DemoExample :title="t.title" :code="code">
       <div class="demo-row">
-        <BaseButton variant="danger" @click="dangerOpen = true"
-          >Eliminar elemento</BaseButton
-        >
-        <BaseButton variant="secondary" @click="primaryOpen = true">
-          Publicar cambios
+        <BaseButton variant="danger" @click="dangerOpen = true">
+          {{ t.deleteItem }}
         </BaseButton>
-        <BaseText variant="sm" color="muted" aria-live="polite">{{
-          status
-        }}</BaseText>
+        <BaseButton variant="secondary" @click="primaryOpen = true">
+          {{ t.publish }}
+        </BaseButton>
+        <BaseText variant="sm" color="muted" aria-live="polite">
+          {{ result ? t[result] : "" }}
+        </BaseText>
       </div>
     </DemoExample>
 
     <BaseConfirmDialog
       :open="dangerOpen"
-      title="Eliminar elemento"
-      description="Esta acción no se puede deshacer."
-      confirm-label="Sí, eliminar"
-      cancel-label="Conservar"
+      :title="t.deleteItem"
+      :description="t.deleteDescription"
+      :confirm-label="t.confirmDelete"
+      :cancel-label="t.keep"
       tone="danger"
       @close="dangerOpen = false"
-      @confirm="confirm('Elemento eliminado (evento confirm).')"
+      @confirm="confirm('deleted')"
     />
     <BaseConfirmDialog
       :open="primaryOpen"
-      title="Publicar cambios"
-      description="Los cambios serán visibles para todos."
-      confirm-label="Publicar"
+      :title="t.publish"
+      :description="t.publishDescription"
+      :confirm-label="t.confirmPublish"
+      :cancel-label="t.cancel"
       tone="primary"
       @close="primaryOpen = false"
-      @confirm="confirm('Cambios publicados (evento confirm).')"
+      @confirm="confirm('published')"
     />
   </DemoSection>
 </template>

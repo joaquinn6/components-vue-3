@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { BaseIcon, BaseInput, BaseText } from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
+import { useMessages } from "../i18n/usePlaygroundLocale";
 
 const iconNames = [
   "logo",
@@ -65,6 +66,33 @@ const iconNames = [
   "message",
 ];
 
+const t = useMessages({
+  en: {
+    description:
+      "Built-in SVG icons. Use decorative next to visible text, or label when the icon conveys information.",
+    sizesTitle: "Sizes and accessibility · size, decorative, label",
+    warning: "Warning",
+    catalogTitle: "Catalog · name",
+    catalogDescription:
+      "Names available for BaseIcon and for props such as BaseDropdownMenu.icon.",
+    filterLabel: "Filter icons",
+    filterPlaceholder: "e.g. arrow",
+    noIcons: "No icon matches the filter.",
+  },
+  es: {
+    description:
+      "Iconos SVG integrados. Usa decorative junto a texto visible o label cuando el icono transmite información.",
+    sizesTitle: "Tamaños y accesibilidad · size, decorative, label",
+    warning: "Advertencia",
+    catalogTitle: "Catálogo · name",
+    catalogDescription:
+      "Nombres disponibles para BaseIcon y para props como BaseDropdownMenu.icon.",
+    filterLabel: "Filtrar iconos",
+    filterPlaceholder: "Ej. arrow",
+    noIcons: "Ningún icono coincide con el filtro.",
+  },
+});
+
 const filter = ref("");
 const visibleIcons = computed(() => {
   const term = filter.value.trim().toLowerCase();
@@ -78,42 +106,35 @@ const sizesCode = `<BaseIcon name="truck" size="sm" decorative />
 <BaseIcon name="truck" size="lg" decorative />
 <BaseIcon name="truck" size="xl" decorative />
 
-<!-- Icono con significado propio: etiqueta accesible -->
-<BaseIcon name="alertTriangle" size="lg" label="Advertencia" />`;
+<!-- Icon with its own meaning: accessible label -->
+<BaseIcon name="alertTriangle" size="lg" label="Warning" />`;
 
 const catalogCode = `<BaseIcon name="package" size="lg" decorative />`;
 </script>
 
 <template>
-  <DemoSection
-    id="base-icon"
-    name="BaseIcon"
-    description="Iconos SVG integrados. Usa decorative junto a texto visible o label cuando el icono transmite información."
-  >
-    <DemoExample
-      title="Tamaños y accesibilidad · size, decorative, label"
-      :code="sizesCode"
-    >
+  <DemoSection id="base-icon" name="BaseIcon" :description="t.description">
+    <DemoExample :title="t.sizesTitle" :code="sizesCode">
       <div class="demo-row">
         <BaseIcon name="truck" size="sm" decorative />
         <BaseIcon name="truck" size="md" decorative />
         <BaseIcon name="truck" size="lg" decorative />
         <BaseIcon name="truck" size="xl" decorative />
-        <BaseIcon name="alertTriangle" size="lg" label="Advertencia" />
+        <BaseIcon name="alertTriangle" size="lg" :label="t.warning" />
       </div>
     </DemoExample>
 
     <DemoExample
-      title="Catálogo · name"
-      description="Nombres disponibles para BaseIcon y para props como BaseDropdownMenu.icon."
+      :title="t.catalogTitle"
+      :description="t.catalogDescription"
       :code="catalogCode"
     >
       <div class="icon-catalog__filter">
         <BaseInput
           id="icon-catalog-filter"
           v-model="filter"
-          label="Filtrar iconos"
-          placeholder="Ej. arrow"
+          :label="t.filterLabel"
+          :placeholder="t.filterPlaceholder"
           type="search"
         />
       </div>
@@ -128,7 +149,7 @@ const catalogCode = `<BaseIcon name="package" size="lg" decorative />`;
         </div>
       </div>
       <BaseText v-if="!visibleIcons.length" variant="sm" color="muted">
-        Ningún icono coincide con el filtro.
+        {{ t.noIcons }}
       </BaseText>
     </DemoExample>
   </DemoSection>
