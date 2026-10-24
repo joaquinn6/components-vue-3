@@ -58,17 +58,17 @@ proceso con un token nuevo.
 
 ## Flujo recomendado con Pull Request
 
-Un Pull Request (PR) sirve para revisar y aprobar el código antes de que llegue a `main`. Un PR por
+Un Pull Request (PR) sirve para revisar y aprobar el código antes de que llegue a `master`. Un PR por
 sí solo **no publica** el paquete: después de fusionarlo, una persona mantenedora publica desde la
-versión exacta que quedó en `main`.
+versión exacta que quedó en `master`.
 
 ### 1. Preparar el cambio en una rama
 
-Parte siempre de la versión más reciente de `main`:
+Parte siempre de la versión más reciente de `master`:
 
 ```bash
-git switch main
-git pull origin main
+git switch master
+git pull origin master
 git switch -c fix/nombre-del-cambio
 ```
 
@@ -106,22 +106,22 @@ En GitHub:
 
 1. Abre el repositorio `components-vue-3`.
 2. Pulsa **Compare & pull request** para la rama que acabas de subir.
-3. Usa `main` como rama de destino.
+3. Usa `master` como rama de destino.
 4. Describe qué cambió, la versión propuesta y cómo se validó.
 5. Solicita revisión a otra persona mantenedora cuando sea posible.
 6. Fusiona el PR solo después de resolver comentarios y comprobaciones.
 
-El código fusionado en `main` es el único que se debe publicar. No publiques desde una rama de
+El código fusionado en `master` es el único que se debe publicar. No publiques desde una rama de
 trabajo ni desde un PR abierto.
 
 ### 3. Crear la etiqueta y publicar después del merge
 
-La persona mantenedora que publica actualiza su `main`, comprueba que la versión es la esperada y
+La persona mantenedora que publica actualiza su `master`, comprueba que la versión es la esperada y
 repite las validaciones:
 
 ```bash
-git switch main
-git pull origin main
+git switch master
+git pull origin master
 pnpm run format:check
 pnpm run check:base-colors
 pnpm run build
