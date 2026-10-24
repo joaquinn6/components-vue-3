@@ -1,10 +1,12 @@
 node_modules/
 dist/
+dist-playground/
 *.log
 *.tgz
 .env
 .env.*
 !.env.example
 .DS_Store
-.node-version.pnpm-store/
+.node-version
+.pnpm-store/
 .tmp-playground-build/
