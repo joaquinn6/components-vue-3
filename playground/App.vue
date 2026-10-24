@@ -69,7 +69,8 @@ onUnmounted(() => {
 <template>
   <a class="skip-link" href="#playground-main">Saltar al contenido</a>
 
-  <header class="playground-topbar">
+  <!-- Con el panel móvil abierto, el resto de la página queda inerte para que el foco no escape. -->
+  <header class="playground-topbar" :inert="menuOpen">
     <div class="playground-topbar__brand">
       <BaseText as="span" variant="label" color="brand" weight="bold"
         >JNV UI</BaseText
@@ -102,23 +103,24 @@ onUnmounted(() => {
           :id="MENU_TOGGLE_ID"
           variant="ghost"
           size="icon"
-          :aria-label="
-            menuOpen
-              ? 'Cerrar índice de componentes'
-              : 'Abrir índice de componentes'
-          "
+          aria-label="Abrir índice de componentes"
           :aria-expanded="menuOpen ? 'true' : 'false'"
           aria-controls="playground-index"
-          @click="menuOpen ? closeMenu() : (menuOpen = true)"
+          @click="menuOpen = true"
         >
-          <BaseIcon :name="menuOpen ? 'close' : 'menu'" size="sm" decorative />
+          <BaseIcon name="menu" size="sm" decorative />
         </BaseButton>
       </span>
     </div>
   </header>
 
   <div class="playground-layout">
-    <main id="playground-main" class="playground-main" tabindex="-1">
+    <main
+      id="playground-main"
+      class="playground-main"
+      tabindex="-1"
+      :inert="menuOpen"
+    >
       <component :is="demo.component" v-for="demo in demos" :key="demo.id" />
     </main>
 
@@ -133,7 +135,29 @@ onUnmounted(() => {
       id="playground-index"
       class="playground-aside"
       :class="{ 'playground-aside--open': menuOpen }"
+      :role="menuOpen ? 'dialog' : undefined"
+      :aria-modal="menuOpen ? 'true' : undefined"
+      :aria-labelledby="menuOpen ? 'playground-index-title' : undefined"
     >
+      <!-- Cabecera solo visible en el panel móvil. -->
+      <div class="playground-aside__header">
+        <BaseText
+          id="playground-index-title"
+          as="span"
+          color="heading"
+          weight="bold"
+        >
+          Componentes
+        </BaseText>
+        <BaseButton
+          variant="ghost"
+          size="icon"
+          aria-label="Cerrar índice de componentes"
+          @click="closeMenu()"
+        >
+          <BaseIcon name="close" size="sm" decorative />
+        </BaseButton>
+      </div>
       <PlaygroundNav
         :items="demos"
         :active-id="activeId"
