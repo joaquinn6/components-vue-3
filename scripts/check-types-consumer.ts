@@ -10,6 +10,7 @@ import {
   BaseStepper,
   BaseTable,
   BaseTabs,
+  BaseTimeline,
   BaseToast,
   loading,
 } from "@joaquinn6/jnv-ui-components";
@@ -28,6 +29,8 @@ import type {
   BaseStepperStep,
   BaseTableProps,
   BaseTabsProps,
+  BaseTimelineItem,
+  BaseTimelineProps,
   BaseToastProps,
   LoadingDirective,
 } from "@joaquinn6/jnv-ui-components";
@@ -107,6 +110,37 @@ const stepperProps: BaseStepperProps = {
 };
 void stepperProps;
 
+const timelineItems: readonly BaseTimelineItem[] = [
+  {
+    id: "a",
+    title: "Frontend",
+    start: "2022-03",
+    end: null,
+    icon: "briefcase",
+  },
+  {
+    id: "b",
+    title: "Ingeniería",
+    start: "2016",
+    end: "2020",
+    precision: "year",
+  },
+];
+const timelineProps: BaseTimelineProps = {
+  items: timelineItems,
+  locale: "en",
+  titleAs: "h4",
+  size: "sm",
+};
+void timelineProps;
+
+const invalidTimeline: BaseTimelineProps = {
+  items: timelineItems,
+  // @ts-expect-error Timeline sizes are intentionally restricted.
+  size: "lg",
+};
+void invalidTimeline;
+
 const badgeProps: BaseBadgeProps = { label: "Entregado", tone: "success" };
 void badgeProps;
 
@@ -185,6 +219,7 @@ void BaseSelect;
 void BaseStepper;
 void BaseTable;
 void BaseTabs;
+void BaseTimeline;
 void BaseToast;
 void BaseBadge;
 void BaseFormColumns;

@@ -563,6 +563,91 @@ paso, todos se muestran como pendientes y el componente no corrige el modelo aut
 
 `BaseStepper` no expone slots ni métodos públicos.
 
+## Timeline
+
+`BaseTimeline` muestra un historial vertical de periodos, como experiencia laboral, educación o
+versiones. Es un componente de presentación: no representa progreso (para eso usa `BaseStepper`),
+no tiene estado interactivo y nunca modifica `items`.
+
+```vue
+<script setup>
+import { BaseBadge, BaseTimeline } from "@joaquinn6/jnv-ui-components";
+
+const experience = [
+  {
+    id: "acme",
+    title: "Desarrollador frontend",
+    subtitle: "Acme",
+    start: "2022-03",
+    end: null,
+    icon: "briefcase",
+  },
+  {
+    id: "uni",
+    title: "Ingeniería en sistemas",
+    subtitle: "Universidad Nacional",
+    start: "2016",
+    end: "2020",
+    icon: "graduationCap",
+  },
+];
+</script>
+
+<template>
+  <BaseTimeline :items="experience" aria-label="Experiencia" title-as="h4">
+    <template #item="{ item }">
+      <BaseBadge v-if="item.id === 'acme'" width="auto" label="Vue" />
+    </template>
+  </BaseTimeline>
+</template>
+```
+
+Se representa como un `<ol>` con `aria-label` (y `role="list"`, para conservar la semántica de
+lista en Safari); cada elemento es un `<li>`. Las fechas se muestran dentro de
+`<time datetime="...">` con el valor ISO original. El marcador y la línea son decorativos y quedan
+ocultos para tecnologías de asistencia; si un elemento tiene `icon`, el marcador muestra un
+`BaseIcon` decorativo. El elemento en curso (`end: null`) destaca su marcador con los tokens
+`--jnv-timeline-marker-current-*`.
+
+| Prop            | Tipo                          | Predeterminado      | Descripción                                                                           |
+| --------------- | ----------------------------- | ------------------- | ------------------------------------------------------------------------------------- |
+| `items`         | `readonly BaseTimelineItem[]` | —                   | Elementos en el orden en que se muestran; cada `id` debe ser único.                   |
+| `locale`        | `string`                      | `"es"`              | Locale de `Intl.DateTimeFormat`. Un locale inválido recurre a `"es"`.                 |
+| `presentLabel`  | `string`                      | `"Actualidad"`      | Texto del final de un periodo en curso (`end: null`).                                 |
+| `dateSeparator` | `string`                      | `" – "`             | Separador entre la fecha inicial y la final; se respeta tal cual, espacios incluidos. |
+| `ariaLabel`     | `string`                      | `"Línea de tiempo"` | Nombre accesible de la lista.                                                         |
+| `titleAs`       | `"h2" \| "h3" \| "h4" \| "p"` | `"h3"`              | Elemento del título de cada elemento; elige el nivel según la jerarquía de la página. |
+| `size`          | `"sm" \| "md"`                | `"md"`              | Tamaño del marcador, la tipografía y la separación entre elementos.                   |
+
+`BaseTimelineItem`:
+
+| Campo       | Tipo                     | Descripción                                                                                             |
+| ----------- | ------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `id`        | `string`                 | Identificador estable y único; se usa como `key`.                                                       |
+| `title`     | `string`                 | Título del periodo.                                                                                     |
+| `subtitle`  | `string`                 | Opcional. Texto secundario, como la empresa o la institución.                                           |
+| `start`     | `string`                 | Fecha ISO parcial: `"2020-09"` o `"2020"`.                                                              |
+| `end`       | `string \| null`         | Opcional. Fecha ISO parcial; `null` indica un periodo en curso y sin valor solo se muestra `start`.     |
+| `precision` | `"month" \| "year"`      | Opcional. `"year"` muestra solo el año aunque la fecha incluya mes. Sin valor, se deduce de cada fecha. |
+| `icon`      | `BaseIconName \| string` | Opcional. Icono de `BaseIcon` dentro del marcador.                                                      |
+
+Con precisión mensual se formatea con `{ year: "numeric", month: "short" }` (por ejemplo,
+`sept 2020` en `es` o `Sep 2020` en `en`) y con precisión anual solo el año, siempre en UTC para
+evitar desplazamientos por zona horaria. Un valor que no sea `AAAA` ni `AAAA-MM` se muestra sin
+formatear y sin atributo `datetime`. Para otro formato, usa el slot `meta`.
+
+### Slots
+
+Todos reciben `{ item, index }`:
+
+- `item`: contenido adicional debajo de las fechas, por ejemplo logros o tecnologías. Si no se
+  proporciona, no se renderiza su contenedor.
+- `title`: reemplaza el texto del título, conservando el elemento indicado en `titleAs`.
+- `meta`: reemplaza el bloque de fechas, incluidos los elementos `<time>` predeterminados.
+
+`BaseTimeline` no emite eventos ni expone modelos o métodos públicos. No usa transiciones ni
+animaciones.
+
 ## Tablas
 
 Ademas de paginar, ordenar y seleccionar, `BaseTable` puede gestionar filas de alta, edicion y eliminacion mediante sus props CRUD.

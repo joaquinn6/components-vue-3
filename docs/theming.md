@@ -226,6 +226,31 @@ propio puede ajustar un tamaño sin afectar a los demás:
 }
 ```
 
+## Tokens de BaseTimeline
+
+Los temas JNV oscuro y claro comparten estos valores de referencia:
+
+| Token                                                            | Valor de referencia                  | Uso                                            |
+| ---------------------------------------------------------------- | ------------------------------------ | ---------------------------------------------- |
+| `--jnv-timeline-line-color`                                      | `var(--jnv-color-border-default)`    | Línea que une los marcadores                   |
+| `--jnv-timeline-marker-color`                                    | `var(--jnv-color-text-muted)`        | Borde e icono de los marcadores                |
+| `--jnv-timeline-marker-background`                               | `var(--jnv-color-surface-page)`      | Relleno de los marcadores; cubre la línea      |
+| `--jnv-timeline-marker-current-color`                            | `var(--jnv-color-brand-primary)`     | Marcador del elemento en curso (`end: null`)   |
+| `--jnv-timeline-marker-current-background`                       | `var(--jnv-color-surface-highlight)` | Fondo y halo del marcador en curso             |
+| `--jnv-timeline-date-color`                                      | `var(--jnv-color-text-muted)`        | Texto de las fechas                            |
+| `--jnv-timeline-sm-gap`, `--jnv-timeline-md-gap`                 | `var(--space-4)`, `var(--space-6)`   | Separación vertical entre elementos por tamaño |
+| `--jnv-timeline-sm-marker-size`, `--jnv-timeline-md-marker-size` | `var(--space-6)`, `var(--space-8)`   | Diámetro del marcador y alto mínimo del título |
+
+El relleno del marcador oculta la línea detrás de él, por lo que `--jnv-timeline-marker-background`
+debe coincidir con la superficie donde se coloca el componente. Por ejemplo, dentro de un panel con
+otra superficie:
+
+```css
+.mi-panel {
+  --jnv-timeline-marker-background: var(--jnv-color-surface-subtle);
+}
+```
+
 ## Tokens del breadcrumb
 
 | Token                                                                                            | Uso                                     |

@@ -36,6 +36,7 @@ import _BaseTable from "./components/BaseTable.vue";
 import _BaseTabs from "./components/BaseTabs.vue";
 import _BaseText from "./components/BaseText.vue";
 import _BaseTextarea from "./components/BaseTextarea.vue";
+import _BaseTimeline from "./components/BaseTimeline.vue";
 import _BaseYearInput from "./components/BaseYearInput.vue";
 import { tooltip as tooltipDirective } from "./directives/tooltip";
 import { loading as loadingDirective } from "./directives/loading";
@@ -75,6 +76,7 @@ import type {
   BaseTabsProps,
   BaseTextProps,
   BaseTextareaProps,
+  BaseTimelineProps,
   BaseYearInputProps,
   DatePickerProps,
   DateRangeValue,
@@ -133,6 +135,7 @@ export const BaseTable = _BaseTable as TypedComponent<BaseTableProps>;
 export const BaseTabs = _BaseTabs as TypedComponent<BaseTabsProps>;
 export const BaseText = _BaseText as TypedComponent<BaseTextProps>;
 export const BaseTextarea = _BaseTextarea as TypedComponent<BaseTextareaProps>;
+export const BaseTimeline = _BaseTimeline as TypedComponent<BaseTimelineProps>;
 export const BaseYearInput =
   _BaseYearInput as TypedComponent<BaseYearInputProps>;
 

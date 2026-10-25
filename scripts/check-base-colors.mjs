@@ -32,6 +32,7 @@ const files = [
   "BaseText",
   "BaseTabs",
   "BaseTextarea",
+  "BaseTimeline",
   "BaseDateInput",
   "BaseDatePicker",
   "BaseDateTimeInput",

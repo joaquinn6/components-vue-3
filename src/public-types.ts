@@ -365,6 +365,30 @@ export interface BaseStepperProps {
   stepDescriptionAriaLabel?: string;
 }
 
+export type BaseTimelinePrecision = "month" | "year";
+
+export interface BaseTimelineItem {
+  id: string;
+  title: string;
+  subtitle?: string;
+  /** Fecha ISO parcial: "2020" o "2020-09". */
+  start: string;
+  /** Fecha ISO parcial; `null` indica un periodo en curso y sin valor solo se muestra `start`. */
+  end?: string | null;
+  precision?: BaseTimelinePrecision;
+  icon?: BaseIconName | (string & {});
+}
+
+export interface BaseTimelineProps {
+  items: readonly BaseTimelineItem[];
+  locale?: string;
+  presentLabel?: string;
+  dateSeparator?: string;
+  ariaLabel?: string;
+  titleAs?: "h2" | "h3" | "h4" | "p";
+  size?: "sm" | "md";
+}
+
 export type BaseTableAlignment = "left" | "center" | "right";
 export type BaseTableSortDirection = "asc" | "desc";
 export type BaseTableRow = Record<string, any>;

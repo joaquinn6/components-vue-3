@@ -13,6 +13,7 @@
  * --jnv-date-picker-menu-* (fondo, texto, hover, selección, borde, foco,
  * deshabilitado, rango, tooltip, scrollbar y cargador del calendario externo)
  * --jnv-breadcrumb-* (espaciado, transición y foco del breadcrumb)
+ * --jnv-timeline-* (línea, marcadores, fechas y espaciado de BaseTimeline)
  */
 
 :root {
@@ -145,6 +146,18 @@
   --jnv-table-lg-font-size: var(--text-heading-sm-size);
   --jnv-table-lg-header-font-size: var(--font-size-sm);
   --jnv-table-lg-page-button-size: var(--control-height-sm);
+
+  /* BaseTimeline: línea, marcadores, fechas y espaciado por tamaño (sm, md). */
+  --jnv-timeline-line-color: var(--jnv-color-border-default);
+  --jnv-timeline-marker-color: var(--jnv-color-text-muted);
+  --jnv-timeline-marker-background: var(--jnv-color-surface-page);
+  --jnv-timeline-marker-current-color: var(--jnv-color-brand-primary);
+  --jnv-timeline-marker-current-background: var(--jnv-color-surface-highlight);
+  --jnv-timeline-date-color: var(--jnv-color-text-muted);
+  --jnv-timeline-sm-gap: var(--space-4);
+  --jnv-timeline-sm-marker-size: var(--space-6);
+  --jnv-timeline-md-gap: var(--space-6);
+  --jnv-timeline-md-marker-size: var(--space-8);
 
   /* Alias conservados para consumidores existentes. */
   --base-field-gap: var(--jnv-field-gap);

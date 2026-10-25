@@ -34,6 +34,7 @@ import TableDemo from "./TableDemo.vue";
 import TabsDemo from "./TabsDemo.vue";
 import TextareaDemo from "./TextareaDemo.vue";
 import TextDemo from "./TextDemo.vue";
+import TimelineDemo from "./TimelineDemo.vue";
 import ToastDemo from "./ToastDemo.vue";
 import YearInputDemo from "./YearInputDemo.vue";
 
@@ -94,6 +95,12 @@ export const demos: readonly DemoEntry[] = [
     name: "BaseIcon",
     category: "content",
     component: IconDemo,
+  },
+  {
+    id: "base-timeline",
+    name: "BaseTimeline",
+    category: "content",
+    component: TimelineDemo,
   },
 
   {
