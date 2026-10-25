@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { BaseIcon, BaseInput, BaseText } from "../../src/index";
+import { BaseButton, BaseIcon, BaseInput, BaseText } from "../../src/index";
 import DemoExample from "../components/DemoExample.vue";
 import DemoSection from "../components/DemoSection.vue";
 import { useMessages } from "../i18n/usePlaygroundLocale";
@@ -66,6 +66,15 @@ const iconNames = [
   "bell",
   "mail",
   "message",
+  "github",
+  "linkedin",
+  "sun",
+  "moon",
+  "languages",
+  "externalLink",
+  "code",
+  "briefcase",
+  "graduationCap",
 ];
 
 const t = useMessages({
@@ -74,6 +83,15 @@ const t = useMessages({
       "Built-in SVG icons. Use decorative next to visible text, or label when the icon conveys information.",
     sizesTitle: "Sizes and accessibility · size, decorative, label",
     warning: "Warning",
+    smallTitle: 'Small actions · size="sm" inside BaseButton size="icon"',
+    smallDescription:
+      "Outline brand and utility icons stay legible at the smallest size.",
+    github: "GitHub profile",
+    linkedin: "LinkedIn profile",
+    externalLink: "Open in a new tab",
+    lightTheme: "Switch to light theme",
+    darkTheme: "Switch to dark theme",
+    language: "Change language",
     catalogTitle: "Catalog · name",
     catalogDescription:
       "Names available for BaseIcon and for props such as BaseDropdownMenu.icon.",
@@ -86,6 +104,16 @@ const t = useMessages({
       "Iconos SVG integrados. Usa decorative junto a texto visible o label cuando el icono transmite información.",
     sizesTitle: "Tamaños y accesibilidad · size, decorative, label",
     warning: "Advertencia",
+    smallTitle:
+      'Acciones pequeñas · size="sm" dentro de BaseButton size="icon"',
+    smallDescription:
+      "Los iconos de marca y utilidad de contorno siguen siendo legibles en el tamaño más pequeño.",
+    github: "Perfil de GitHub",
+    linkedin: "Perfil de LinkedIn",
+    externalLink: "Abrir en una pestaña nueva",
+    lightTheme: "Cambiar al tema claro",
+    darkTheme: "Cambiar al tema oscuro",
+    language: "Cambiar idioma",
     catalogTitle: "Catálogo · name",
     catalogDescription:
       "Nombres disponibles para BaseIcon y para props como BaseDropdownMenu.icon.",
@@ -111,6 +139,22 @@ const sizesCode = `<BaseIcon name="truck" size="sm" decorative />
 <!-- Icon with its own meaning: accessible label -->
 <BaseIcon name="alertTriangle" size="lg" label="Warning" />`;
 
+const smallActions = [
+  { icon: "github", label: "github" },
+  { icon: "linkedin", label: "linkedin" },
+  { icon: "externalLink", label: "externalLink" },
+  { icon: "sun", label: "lightTheme" },
+  { icon: "moon", label: "darkTheme" },
+  { icon: "languages", label: "language" },
+] as const;
+
+const smallCode = `<BaseButton size="icon" variant="ghost" aria-label="GitHub profile">
+  <BaseIcon name="github" size="sm" decorative />
+</BaseButton>
+<BaseButton size="icon" variant="ghost" aria-label="Switch to light theme">
+  <BaseIcon name="sun" size="sm" decorative />
+</BaseButton>`;
+
 const catalogCode = `<BaseIcon name="package" size="lg" decorative />`;
 </script>
 
@@ -123,6 +167,25 @@ const catalogCode = `<BaseIcon name="package" size="lg" decorative />`;
         <BaseIcon name="truck" size="lg" decorative />
         <BaseIcon name="truck" size="xl" decorative />
         <BaseIcon name="alertTriangle" size="lg" :label="t.warning" />
+      </div>
+    </DemoExample>
+
+    <DemoExample
+      :title="t.smallTitle"
+      :description="t.smallDescription"
+      :code="smallCode"
+    >
+      <div class="demo-row">
+        <BaseButton
+          v-for="action in smallActions"
+          :key="action.icon"
+          size="icon"
+          variant="ghost"
+          :aria-label="t[action.label]"
+          :title="t[action.label]"
+        >
+          <BaseIcon :name="action.icon" size="sm" decorative />
+        </BaseButton>
       </div>
     </DemoExample>
 

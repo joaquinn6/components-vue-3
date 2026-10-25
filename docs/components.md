@@ -110,6 +110,45 @@ import { tooltip } from "@joaquinn6/jnv-ui-components";
 app.directive("tooltip", tooltip);
 ```
 
+### BaseIcon
+
+Icono SVG de contorno (`viewBox` 24×24, `stroke="currentColor"`) que hereda el color del texto.
+Usa `decorative` cuando acompaña a un texto visible y `label` cuando el icono transmite
+información por sí mismo.
+
+```vue
+<BaseIcon name="github" size="sm" decorative />
+<BaseIcon name="alertTriangle" size="lg" label="Advertencia" />
+```
+
+| Prop         | Tipo                     | Predeterminado | Descripción                                                                                |
+| ------------ | ------------------------ | -------------- | ------------------------------------------------------------------------------------------ |
+| `name`       | `BaseIconName \| string` | —              | Nombre del icono. Un nombre desconocido produce un aviso del validator y no dibuja trazos. |
+| `size`       | `sm \| md \| lg \| xl`   | `md`           | Tamaño, según los tokens `--icon-size-*`.                                                  |
+| `label`      | `string`                 | `""`           | Etiqueta accesible; añade `role="img"` y `aria-label`.                                     |
+| `decorative` | `boolean`                | `false`        | Oculta el icono a tecnologías de asistencia aunque exista `label`.                         |
+
+Sin `label`, o con `decorative`, el icono se marca con `aria-hidden="true"`. No emite eventos ni
+expone modelos, slots o métodos.
+
+El tipo `BaseIconName` reúne los nombres disponibles y ofrece autocompletado; `BaseIconProps.name`
+sigue aceptando cualquier `string` por compatibilidad. Nombres disponibles:
+
+| Grupo          | Nombres                                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Navegación     | `menu`, `moreVertical`, `close`, `search`, `arrowLeft`, `arrowRight`, `chevronDown`, `chevronLeft`, `chevronRight`, `externalLink`, `home` |
+| Acciones       | `plus`, `edit`, `trash`, `copy`, `clipboard`, `download`, `send`, `printer`, `sort`, `check`, `settings`, `loader`                         |
+| Estado         | `info`, `help`, `alertTriangle`, `circleCheck`, `circleX`, `bell`, `lock`, `shield`, `eye`, `eyeOff`, `clock`, `calendar`                  |
+| Personas       | `user`, `circleUser`, `support`, `mail`, `message`, `smartphone`, `monitor`, `camera`                                                      |
+| Comercio       | `cart`, `card`, `bank`, `piggyBank`, `receipt`, `tag`, `package`, `truck`, `weight`, `location`, `map`, `building`                         |
+| Contenido      | `grid`, `list`, `bolt`, `code`, `briefcase`, `graduationCap`, `languages`                                                                  |
+| Tema           | `sun`, `moon`                                                                                                                              |
+| Marcas y otros | `logo`, `facebook`, `twitter`, `github`, `linkedin`                                                                                        |
+
+Los trazados de `github`, `linkedin`, `sun`, `moon`, `languages`, `externalLink`, `code`,
+`briefcase` y `graduationCap` están adaptados de [Lucide](https://lucide.dev) (licencia ISC); la
+atribución se distribuye en `NOTICE`.
+
 ## Directiva `v-loading`
 
 La exportación `loading` permite mostrar una superficie de carga sobre un elemento HTML.

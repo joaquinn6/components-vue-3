@@ -14,9 +14,13 @@
     "./themes/jnv.css": "./src/styles/themes/jnv.css",
     "./themes/jnv-light.css": "./src/styles/themes/jnv-light.css"
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist",
-    "src/styles/themes"
+    "src/styles/themes",
+    "NOTICE"
   ],
   "repository": {
     "type": "git",

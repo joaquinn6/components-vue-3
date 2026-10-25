@@ -53,8 +53,82 @@ export interface BaseLinkProps {
   size?: Size;
   underline?: "always" | "hover" | "none";
 }
+export type BaseIconName =
+  | "logo"
+  | "menu"
+  | "moreVertical"
+  | "settings"
+  | "close"
+  | "search"
+  | "clipboard"
+  | "copy"
+  | "printer"
+  | "send"
+  | "support"
+  | "building"
+  | "home"
+  | "map"
+  | "arrowLeft"
+  | "arrowRight"
+  | "download"
+  | "plus"
+  | "trash"
+  | "facebook"
+  | "twitter"
+  | "loader"
+  | "chevronDown"
+  | "chevronLeft"
+  | "chevronRight"
+  | "sort"
+  | "check"
+  | "location"
+  | "weight"
+  | "edit"
+  | "grid"
+  | "list"
+  | "shield"
+  | "user"
+  | "circleUser"
+  | "bolt"
+  | "clock"
+  | "package"
+  | "truck"
+  | "circleCheck"
+  | "circleX"
+  | "alertTriangle"
+  | "calendar"
+  | "tag"
+  | "info"
+  | "lock"
+  | "eye"
+  | "eyeOff"
+  | "help"
+  | "receipt"
+  | "piggyBank"
+  | "camera"
+  | "monitor"
+  | "smartphone"
+  | "card"
+  | "cart"
+  | "bank"
+  | "bell"
+  | "mail"
+  | "message"
+  | "github"
+  | "linkedin"
+  | "sun"
+  | "moon"
+  | "languages"
+  | "externalLink"
+  | "code"
+  | "briefcase"
+  | "graduationCap";
 export interface BaseIconProps {
-  name: string;
+  /**
+   * Nombre del icono. Acepta cualquier `string` por compatibilidad; los nombres de
+   * `BaseIconName` ofrecen autocompletado.
+   */
+  name: BaseIconName | (string & {});
   size?: "sm" | "md" | "lg" | "xl";
   label?: string;
   decorative?: boolean;
@@ -523,7 +597,9 @@ export type TypedComponent<Props, Model = never> = DefineComponent<Props> & {
   new (): ComponentPublicInstance<Props, Model>;
 };
 
+// `[Model]` evita un condicional distributivo: con `Model = never` el resultado debe ser `{}` y no
+// `never`, que haría inasignable cualquier componente en consumidores con vue-tsc estricto.
 type ComponentPublicInstance<Props, Model> = Component & {
   $props: Props;
   $emit: (event: string, ...args: any[]) => void;
-} & (Model extends never ? {} : Model);
+} & ([Model] extends [never] ? {} : Model);

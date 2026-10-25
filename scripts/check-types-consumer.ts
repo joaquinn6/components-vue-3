@@ -3,6 +3,7 @@ import {
   BaseButton,
   BaseFormColumns,
   BaseBreadcrumb,
+  BaseIcon,
   BaseRadio,
   BaseSearchQL,
   BaseSelect,
@@ -16,6 +17,8 @@ import type {
   BaseBadgeProps,
   BaseButtonProps,
   BaseBreadcrumbItem,
+  BaseIconName,
+  BaseIconProps,
   BaseBreadcrumbProps,
   BaseRadioProps,
   BaseSearchQLChange,
@@ -126,6 +129,34 @@ const tableProps: BaseTableProps = {
 };
 void tableProps;
 
+const iconName: BaseIconName = "github";
+const iconProps: BaseIconProps = {
+  name: iconName,
+  size: "sm",
+  decorative: true,
+};
+// BaseIconProps.name keeps accepting any string for backwards compatibility.
+const legacyIconProps: BaseIconProps = { name: "custom" as string };
+void iconProps;
+void legacyIconProps;
+
+// @ts-expect-error Unknown names are not part of the BaseIconName union.
+const invalidIconName: BaseIconName = "unknown";
+void invalidIconName;
+
+// vue-tsc resolves template props through InstanceType<typeof Component>["$props"]. If
+// TypedComponent's default Model (never) distributes, the instance becomes never and every
+// component usage fails with "not assignable to parameter of type 'never'".
+type IsNever<T> = [T] extends [never] ? true : false;
+const buttonInstanceIsNever: IsNever<InstanceType<typeof BaseButton>> = false;
+const iconInstanceIsNever: IsNever<InstanceType<typeof BaseIcon>> = false;
+const buttonInstanceProps: BaseButtonProps = (
+  {} as InstanceType<typeof BaseButton>
+).$props;
+void buttonInstanceIsNever;
+void iconInstanceIsNever;
+void buttonInstanceProps;
+
 // @ts-expect-error Component variants are intentionally restricted.
 const invalidButton: BaseButtonProps = { variant: "unknown" };
 void invalidButton;
@@ -157,6 +188,7 @@ void BaseTabs;
 void BaseToast;
 void BaseBadge;
 void BaseFormColumns;
+void BaseIcon;
 
 const loadingDirective: LoadingDirective = loading;
 void loadingDirective;
