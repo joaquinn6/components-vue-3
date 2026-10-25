@@ -50,3 +50,32 @@
   visibility: visible;
   transform: translate(-50%, 0);
 }
+
+/* Abajo del elemento: la flecha apunta hacia arriba y la entrada parte desde arriba. */
+.v-tooltip__content[data-placement="bottom"] {
+  transform: translate(-50%, calc(var(--space-1) * -1));
+}
+
+.v-tooltip__content[data-placement="bottom"]::after {
+  top: auto;
+  bottom: 100%;
+  border-right: 0;
+  border-bottom: 0;
+  border-top: var(--border-width-thin) solid var(--jnv-tooltip-border);
+  border-left: var(--border-width-thin) solid var(--jnv-tooltip-border);
+  transform: translate(-50%, 50%) rotate(45deg);
+}
+
+.v-tooltip__content[data-placement="bottom"].v-tooltip-visible {
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v-tooltip__content,
+  .v-tooltip__content[data-placement="bottom"] {
+    transform: translate(-50%, 0);
+    transition:
+      opacity var(--transition-fast),
+      visibility var(--transition-fast);
+  }
+}

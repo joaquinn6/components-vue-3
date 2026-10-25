@@ -1,6 +1,14 @@
 import type { Component, DefineComponent, Directive } from "vue";
 
 export type LoadingDirective = Directive<HTMLElement, boolean>;
+/** Lado preferido del tooltip; se voltea al opuesto si no cabe en el viewport. */
+export type TooltipPlacement = "top" | "bottom";
+export type TooltipDirective = Directive<
+  Element,
+  unknown,
+  string,
+  TooltipPlacement
+>;
 
 export type Size = "sm" | "md" | "lg";
 export type FieldState = "default" | "error" | "success";

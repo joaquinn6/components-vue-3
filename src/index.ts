@@ -1,5 +1,4 @@
 import "./styles.css";
-import type { Directive } from "vue";
 
 import _BaseAutocomplete from "./components/BaseAutocomplete.vue";
 import _BaseAlert from "./components/BaseAlert.vue";
@@ -82,6 +81,7 @@ import type {
   DateRangeValue,
   DateValue,
   LoadingDirective,
+  TooltipDirective,
   TypedComponent,
 } from "./public-types";
 
@@ -139,7 +139,7 @@ export const BaseTimeline = _BaseTimeline as TypedComponent<BaseTimelineProps>;
 export const BaseYearInput =
   _BaseYearInput as TypedComponent<BaseYearInputProps>;
 
-export const tooltip: Directive = tooltipDirective;
+export const tooltip: TooltipDirective = tooltipDirective;
 export const loading: LoadingDirective = loadingDirective;
 
 export type * from "./public-types";

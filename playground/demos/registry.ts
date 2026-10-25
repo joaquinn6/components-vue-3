@@ -36,6 +36,7 @@ import TextareaDemo from "./TextareaDemo.vue";
 import TextDemo from "./TextDemo.vue";
 import TimelineDemo from "./TimelineDemo.vue";
 import ToastDemo from "./ToastDemo.vue";
+import TooltipDirectiveDemo from "./TooltipDirectiveDemo.vue";
 import YearInputDemo from "./YearInputDemo.vue";
 
 export interface DemoEntry {
@@ -126,6 +127,12 @@ export const demos: readonly DemoEntry[] = [
     name: "v-loading",
     category: "actions",
     component: LoadingDirectiveDemo,
+  },
+  {
+    id: "v-tooltip",
+    name: "v-tooltip",
+    category: "actions",
+    component: TooltipDirectiveDemo,
   },
 
   {

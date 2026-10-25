@@ -149,6 +149,43 @@ Los trazados de `github`, `linkedin`, `sun`, `moon`, `languages`, `externalLink`
 `briefcase` y `graduationCap` están adaptados de [Lucide](https://lucide.dev) (licencia ISC); la
 atribución se distribuye en `NOTICE`.
 
+## Directiva `v-tooltip`
+
+La exportación `tooltip` muestra un texto de ayuda al pasar el ratón o al enfocar el elemento con
+el teclado. Recibe un `string`; un valor vacío o que no sea texto no crea el tooltip. El tooltip
+se inserta en `document.body` con `role="tooltip"`, se asocia al elemento mediante
+`aria-describedby` (conservando los identificadores previos) y alterna `hidden` y `aria-hidden`
+según su visibilidad.
+
+```vue
+<script setup>
+import { tooltip as vTooltip } from "@joaquinn6/jnv-ui-components";
+</script>
+
+<template>
+  <button type="button" v-tooltip="'Guardar cambios'">Guardar</button>
+  <button type="button" v-tooltip:bottom="'Abre hacia abajo'">Ayuda</button>
+</template>
+```
+
+| Argumento | Tipo               | Predeterminado | Descripción                                                              |
+| --------- | ------------------ | -------------- | ------------------------------------------------------------------------ |
+| `arg`     | `TooltipPlacement` | `top`          | Lado preferido: `top` (`v-tooltip:top`) o `bottom` (`v-tooltip:bottom`). |
+
+Volteo automático: si el tooltip no cabe en el lado preferido dentro del viewport (con un margen
+de 8 px), se coloca en el lado opuesto; si tampoco cabe allí, usa el lado con más espacio. La
+posición se recalcula al hacer scroll y al cambiar el tamaño de la ventana. Sin argumento, el
+comportamiento cuando hay espacio arriba es el mismo que en versiones anteriores. Un argumento
+distinto de `top` o `bottom` se trata como `top`.
+
+El lado final se expone en el elemento del tooltip como `data-placement="top|bottom"`. Los estilos
+de la biblioteca lo usan para orientar la flecha y el desplazamiento de entrada; con
+`prefers-reduced-motion: reduce`, el tooltip solo cambia de opacidad.
+
+La directiva se exporta con el tipo público `TooltipDirective`. No emite eventos ni expone
+modelos, slots o métodos. Al desmontarse, elimina el tooltip, sus listeners y restaura el
+`aria-describedby` original.
+
 ## Directiva `v-loading`
 
 La exportación `loading` permite mostrar una superficie de carga sobre un elemento HTML.

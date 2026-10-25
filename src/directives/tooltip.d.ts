@@ -1,3 +1,3 @@
-import type { Directive } from "vue";
+import type { TooltipDirective } from "../public-types";
 
-export declare const tooltip: Directive;
+export declare const tooltip: TooltipDirective;

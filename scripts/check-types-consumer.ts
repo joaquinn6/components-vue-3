@@ -1,3 +1,4 @@
+import type { Directive } from "vue";
 import {
   BaseBadge,
   BaseButton,
@@ -13,6 +14,7 @@ import {
   BaseTimeline,
   BaseToast,
   loading,
+  tooltip,
 } from "@joaquinn6/jnv-ui-components";
 import type {
   BaseBadgeProps,
@@ -33,6 +35,8 @@ import type {
   BaseTimelineProps,
   BaseToastProps,
   LoadingDirective,
+  TooltipDirective,
+  TooltipPlacement,
 } from "@joaquinn6/jnv-ui-components";
 
 const buttonProps: BaseButtonProps = {
@@ -227,3 +231,10 @@ void BaseIcon;
 
 const loadingDirective: LoadingDirective = loading;
 void loadingDirective;
+
+const tooltipDirective: TooltipDirective = tooltip;
+const legacyTooltipDirective: Directive = tooltip;
+const tooltipPlacement: TooltipPlacement = "bottom";
+void tooltipDirective;
+void legacyTooltipDirective;
+void tooltipPlacement;

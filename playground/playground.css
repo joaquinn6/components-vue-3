@@ -351,6 +351,32 @@ code {
   font-size: var(--font-size-xs);
 }
 
+/* Barra de la demo de v-tooltip; al fijarla queda pegada al borde superior de la ventana. */
+.tooltip-demo-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-self: start;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border: var(--border-width-thin) solid var(--jnv-color-border-default);
+  border-radius: var(--radius-md);
+  background: var(--jnv-color-surface-page);
+}
+
+.tooltip-demo-toolbar--pinned {
+  position: fixed;
+  /* Por encima de la barra del playground (30) y por debajo del tooltip (--layer-tooltip). */
+  z-index: 31;
+  top: 0;
+  left: 50%;
+  max-width: calc(100vw - 2 * var(--space-4));
+  border-top: 0;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transform: translateX(-50%);
+}
+
 .inverse-sample {
   justify-self: start;
 }
