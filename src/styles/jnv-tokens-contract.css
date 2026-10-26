@@ -67,6 +67,10 @@
 
   /* Superficies flotantes: menús, diálogos, cargador y tooltips. */
   --jnv-overlay-background: var(--jnv-color-surface-page);
+  --jnv-dialog-sm-width: 28rem;
+  --jnv-dialog-md-width: 40rem;
+  --jnv-dialog-radius: var(--radius-md);
+  --jnv-dialog-shadow: var(--shadow-md);
   --jnv-dialog-backdrop-background: color-mix(
     in srgb,
     var(--jnv-color-surface-footer) 62%,

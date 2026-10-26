@@ -189,6 +189,11 @@ export interface BaseDialogProps {
   open?: boolean;
   title: string;
   description?: string;
+  /**
+   * Ancho máximo del diálogo. `sm` usa `--jnv-dialog-sm-width` (28rem en los temas JNV) y `md`
+   * usa `--jnv-dialog-md-width` (40rem). En pantallas estrechas se limita al viewport menos
+   * `--space-8`. Predeterminado: `sm`.
+   */
   size?: "sm" | "md";
   form?: boolean;
   loading?: boolean;

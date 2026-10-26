@@ -159,6 +159,17 @@ usando `--jnv-color-state-{error,success}` y sus superficies.
 `--jnv-dialog-backdrop-background`, `--jnv-loading-overlay-background` y `--jnv-tooltip-border`
 suelen necesitar transparencia o mezcla; declara esos valores en el tema, nunca en un componente.
 
+## Tokens de BaseDialog
+
+| Token                                            | JNV oscuro y claro     | Uso                                                 |
+| ------------------------------------------------ | ---------------------- | --------------------------------------------------- |
+| `--jnv-dialog-sm-width`, `--jnv-dialog-md-width` | `28rem`, `40rem`       | Ancho máximo con `size="sm"` y `size="md"`          |
+| `--jnv-dialog-radius`                            | `var(--radius-md)`     | Radio del borde, igual al de los controles de campo |
+| `--jnv-dialog-shadow`                            | `var(--shadow-md)`     | Sombra de la superficie                             |
+| `--jnv-dialog-backdrop-background`               | Ver tabla de controles | Fondo detrás del diálogo                            |
+
+En pantallas estrechas el ancho se limita al viewport menos `var(--space-8)`.
+
 ## Tokens de BaseTabs
 
 | Token                      | Uso                                  |

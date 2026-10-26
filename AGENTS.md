@@ -59,7 +59,11 @@ aplican a todo el proyecto y deben respetarse al crear o modificar componentes.
   intención visual.
 - Todo token nuevo debe declararse en `src/styles/jnv-tokens-contract.css`, recibir un valor en
   `src/styles/themes/jnv.css` y `src/styles/themes/jnv-light.css`, y documentarse en
-  `docs/theming.md`.
+  `docs/theming.md`. Si el token afecta a una prop pública (por ejemplo, el ancho de un `size`),
+  descríbelo también en el JSDoc de esa prop en `src/public-types.ts`.
+- Nunca consumas un token que no exista. Antes de usar una variable CSS (`--jnv-*`, `--space-*`,
+  `--radius-*`, `--shadow-*`, etc.), comprueba que esté definida en `src/styles/primitives.css`, en
+  el contrato o en los temas; una variable indefinida invalida la declaración en silencio.
 - Al crear un componente, inclúyelo en el alcance de `scripts/check-base-colors.mjs`.
 - Los componentes nuevos deben llamarse `BaseXxx` y usar clases CSS con prefijo `base-xxx`.
 - Mantén los estilos del componente encapsulados con `scoped`. Solo usa estilos globales cuando una

@@ -157,17 +157,17 @@ defineExpose({ focusFirstInvalid });
   padding: var(--space-0);
   overflow: auto;
   border: var(--border-width-thin) solid var(--jnv-color-border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--jnv-dialog-radius);
   color: var(--jnv-color-text-body);
   background: var(--jnv-color-surface-page);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--jnv-dialog-shadow);
 }
 
 .base-dialog--sm {
-  --base-dialog-width: var(--content-narrow);
+  --base-dialog-width: var(--jnv-dialog-sm-width);
 }
 .base-dialog--md {
-  --base-dialog-width: var(--container-sm);
+  --base-dialog-width: var(--jnv-dialog-md-width);
 }
 .base-dialog::backdrop {
   background: var(--jnv-dialog-backdrop-background);
