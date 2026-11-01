@@ -8,6 +8,7 @@ import _BaseButton from "./components/BaseButton.vue";
 import _BaseBadge from "./components/BaseBadge.vue";
 import _BaseCard from "./components/BaseCard.vue";
 import _BaseCheckbox from "./components/BaseCheckbox.vue";
+import _BaseColorPicker from "./components/BaseColorPicker.vue";
 import _BaseConfirmDialog from "./components/BaseConfirmDialog.vue";
 import _BaseDateInput from "./components/BaseDateInput.vue";
 import _BaseDatePicker from "./components/BaseDatePicker.vue";
@@ -48,6 +49,7 @@ import type {
   BaseBadgeProps,
   BaseCardProps,
   BaseCheckboxProps,
+  BaseColorPickerProps,
   BaseConfirmDialogProps,
   BaseDateInputProps,
   BaseDateTimeInputProps,
@@ -95,6 +97,8 @@ export const BaseButton = _BaseButton as TypedComponent<BaseButtonProps>;
 export const BaseBadge = _BaseBadge as TypedComponent<BaseBadgeProps>;
 export const BaseCard = _BaseCard as TypedComponent<BaseCardProps>;
 export const BaseCheckbox = _BaseCheckbox as TypedComponent<BaseCheckboxProps>;
+export const BaseColorPicker =
+  _BaseColorPicker as TypedComponent<BaseColorPickerProps>;
 export const BaseDialog = _BaseDialog as TypedComponent<BaseDialogProps>;
 export const BaseConfirmDialog =
   _BaseConfirmDialog as TypedComponent<BaseConfirmDialogProps>;

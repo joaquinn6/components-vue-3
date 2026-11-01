@@ -140,7 +140,7 @@ restaurarlas en su tema:
 
 ## Tokens de controles de formulario
 
-Inputs, textareas, selects, autocompletes, selectores de fecha y teléfono, casillas, radios,
+Inputs, textareas, selects, autocompletes, selectores de color, fecha y teléfono, casillas, radios,
 switches y la barra de `BaseSearchQL` comparten estos tokens. Los estados de error y éxito siguen
 usando `--jnv-color-state-{error,success}` y sus superficies.
 
@@ -261,6 +261,23 @@ otra superficie:
   --jnv-timeline-marker-background: var(--jnv-color-surface-subtle);
 }
 ```
+
+## Tokens de BaseColorPicker
+
+| Token                             | JNV oscuro y claro      | Uso                                                       |
+| --------------------------------- | ----------------------- | --------------------------------------------------------- |
+| `--jnv-color-picker-panel-width`  | `16rem`                 | Ancho del panel; se limita al viewport menos `--space-8`  |
+| `--jnv-color-picker-area-height`  | `10rem`                 | Altura del área de saturación y brillo                    |
+| `--jnv-color-picker-hue-height`   | `var(--space-3)`        | Grosor de la barra de tono                                |
+| `--jnv-color-picker-swatch-size`  | `var(--space-6)`        | Muestras predefinidas y muestra del control `md` y `lg`   |
+| `--jnv-color-picker-thumb-size`   | `var(--space-4)`        | Diámetro de los marcadores del área y de la barra de tono |
+| `--jnv-color-picker-thumb-border` | Blanco de la paleta JNV | Anillo de los marcadores                                  |
+| `--jnv-color-picker-thumb-shadow` | `rgb(0 0 0 / 0.45)`     | Contorno exterior de los marcadores                       |
+
+El área y la barra de tono representan el espacio de color HSV, por lo que sus degradados no
+dependen del tema. Los marcadores sí: el anillo claro y el contorno oscuro deben mantener contraste
+sobre cualquier color, también en temas propios. El panel reutiliza `--jnv-overlay-background` y los
+tokens de controles de formulario.
 
 ## Tokens del breadcrumb
 

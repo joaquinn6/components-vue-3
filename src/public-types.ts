@@ -616,6 +616,24 @@ export interface BaseYearInputProps extends DatePickerProps {
   autoApply?: boolean;
   modelValue?: number | null;
 }
+export interface BaseColorPickerProps extends CommonFieldProps {
+  name?: string;
+  placeholder?: string;
+  /**
+   * Colores predefinidos en formato hexadecimal (`#rgb` o `#rrggbb`). Los valores no válidos o
+   * repetidos se ignoran. El tamaño de cada muestra usa `--jnv-color-picker-swatch-size`.
+   */
+  swatches?: readonly string[];
+  inputAriaLabel?: string;
+  toggleAriaLabel?: string;
+  panelAriaLabel?: string;
+  saturationLabel?: string;
+  brightnessLabel?: string;
+  hueAriaLabel?: string;
+  swatchesAriaLabel?: string;
+  /** Color normalizado `#rrggbb` en minúsculas, o `""` sin color. */
+  modelValue?: string;
+}
 export interface BaseSignatureProps {
   id?: string;
   label?: string;

@@ -923,6 +923,7 @@ predeterminado) y conserva `totalItems` igual a `rows.length`.
 | `BaseSwitch`       | `id`, `label` (`""`), `labelPosition` (`"top"` o `"end"`, predeterminado `"end"`), `size` (`sm`, `md`, predeterminado `sm`), `error`, `disabled`                                                                                                         | `v-model` booleano; `id` es obligatorio; `error` muestra un mensaje y marca el control como inválido                                                                                                                                                                                                                                                                  |
 | `BaseSelect`       | `id`, `label`, `name`, `placeholder`, `options` (`valor` u objeto `{ label, value, disabled? }`), `multiple` (`false`), `allowCreate` (`false`), `searchPlaceholder`, `createOptionText`, `removeOptionAriaLabel`, `moreSelectedAriaLabel`, estado común | `v-model` escalar o array cuando `multiple`; `allowCreate` agrega textos nuevos como strings solo en modo múltiple; cuando los chips no caben muestra `+N` con un tooltip para revisar y quitar los valores ocultos; genera un campo oculto JSON cuando recibe `name`; slots `leading`, `selected` y `option`; teclado: flechas, Inicio, Fin, Enter, Espacio y Escape |
 | `BaseAutocomplete` | `options`, `fetchOptions`, `labelKey`, `valueKey`, `selectedLabelKey`, `minChars`, `debounceMs`, `maxSuggestions`, `allowCreate`, textos `loadingText`, `noResultsText`, `loadErrorText`, `clearAriaLabel`                                               | `v-model`, `select`, `blur`; slot `leading`; expone `focus()`                                                                                                                                                                                                                                                                                                         |
+| `BaseColorPicker`  | `swatches`, textos accesibles; ver [BaseColorPicker](#basecolorpicker), estado común                                                                                                                                                                     | `v-model` `#rrggbb` o `""`; `change`, `blur`, `open`, `close`; expone `focus()`, `open()` y `close()`                                                                                                                                                                                                                                                                 |
 | `BaseSignature`    | `id`, `label`, `width`, `height`, `clearAriaLabel`, `drawingInstructions`, `help`, `error`                                                                                                                                                               | `v-model` con PNG data URL; se opera con puntero táctil, lápiz o ratón                                                                                                                                                                                                                                                                                                |
 
 > **Migración de `BaseCheckbox`:** desde esta versión la etiqueta se muestra por defecto a la
@@ -988,6 +989,83 @@ prefijo; al cambiar el país conserva el número nacional. Los valores iniciales
 país por el prefijo más largo disponible; ante prefijos compartidos se usa el primer país de la
 lista. `defaultCountry` acepta ISO2, prefijo o nombre y, si se omite, se selecciona España cuando
 está en la lista o el primer país disponible.
+
+## BaseColorPicker
+
+Campo para elegir un color. Combina un input de texto hexadecimal con un panel desplegable que
+contiene un área de saturación y brillo, una barra de tono y, opcionalmente, una paleta de colores
+predefinidos. El modelo es siempre un color `#rrggbb` en minúsculas o `""` cuando no hay color.
+
+```vue
+<BaseColorPicker
+  v-model="brandColor"
+  label="Color de marca"
+  :swatches="['#7c3aed', '#0ea5e9', '#16a34a', '#f59e0b', '#dc2626']"
+  help="Escribe un código hexadecimal o elige un color en el panel."
+/>
+```
+
+### Props
+
+| Prop                | Tipo                                                      | Predeterminado                   | Descripción                                                                     |
+| ------------------- | --------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------- |
+| `id`                | `string`                                                  | `""` (se genera uno único)       | Id del input de texto; el label apunta a él                                     |
+| `label`             | `string`                                                  | `""`                             | Etiqueta visible del campo                                                      |
+| `info`              | `string`                                                  | `""`                             | Texto de `BaseFieldInfo` junto a la etiqueta                                    |
+| `infoAriaLabel`     | `string`                                                  | `"Información adicional"`        | Etiqueta accesible del botón de información                                     |
+| `infoType`          | `"" \| "primary" \| "secondary" \| "success" \| "danger"` | `""`                             | Tono del botón de información                                                   |
+| `name`              | `string`                                                  | `""`                             | Nombre del input para formularios nativos                                       |
+| `placeholder`       | `string`                                                  | `"Seleccionar color"`            | Texto del input vacío                                                           |
+| `swatches`          | `readonly string[]`                                       | `[]`                             | Colores predefinidos (`#rgb` o `#rrggbb`); los no válidos o repetidos se omiten |
+| `size`              | `"sm" \| "md" \| "lg"`                                    | `"sm"`                           | Altura del control                                                              |
+| `state`             | `"default" \| "error" \| "success"`                       | `"default"`                      | Estado visual; `error` y `success` también lo activan                           |
+| `help`              | `string`                                                  | `""`                             | Mensaje de ayuda                                                                |
+| `error`             | `string`                                                  | `""`                             | Mensaje de error; marca el input con `aria-invalid`                             |
+| `success`           | `string`                                                  | `""`                             | Mensaje de éxito                                                                |
+| `required`          | `boolean`                                                 | `false`                          | Marca el campo como obligatorio                                                 |
+| `disabled`          | `boolean`                                                 | `false`                          | Deshabilita el input y el botón del panel                                       |
+| `readonly`          | `boolean`                                                 | `false`                          | Input de solo lectura; el panel no se puede abrir                               |
+| `tone`              | `"default" \| "inverse"`                                  | `"default"`                      | `inverse` adapta la etiqueta a superficies invertidas                           |
+| `inputAriaLabel`    | `string`                                                  | `"Código hexadecimal del color"` | Etiqueta accesible del input cuando no hay `label`                              |
+| `toggleAriaLabel`   | `string`                                                  | `"Abrir selector de color"`      | Etiqueta accesible del botón con la muestra de color                            |
+| `panelAriaLabel`    | `string`                                                  | `"Selector de color"`            | Etiqueta accesible del panel (`role="dialog"`)                                  |
+| `saturationLabel`   | `string`                                                  | `"Saturación"`                   | Texto de la etiqueta y del valor accesible del área                             |
+| `brightnessLabel`   | `string`                                                  | `"Brillo"`                       | Texto de la etiqueta y del valor accesible del área                             |
+| `hueAriaLabel`      | `string`                                                  | `"Tono"`                         | Etiqueta accesible de la barra de tono                                          |
+| `swatchesAriaLabel` | `string`                                                  | `"Colores predefinidos"`         | Etiqueta accesible del grupo de colores predefinidos                            |
+
+Los atributos no declarados (`autofocus`, `data-*`, etc.) se aplican al input de texto.
+
+### Modelo y eventos
+
+| Nombre                   | Payload      | Cuándo se emite                                                                                                                                                                                       |
+| ------------------------ | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `v-model` (`modelValue`) | `string`     | En vivo al arrastrar, usar el teclado o escribir un hexadecimal válido; `""` al vaciar el input                                                                                                       |
+| `change`                 | `string`     | Al confirmar un color distinto del último confirmado: al soltar el puntero o la barra de tono, con cada tecla del área, al elegir una muestra, al salir del input o pulsar Enter y al cerrar el panel |
+| `blur`                   | `FocusEvent` | Cuando el input de texto pierde el foco                                                                                                                                                               |
+| `open`, `close`          | —            | Al abrir y cerrar el panel                                                                                                                                                                            |
+
+El input acepta `#rgb`, `#rrggbb` y las mismas formas sin `#`, sin distinguir mayúsculas. Al salir
+del input o pulsar Enter, un valor válido se normaliza a `#rrggbb` y uno no válido se descarta para
+restaurar el color actual. Un `modelValue` externo que no sea hexadecimal se muestra tal cual en el
+input, sin modificar el panel.
+
+### Teclado y accesibilidad
+
+- El botón con la muestra abre y cierra el panel; al abrirse, el foco pasa al área de saturación y
+  brillo.
+- En el área, `←`/`→` ajustan la saturación y `↑`/`↓` el brillo en pasos de 1 %; con `Shift`, de
+  10 %. Expone `role="slider"` con un `aria-valuetext` que describe ambos valores.
+- La barra de tono es un `<input type="range">` nativo (0–360°).
+- Las muestras son botones con `aria-pressed` y el código del color como etiqueta.
+- `Escape` cierra el panel y devuelve el foco al botón si estaba dentro del panel. El panel también
+  se cierra al hacer clic fuera o al mover el foco fuera del componente.
+- El panel se abre hacia arriba cuando no hay espacio suficiente debajo del campo.
+
+### Slots y métodos expuestos
+
+No tiene slots. Expone `focus()` (enfoca el input de texto), `open()` y `close()` para controlar el
+panel.
 
 ## Fecha y hora
 

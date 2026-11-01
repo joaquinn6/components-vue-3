@@ -2,6 +2,7 @@ import type { Directive } from "vue";
 import {
   BaseBadge,
   BaseButton,
+  BaseColorPicker,
   BaseFormColumns,
   BaseBreadcrumb,
   BaseIcon,
@@ -19,6 +20,7 @@ import {
 import type {
   BaseBadgeProps,
   BaseButtonProps,
+  BaseColorPickerProps,
   BaseBreadcrumbItem,
   BaseIconName,
   BaseIconProps,
@@ -45,6 +47,13 @@ const buttonProps: BaseButtonProps = {
   type: "submit",
 };
 void buttonProps;
+
+const colorPickerProps: BaseColorPickerProps = {
+  label: "Color de marca",
+  swatches: ["#7c3aed", "#0ea5e9"],
+  modelValue: "#7c3aed",
+};
+void colorPickerProps;
 
 const breadcrumbItems: BaseBreadcrumbItem[] = [
   { name: "Inicio", to: { name: "home" } },
@@ -216,6 +225,7 @@ const invalidStepper: BaseStepperProps = {
 void invalidStepper;
 
 void BaseButton;
+void BaseColorPicker;
 void BaseBreadcrumb;
 void BaseRadio;
 void BaseSearchQL;

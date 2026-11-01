@@ -9,6 +9,7 @@ import BreadcrumbDemo from "./BreadcrumbDemo.vue";
 import ButtonDemo from "./ButtonDemo.vue";
 import CardDemo from "./CardDemo.vue";
 import CheckboxDemo from "./CheckboxDemo.vue";
+import ColorPickerDemo from "./ColorPickerDemo.vue";
 import ConfirmDialogDemo from "./ConfirmDialogDemo.vue";
 import DateInputDemo from "./DateInputDemo.vue";
 import DatePickerDemo from "./DatePickerDemo.vue";
@@ -201,6 +202,12 @@ export const demos: readonly DemoEntry[] = [
     name: "BaseSwitch",
     category: "forms",
     component: SwitchDemo,
+  },
+  {
+    id: "base-color-picker",
+    name: "BaseColorPicker",
+    category: "forms",
+    component: ColorPickerDemo,
   },
   {
     id: "base-signature",

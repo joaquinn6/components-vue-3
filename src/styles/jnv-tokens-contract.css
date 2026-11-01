@@ -14,6 +14,7 @@
  * deshabilitado, rango, tooltip, scrollbar y cargador del calendario externo)
  * --jnv-breadcrumb-* (espaciado, transición y foco del breadcrumb)
  * --jnv-timeline-* (línea, marcadores, fechas y espaciado de BaseTimeline)
+ * --jnv-color-picker-* (panel, área, barra de tono, muestras y marcadores de BaseColorPicker)
  */
 
 :root {
@@ -162,6 +163,15 @@
   --jnv-timeline-sm-marker-size: var(--space-6);
   --jnv-timeline-md-gap: var(--space-6);
   --jnv-timeline-md-marker-size: var(--space-8);
+
+  /* BaseColorPicker: dimensiones del panel y contraste de los marcadores. */
+  --jnv-color-picker-panel-width: 16rem;
+  --jnv-color-picker-area-height: 10rem;
+  --jnv-color-picker-hue-height: var(--space-3);
+  --jnv-color-picker-swatch-size: var(--space-6);
+  --jnv-color-picker-thumb-size: var(--space-4);
+  --jnv-color-picker-thumb-border: var(--jnv-color-surface-page);
+  --jnv-color-picker-thumb-shadow: var(--jnv-color-text-heading);
 
   /* Alias conservados para consumidores existentes. */
   --base-field-gap: var(--jnv-field-gap);
