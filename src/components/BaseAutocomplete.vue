@@ -37,7 +37,7 @@ const props = defineProps({
   maxSuggestions: { type: Number, default: 10 },
   size: {
     type: String,
-    default: "md",
+    default: "sm",
     validator: (value) => ["sm", "md", "lg"].includes(value),
   },
   state: {

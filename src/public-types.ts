@@ -34,6 +34,7 @@ export interface CommonFieldProps {
   info?: string;
   infoAriaLabel?: string;
   infoType?: InfoType;
+  /** Altura del control. Predeterminado: `"sm"`. */
   size?: Size;
   state?: FieldState;
   help?: string;

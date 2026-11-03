@@ -2,7 +2,7 @@
 
 ## Convenciones comunes
 
-`size`: `sm`, `md`, `lg`. `state`: `default`, `error`, `success`. `tone`: `default`, `inverse`.
+`size`: `sm`, `md`, `lg` (los campos de formulario usan `sm` por defecto). `state`: `default`, `error`, `success`. `tone`: `default`, `inverse`.
 Los campos con `error`, `success` y `help` muestran el primer valor disponible en ese orden.
 
 `BaseDropdownMenu` acepta la prop `icon` para personalizar el icono del botón disparador. Su valor
