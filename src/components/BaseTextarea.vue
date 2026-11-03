@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { computed, ref, useId } from "vue";
+import BaseFieldInfo from "./BaseFieldInfo.vue";
 
 defineOptions({ inheritAttrs: false });
 
 const props = defineProps({
   id: { type: String, default: "" },
   label: { type: String, default: "" },
+  info: { type: String, default: "" },
+  infoAriaLabel: { type: String, default: "Información adicional" },
+  infoType: {
+    type: String,
+    default: "",
+    validator: (value) =>
+      ["", "primary", "secondary", "success", "danger"].includes(value),
+  },
   state: {
     type: String,
     default: "default",
@@ -33,6 +42,7 @@ const message = computed(() => props.error || props.success || props.help);
 const messageId = computed(() => `${textareaId.value}-message`);
 const textarea = defineModel({ type: String, default: "" });
 const textareaElement = ref(null);
+const hasInfo = computed(() => Boolean(props.info.trim()));
 const characterCountId = computed(() => `${textareaId.value}-character-count`);
 const hasMaxLength = computed(
   () => Number.isInteger(props.maxLength) && props.maxLength >= 0,
@@ -56,9 +66,17 @@ defineExpose({ focus: () => textareaElement.value?.focus() });
 
 <template>
   <div class="base-textarea" :class="`base-textarea--${currentState}`">
-    <label v-if="label" class="base-textarea__label" :for="textareaId">
-      {{ label }}<span v-if="required" aria-hidden="true"> *</span>
-    </label>
+    <div v-if="label" class="base-textarea__label-row">
+      <label class="base-textarea__label" :for="textareaId">
+        {{ label }}<span v-if="required" aria-hidden="true"> *</span>
+      </label>
+      <BaseFieldInfo
+        v-if="hasInfo"
+        :text="info"
+        :type="infoType"
+        :aria-label="infoAriaLabel"
+      />
+    </div>
     <textarea
       :id="textareaId"
       ref="textareaElement"
@@ -105,6 +123,15 @@ defineExpose({ focus: () => textareaElement.value?.focus() });
   font-size: var(--jnv-form-label-size);
   font-weight: var(--text-label-weight);
   line-height: var(--text-label-leading);
+}
+
+.base-textarea__label-row {
+  display: flex;
+  width: 100%;
+  min-width: var(--space-0);
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
 }
 
 .base-textarea__input {

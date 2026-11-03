@@ -11,6 +11,8 @@ const t = useMessages({
     title: "Counter · rows, maxLength, maxLengthVisible",
     label: "Notes",
     sample: "Components can be tested without publishing the package.",
+    info: "Notes are visible only to your team.",
+    infoAriaLabel: "More information",
   },
   es: {
     description:
@@ -18,6 +20,8 @@ const t = useMessages({
     title: "Contador · rows, maxLength, maxLengthVisible",
     label: "Notas",
     sample: "Los componentes pueden probarse sin publicar el paquete.",
+    info: "Las notas solo son visibles para tu equipo.",
+    infoAriaLabel: "Más información",
   },
 });
 
@@ -33,6 +37,7 @@ const notes = computed({
 const code = `<BaseTextarea
   v-model="notes"
   label="Notes"
+  info="Notes are visible only to your team."
   :rows="4"
   :max-length="160"
   max-length-visible
@@ -50,6 +55,8 @@ const code = `<BaseTextarea
         id="textarea-notes"
         v-model="notes"
         :label="t.label"
+        :info="t.info"
+        :info-aria-label="t.infoAriaLabel"
         :rows="4"
         :max-length="160"
         max-length-visible
