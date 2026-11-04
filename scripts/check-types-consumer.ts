@@ -3,6 +3,8 @@ import {
   BaseBadge,
   BaseButton,
   BaseColorPicker,
+  BaseCollapse,
+  BaseCollapseGroup,
   BaseFormColumns,
   BaseBreadcrumb,
   BaseIcon,
@@ -21,6 +23,8 @@ import type {
   BaseBadgeProps,
   BaseButtonProps,
   BaseColorPickerProps,
+  BaseCollapseGroupProps,
+  BaseCollapseProps,
   BaseBreadcrumbItem,
   BaseIconName,
   BaseIconProps,
@@ -54,6 +58,26 @@ const colorPickerProps: BaseColorPickerProps = {
   modelValue: "#7c3aed",
 };
 void colorPickerProps;
+
+const collapseProps: BaseCollapseProps = {
+  open: true,
+  title: "Datos de envío",
+  variant: "card",
+};
+void collapseProps;
+
+const collapseGroupProps: BaseCollapseGroupProps = {
+  modelValue: ["envio"],
+  multiple: true,
+  variant: "plain",
+};
+void collapseGroupProps;
+
+const invalidCollapse: BaseCollapseProps = {
+  // @ts-expect-error Collapse variants are intentionally restricted.
+  variant: "outlined",
+};
+void invalidCollapse;
 
 const breadcrumbItems: BaseBreadcrumbItem[] = [
   { name: "Inicio", to: { name: "home" } },
@@ -226,6 +250,8 @@ void invalidStepper;
 
 void BaseButton;
 void BaseColorPicker;
+void BaseCollapse;
+void BaseCollapseGroup;
 void BaseBreadcrumb;
 void BaseRadio;
 void BaseSearchQL;

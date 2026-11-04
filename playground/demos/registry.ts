@@ -9,6 +9,7 @@ import BreadcrumbDemo from "./BreadcrumbDemo.vue";
 import ButtonDemo from "./ButtonDemo.vue";
 import CardDemo from "./CardDemo.vue";
 import CheckboxDemo from "./CheckboxDemo.vue";
+import CollapseDemo from "./CollapseDemo.vue";
 import ColorPickerDemo from "./ColorPickerDemo.vue";
 import ConfirmDialogDemo from "./ConfirmDialogDemo.vue";
 import DateInputDemo from "./DateInputDemo.vue";
@@ -67,6 +68,12 @@ export const demos: readonly DemoEntry[] = [
     name: "BaseCard",
     category: "content",
     component: CardDemo,
+  },
+  {
+    id: "base-collapse",
+    name: "BaseCollapse",
+    category: "content",
+    component: CollapseDemo,
   },
   {
     id: "base-alert",

@@ -38,6 +38,8 @@ No emite eventos propios ni expone modelos, métodos o slots con nombre.
 | `BaseBadge`         | `label`, `tone` (`neutral`, `info`, `success`, `warning`, `error`, `critical`, `progress`, `violet`), `size` (`sm`, `md`), `width` (`auto`, `fixed`)                   | Slot predeterminado opcional; si existe, tiene prioridad sobre `label`          |
 | `BaseLink`          | `href`, `target`, `rel`, `variant` (`brand`, `body`, `muted`, `inverse`), `size`, `underline` (`always`, `hover`, `none`)                                              | Sin eventos propios; contenido mediante slot predeterminado                     |
 | `BaseCard`          | `as`, `surface` (`page`, `inverse`, `primary`), `padding`, `radius`, `elevation`, `outlined`, `title`, `titlePosition` (`inside`, `outside`), `titleIcon`, `titleAs`   | Slot predeterminado                                                             |
+| `BaseCollapse`      | `open`, `title`, `description`, `icon`, `titleAs`, `variant` (`plain`, `card`), `value`, `id`, `disabled`, `toggleAriaLabel`                                           | `v-model:open`, `toggle`; slots predeterminado, `title` y `actions`             |
+| `BaseCollapseGroup` | `v-model`, `multiple`, `collapsible`, `variant` (`plain`, `card`)                                                                                                      | `change`; acordeón con teclado: flechas, Inicio y Fin                           |
 | `BaseAlert`         | `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`                                                                                                    | `dismiss`; slots predeterminado e `icon`                                        |
 | `BaseToast`         | `open`, `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`, `duration`, `pauseOnHover`, `position`                                                    | `v-model:open`, `close`; slots predeterminado e `icon`                          |
 | `BaseDialog`        | `open`, `title`, `description`, `size` (`sm`, `md`), `form`, `loading`, `closeLabel`, `closeDisabled`                                                                  | `close`, `submit`; slots predeterminado y `actions`                             |
@@ -148,6 +150,78 @@ sigue aceptando cualquier `string` por compatibilidad. Nombres disponibles:
 Los trazados de `github`, `linkedin`, `sun`, `moon`, `languages`, `externalLink`, `code`,
 `briefcase` y `graduationCap` están adaptados de [Lucide](https://lucide.dev) (licencia ISC); la
 atribución se distribuye en `NOTICE`.
+
+## BaseCollapse
+
+Sección colapsable con cabecera clicable y contenido que se expande con una animación de altura.
+Tiene dos diseños: `plain` (predeterminado, sin card: solo una línea divisoria inferior) y `card`
+(sobre `BaseCard` con borde y elevación). Varias secciones dentro de `BaseCollapseGroup` forman un
+acordeón.
+
+```vue
+<BaseCollapse v-model:open="open" title="Notas del pedido">
+  <BaseText>Las notas son visibles para todo el equipo.</BaseText>
+</BaseCollapse>
+
+<BaseCollapseGroup v-model="activo" variant="card">
+  <BaseCollapse value="envio" title="Envío">…</BaseCollapse>
+  <BaseCollapse value="pago" title="Pago">…</BaseCollapse>
+</BaseCollapseGroup>
+```
+
+### Props de BaseCollapse
+
+| Prop              | Tipo                   | Predeterminado                                   | Descripción                                                                                    |
+| ----------------- | ---------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `open`            | `boolean`              | `false`                                          | Estado abierto (`v-model:open`). Funciona también sin v-model. Se ignora dentro de un grupo    |
+| `title`           | `string`               | `""`                                             | Título de la cabecera                                                                          |
+| `description`     | `string`               | `""`                                             | Texto secundario bajo el título; se asocia al botón con `aria-describedby`                     |
+| `icon`            | `string`               | `""`                                             | Nombre de un icono de `BaseIcon` mostrado antes del título (decorativo)                        |
+| `titleAs`         | `"h2" \| "h3" \| "h4"` | `"h3"`                                           | Elemento de encabezado que envuelve el botón                                                   |
+| `variant`         | `"plain" \| "card"`    | `undefined` (hereda del grupo; si no, `"plain"`) | Diseño sin card o con card                                                                     |
+| `value`           | `string \| number`     | `""` (se genera un id único)                     | Identificador del ítem dentro de `BaseCollapseGroup`; indícalo para usar `v-model` en el grupo |
+| `id`              | `string`               | `""` (se genera uno único)                       | Base de los ids del botón (`{id}-trigger`) y del panel (`{id}-panel`)                          |
+| `disabled`        | `boolean`              | `false`                                          | Deshabilita el botón; el estado tampoco cambia con los métodos expuestos                       |
+| `toggleAriaLabel` | `string`               | `""`                                             | Nombre accesible del botón; úsalo cuando el slot `title` no tenga texto                        |
+
+Los atributos no declarados (`class`, `data-*`, etc.) se aplican al elemento raíz.
+
+### Props de BaseCollapseGroup
+
+| Prop          | Tipo                                               | Predeterminado | Descripción                                                                |
+| ------------- | -------------------------------------------------- | -------------- | -------------------------------------------------------------------------- |
+| `modelValue`  | `string \| number \| (string \| number)[] \| null` | `null`         | Valor del ítem abierto o, con `multiple`, arreglo de valores abiertos      |
+| `multiple`    | `boolean`                                          | `false`        | Permite varios ítems abiertos a la vez                                     |
+| `collapsible` | `boolean`                                          | `true`         | Sin `multiple`, permite cerrar el ítem abierto y dejar todos cerrados      |
+| `variant`     | `"plain" \| "card"`                                | `"plain"`      | Diseño de los ítems sin `variant` propio; `card` los separa con un espacio |
+
+### Modelos y eventos
+
+| Componente          | Nombre                   | Payload                                              | Cuándo se emite                                             |
+| ------------------- | ------------------------ | ---------------------------------------------------- | ----------------------------------------------------------- |
+| `BaseCollapse`      | `v-model:open`           | `boolean`                                            | Al abrir o cerrar la sección (también dentro de un grupo)   |
+| `BaseCollapse`      | `toggle`                 | `boolean` (nuevo estado)                             | Al abrir o cerrar la sección                                |
+| `BaseCollapseGroup` | `v-model` (`modelValue`) | `string \| number \| null`, o arreglo con `multiple` | Al abrir o cerrar un ítem; nunca modifica el valor recibido |
+| `BaseCollapseGroup` | `change`                 | `{ value, open }`                                    | Al abrir o cerrar un ítem                                   |
+
+Sin `v-model`, ambos componentes conservan el estado internamente.
+
+### Slots y métodos expuestos
+
+- `BaseCollapse`: slot predeterminado (contenido, recibe `{ open }`), `title` (reemplaza el título
+  dentro del botón, recibe `{ open }`) y `actions` (contenido de la cabecera fuera del botón, como
+  badges o botones; recibe `{ open }`). Expone `expand()`, `collapse()` y `toggle()`.
+- `BaseCollapseGroup`: slot predeterminado con los `BaseCollapse`. Sin métodos expuestos.
+
+### Teclado y accesibilidad
+
+- Sigue el patrón de acordeón de WAI-ARIA: un `<button>` con `aria-expanded` y `aria-controls`
+  dentro del encabezado `titleAs`, y un panel `role="region"` etiquetado por el botón.
+- `Enter` y `Espacio` abren y cierran la sección. El contenido cerrado queda oculto
+  (`visibility: hidden`) y no recibe foco.
+- Dentro de `BaseCollapseGroup`, `↑`/`↓` mueven el foco entre cabeceras habilitadas (de forma
+  circular) e `Inicio`/`Fin` van a la primera y la última.
+- Con `prefers-reduced-motion: reduce` se desactivan las animaciones.
 
 ## Directiva `v-tooltip`
 

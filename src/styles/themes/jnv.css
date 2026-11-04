@@ -122,6 +122,10 @@
   --jnv-tabs-text: var(--jnv-color-text-muted);
   --jnv-tabs-text-active: var(--jnv-color-text-heading);
   --jnv-card-background: var(--jnv-color-surface-page);
+  --jnv-collapse-divider: var(--jnv-color-border-default);
+  --jnv-collapse-header-hover-background: var(--jnv-color-surface-muted);
+  --jnv-collapse-icon: var(--jnv-color-text-muted);
+  --jnv-collapse-group-gap: var(--space-3);
 
   /* BaseBadge. */
   --jnv-badge-sm-padding-block: 0.125rem;

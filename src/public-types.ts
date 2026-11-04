@@ -166,6 +166,38 @@ export interface BaseCardProps {
   titleIcon?: string;
   titleAs?: "h2" | "h3" | "h4";
 }
+export type BaseCollapseVariant = "plain" | "card";
+export type BaseCollapseValue = string | number;
+export interface BaseCollapseProps {
+  /** Estado abierto; admite `v-model:open`. Se ignora dentro de `BaseCollapseGroup`. */
+  open?: boolean;
+  title?: string;
+  description?: string;
+  icon?: string;
+  titleAs?: "h2" | "h3" | "h4";
+  /**
+   * `plain` (sin card, con divisor `--jnv-collapse-divider`) o `card` (sobre `BaseCard`).
+   * Sin valor hereda el `variant` del grupo; fuera de un grupo es `plain`.
+   */
+  variant?: BaseCollapseVariant;
+  /** Identificador dentro de `BaseCollapseGroup`. Predeterminado: un id único generado. */
+  value?: BaseCollapseValue;
+  id?: string;
+  disabled?: boolean;
+  toggleAriaLabel?: string;
+}
+export interface BaseCollapseGroupChangeEvent {
+  value: BaseCollapseValue;
+  open: boolean;
+}
+export interface BaseCollapseGroupProps {
+  /** Valor abierto (o arreglo de valores con `multiple`); `null` si no hay ninguno. */
+  modelValue?: BaseCollapseValue | BaseCollapseValue[] | null;
+  multiple?: boolean;
+  collapsible?: boolean;
+  /** Variante predeterminada de los ítems. `card` los separa con `--jnv-collapse-group-gap`. */
+  variant?: BaseCollapseVariant;
+}
 export interface BaseAlertProps {
   title?: string;
   description?: string;

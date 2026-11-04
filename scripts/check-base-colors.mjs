@@ -11,6 +11,8 @@ const files = [
   "BaseCard",
   "BaseCheckbox",
   "BaseColorPicker",
+  "BaseCollapse",
+  "BaseCollapseGroup",
   "BaseConfirmDialog",
   "BaseDialog",
   "BaseFieldInfo",

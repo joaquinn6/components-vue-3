@@ -98,6 +98,12 @@
   --jnv-card-padding-compact: var(--space-4);
   --jnv-card-background: var(--jnv-color-surface-page);
 
+  /* BaseCollapse y BaseCollapseGroup. */
+  --jnv-collapse-divider: var(--jnv-color-border-default);
+  --jnv-collapse-header-hover-background: var(--jnv-color-surface-muted);
+  --jnv-collapse-icon: var(--jnv-color-text-muted);
+  --jnv-collapse-group-gap: var(--space-3);
+
   /* BaseBadge: tamaños, ancho fijo y colores por tono. */
   --jnv-badge-sm-padding-block: 0.125rem;
   --jnv-badge-sm-padding-inline: var(--space-2);

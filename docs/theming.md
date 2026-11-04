@@ -209,6 +209,17 @@ ejemplo:
 }
 ```
 
+## Tokens de BaseCollapse
+
+| Token                                    | JNV oscuro y claro                | Uso                                                                |
+| ---------------------------------------- | --------------------------------- | ------------------------------------------------------------------ |
+| `--jnv-collapse-divider`                 | `var(--jnv-color-border-default)` | Línea inferior de `variant="plain"` y separador interno de la card |
+| `--jnv-collapse-header-hover-background` | `var(--jnv-color-surface-muted)`  | Fondo de la cabecera al pasar el puntero                           |
+| `--jnv-collapse-icon`                    | `var(--jnv-color-text-muted)`     | Color del chevron                                                  |
+| `--jnv-collapse-group-gap`               | `var(--space-3)`                  | Separación entre ítems de `BaseCollapseGroup` con `variant="card"` |
+
+La variante `card` reutiliza `BaseCard`, por lo que también responde a `--jnv-card-background`.
+
 ## Tokens de BaseAlert
 
 Cada tono define fondo, borde y texto con `--jnv-alert-{tono}-{background,border,text}`.
