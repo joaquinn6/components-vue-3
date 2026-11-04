@@ -21,6 +21,8 @@ const files = [
   "BaseFormSection",
   "BaseHeading",
   "BaseIcon",
+  "BaseImageLightbox",
+  "BaseImageViewer",
   "BaseInput",
   "BaseLink",
   "BasePhoneInput",

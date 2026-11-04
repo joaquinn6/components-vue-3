@@ -126,6 +126,19 @@
   --jnv-collapse-header-hover-background: var(--jnv-color-surface-muted);
   --jnv-collapse-icon: var(--jnv-color-text-muted);
   --jnv-collapse-group-gap: var(--space-3);
+  --jnv-image-viewer-thumbnail-sm: 3rem;
+  --jnv-image-viewer-thumbnail-md: 4.5rem;
+  --jnv-image-viewer-thumbnail-lg: 6rem;
+  --jnv-image-viewer-background: var(--jnv-color-surface-muted);
+  --jnv-image-viewer-border-color: var(--jnv-color-brand-primary);
+  --jnv-image-viewer-border-width: var(--border-width-accent);
+  --jnv-image-viewer-scrim: rgb(0 0 0 / 0.32);
+  --jnv-image-viewer-action-background: rgb(0 0 0 / 0.56);
+  --jnv-image-viewer-action-hover-background: rgb(0 0 0 / 0.78);
+  --jnv-image-viewer-action-text: #ffffff;
+  --jnv-image-lightbox-width: 64rem;
+  --jnv-image-lightbox-height: 48rem;
+  --jnv-image-lightbox-stage-background: var(--jnv-color-surface-muted);
 
   /* BaseBadge. */
   --jnv-badge-sm-padding-block: 0.125rem;

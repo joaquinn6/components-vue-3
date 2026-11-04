@@ -21,6 +21,7 @@ import FieldInfoDemo from "./FieldInfoDemo.vue";
 import FormLayoutDemo from "./FormLayoutDemo.vue";
 import HeadingDemo from "./HeadingDemo.vue";
 import IconDemo from "./IconDemo.vue";
+import ImageViewerDemo from "./ImageViewerDemo.vue";
 import InputDemo from "./InputDemo.vue";
 import LinkDemo from "./LinkDemo.vue";
 import LoadingDirectiveDemo from "./LoadingDirectiveDemo.vue";
@@ -74,6 +75,12 @@ export const demos: readonly DemoEntry[] = [
     name: "BaseCollapse",
     category: "content",
     component: CollapseDemo,
+  },
+  {
+    id: "base-image-viewer",
+    name: "BaseImageViewer · BaseImageLightbox",
+    category: "content",
+    component: ImageViewerDemo,
   },
   {
     id: "base-alert",

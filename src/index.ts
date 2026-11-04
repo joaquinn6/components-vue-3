@@ -24,6 +24,8 @@ import _BaseFormSection from "./components/BaseFormSection.vue";
 import _BaseHeading from "./components/BaseHeading.vue";
 import _BaseInput from "./components/BaseInput.vue";
 import _BaseIcon from "./components/BaseIcon.vue";
+import _BaseImageLightbox from "./components/BaseImageLightbox.vue";
+import _BaseImageViewer from "./components/BaseImageViewer.vue";
 import _BaseLink from "./components/BaseLink.vue";
 import _BasePhoneInput from "./components/BasePhoneInput.vue";
 import _BaseMonthInput from "./components/BaseMonthInput.vue";
@@ -66,6 +68,8 @@ import type {
   BaseHeadingProps,
   BaseInputProps,
   BaseIconProps,
+  BaseImageLightboxProps,
+  BaseImageViewerProps,
   BaseLinkProps,
   BasePhoneInputProps,
   BaseMonthInputProps,
@@ -127,6 +131,10 @@ export const BaseFormSection =
 export const BaseHeading = _BaseHeading as TypedComponent<BaseHeadingProps>;
 export const BaseInput = _BaseInput as TypedComponent<BaseInputProps>;
 export const BaseIcon = _BaseIcon as TypedComponent<BaseIconProps>;
+export const BaseImageViewer =
+  _BaseImageViewer as TypedComponent<BaseImageViewerProps>;
+export const BaseImageLightbox =
+  _BaseImageLightbox as TypedComponent<BaseImageLightboxProps>;
 export const BaseLink = _BaseLink as TypedComponent<BaseLinkProps>;
 export const BasePhoneInput =
   _BasePhoneInput as TypedComponent<BasePhoneInputProps>;

@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import {
-  computed,
-  nextTick,
-  onBeforeUnmount,
-  ref,
-  useId,
-  useSlots,
-  watch,
-} from "vue";
+import { computed, nextTick, ref, useId, useSlots } from "vue";
 
 import BaseHeading from "./BaseHeading.vue";
 import BaseIcon from "./BaseIcon.vue";
 import BaseText from "./BaseText.vue";
+import { useModalDialog } from "../composables/useModalDialog";
 import { loading as vLoading } from "../directives/loading";
 
 const props = defineProps({
@@ -34,7 +27,6 @@ const slots = useSlots();
 const generatedId = useId();
 const dialogElement = ref<HTMLDialogElement | null>(null);
 const closeButton = ref<HTMLButtonElement | null>(null);
-const previousFocus = ref<HTMLElement | null>(null);
 const titleId = computed(() => `dialog-title-${generatedId}`);
 const descriptionId = computed(() => `dialog-description-${generatedId}`);
 const surfaceTag = computed(() => (props.form ? "form" : "div"));
@@ -55,9 +47,11 @@ function focusFirstInvalid() {
   );
 }
 
-function restoreFocus() {
-  nextTick(() => previousFocus.value?.focus?.());
-}
+const { restoreFocus } = useModalDialog({
+  open: () => props.open,
+  dialog: dialogElement,
+  focusInitial: focusInitialControl,
+});
 
 function requestClose() {
   if (!props.closeDisabled) emit("close");
@@ -71,27 +65,6 @@ function onClose() {
 function onSubmit(event: SubmitEvent) {
   if (props.form) emit("submit", event);
 }
-
-watch(
-  () => props.open,
-  async (open) => {
-    if (open) {
-      previousFocus.value = document.activeElement as HTMLElement | null;
-      await nextTick();
-      if (!dialogElement.value?.open) dialogElement.value?.showModal();
-      await nextTick();
-      focusInitialControl();
-      return;
-    }
-
-    if (dialogElement.value?.open) dialogElement.value.close();
-  },
-  { immediate: true, flush: "post" },
-);
-
-onBeforeUnmount(() => {
-  if (dialogElement.value?.open) dialogElement.value.close();
-});
 
 defineExpose({ focusFirstInvalid });
 </script>

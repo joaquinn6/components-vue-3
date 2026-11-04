@@ -32,29 +32,31 @@ sistema visual. `href` es obligatorio y el contenido se proporciona mediante el 
 
 No emite eventos propios ni expone modelos, métodos o slots con nombre.
 
-| Componente          | Props principales                                                                                                                                                      | Modelo y eventos                                                                |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `BaseButton`        | `variant` (`primary`, `secondary`, `outline`, `ghost`, `inverse`, `danger`, `ghost-danger`), `size` (`sm`, `md`, `lg`, `icon`), `type`, `loading`, `disabled`, `block` | `click`; contenido mediante slot predeterminado                                 |
-| `BaseBadge`         | `label`, `tone` (`neutral`, `info`, `success`, `warning`, `error`, `critical`, `progress`, `violet`), `size` (`sm`, `md`), `width` (`auto`, `fixed`)                   | Slot predeterminado opcional; si existe, tiene prioridad sobre `label`          |
-| `BaseLink`          | `href`, `target`, `rel`, `variant` (`brand`, `body`, `muted`, `inverse`), `size`, `underline` (`always`, `hover`, `none`)                                              | Sin eventos propios; contenido mediante slot predeterminado                     |
-| `BaseCard`          | `as`, `surface` (`page`, `inverse`, `primary`), `padding`, `radius`, `elevation`, `outlined`, `title`, `titlePosition` (`inside`, `outside`), `titleIcon`, `titleAs`   | Slot predeterminado                                                             |
-| `BaseCollapse`      | `open`, `title`, `description`, `icon`, `titleAs`, `variant` (`plain`, `card`), `value`, `id`, `disabled`, `toggleAriaLabel`                                           | `v-model:open`, `toggle`; slots predeterminado, `title` y `actions`             |
-| `BaseCollapseGroup` | `v-model`, `multiple`, `collapsible`, `variant` (`plain`, `card`)                                                                                                      | `change`; acordeón con teclado: flechas, Inicio y Fin                           |
-| `BaseAlert`         | `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`                                                                                                    | `dismiss`; slots predeterminado e `icon`                                        |
-| `BaseToast`         | `open`, `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`, `duration`, `pauseOnHover`, `position`                                                    | `v-model:open`, `close`; slots predeterminado e `icon`                          |
-| `BaseDialog`        | `open`, `title`, `description`, `size` (`sm`, `md`), `form`, `loading`, `closeLabel`, `closeDisabled`                                                                  | `close`, `submit`; slots predeterminado y `actions`                             |
-| `BaseConfirmDialog` | `open`, `title`, `description`, `confirmLabel`, `cancelLabel`, `buttonSize` (`sm`, `md`, `lg`, predeterminado `sm`), `loading`, `tone` (`danger`, `primary`)           | `close`, `confirm`                                                              |
-| `BaseHeading`       | `as`, `variant` (`hero`, `lg`, `md`, `sm`, `xs`), `color`, `align`                                                                                                     | Slot predeterminado                                                             |
-| `BaseText`          | `as`, `variant` (`md`, `sm`, `label`, `xl`), `color`, `weight`                                                                                                         | Slot predeterminado                                                             |
-| `BaseBreadcrumb`    | `value` (`{ name, to? }[]`), `divider`, `size` (`sm`, `md`, `label`, `xl`), `weight`, `ariaLabel`                                                                      | Sin eventos ni slots                                                            |
-| `BaseTabs`          | `tabs` (`{ label, value, disabled?, id?, panelId? }`), `ariaLabel`                                                                                                     | `v-model`; teclado: flechas, Inicio y Fin                                       |
-| `BaseFieldInfo`     | `text`, `type`, `ariaLabel`                                                                                                                                            | Tooltip al foco o hover                                                         |
-| `BaseDropdownMenu`  | `groups` (`{ label, event, color?, disabled?, tooltip? }[][]`)                                                                                                         | `select`; menú accesible con teclado                                            |
-| `BaseSearchQL`      | `v-model`, `filters`, `defaultFilters`, rango de fecha opcional, textos y etiquetas accesibles, `disabled`                                                             | `update:modelValue`, `change`, `date-change`; emite filtros y el rango aplicado |
-| `BaseIcon`          | `name`, `size` (`sm`, `md`, `lg`, `xl`), `label`, `decorative`                                                                                                         | Sin eventos; icono SVG accesible                                                |
-| `BaseFormSection`   | `title`, `description`, `stretch`, `titleAs` (`h2`, `h3`, `h4`)                                                                                                        | Slot predeterminado; sin eventos ni métodos expuestos                           |
-| `BaseFormRow`       | `columns` (`1`, `2`, `3`, `4`), `columnWidths`, `alignItems` (`start`, `center`, `end`, `stretch`)                                                                     | Slot predeterminado; sin eventos ni métodos expuestos                           |
-| `BaseFormColumns`   | Sin props                                                                                                                                                              | Slot predeterminado; sin eventos ni métodos expuestos                           |
+| Componente          | Props principales                                                                                                                                                      | Modelo y eventos                                                                                        |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `BaseButton`        | `variant` (`primary`, `secondary`, `outline`, `ghost`, `inverse`, `danger`, `ghost-danger`), `size` (`sm`, `md`, `lg`, `icon`), `type`, `loading`, `disabled`, `block` | `click`; contenido mediante slot predeterminado                                                         |
+| `BaseBadge`         | `label`, `tone` (`neutral`, `info`, `success`, `warning`, `error`, `critical`, `progress`, `violet`), `size` (`sm`, `md`), `width` (`auto`, `fixed`)                   | Slot predeterminado opcional; si existe, tiene prioridad sobre `label`                                  |
+| `BaseLink`          | `href`, `target`, `rel`, `variant` (`brand`, `body`, `muted`, `inverse`), `size`, `underline` (`always`, `hover`, `none`)                                              | Sin eventos propios; contenido mediante slot predeterminado                                             |
+| `BaseCard`          | `as`, `surface` (`page`, `inverse`, `primary`), `padding`, `radius`, `elevation`, `outlined`, `title`, `titlePosition` (`inside`, `outside`), `titleIcon`, `titleAs`   | Slot predeterminado                                                                                     |
+| `BaseCollapse`      | `open`, `title`, `description`, `icon`, `titleAs`, `variant` (`plain`, `card`), `value`, `id`, `disabled`, `toggleAriaLabel`                                           | `v-model:open`, `toggle`; slots predeterminado, `title` y `actions`                                     |
+| `BaseCollapseGroup` | `v-model`, `multiple`, `collapsible`, `variant` (`plain`, `card`)                                                                                                      | `change`; acordeón con teclado: flechas, Inicio y Fin                                                   |
+| `BaseImageViewer`   | `src`, `alt`, `variant` (`default`, `thumbnail`), `radius`, `bordered`, `thumbnailSize`, `aspectRatio`, `fit`, `actions`, `texts` y opciones del visor                 | `edit`, `delete`, `download`, `copy`, `open`, `close`, `error`. Ver [BaseImageViewer](#baseimageviewer) |
+| `BaseImageLightbox` | `open`, `src`, `alt`, `caption`, `downloadable`, `copyable`, `maxZoom`, `zoomStep`, `texts`                                                                            | `v-model:open`, `close`, `download`, `copy`, `zoom`                                                     |
+| `BaseAlert`         | `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`                                                                                                    | `dismiss`; slots predeterminado e `icon`                                                                |
+| `BaseToast`         | `open`, `title`, `description`, `tone`, `icon`, `dismissible`, `closeLabel`, `duration`, `pauseOnHover`, `position`                                                    | `v-model:open`, `close`; slots predeterminado e `icon`                                                  |
+| `BaseDialog`        | `open`, `title`, `description`, `size` (`sm`, `md`), `form`, `loading`, `closeLabel`, `closeDisabled`                                                                  | `close`, `submit`; slots predeterminado y `actions`                                                     |
+| `BaseConfirmDialog` | `open`, `title`, `description`, `confirmLabel`, `cancelLabel`, `buttonSize` (`sm`, `md`, `lg`, predeterminado `sm`), `loading`, `tone` (`danger`, `primary`)           | `close`, `confirm`                                                                                      |
+| `BaseHeading`       | `as`, `variant` (`hero`, `lg`, `md`, `sm`, `xs`), `color`, `align`                                                                                                     | Slot predeterminado                                                                                     |
+| `BaseText`          | `as`, `variant` (`md`, `sm`, `label`, `xl`), `color`, `weight`                                                                                                         | Slot predeterminado                                                                                     |
+| `BaseBreadcrumb`    | `value` (`{ name, to? }[]`), `divider`, `size` (`sm`, `md`, `label`, `xl`), `weight`, `ariaLabel`                                                                      | Sin eventos ni slots                                                                                    |
+| `BaseTabs`          | `tabs` (`{ label, value, disabled?, id?, panelId? }`), `ariaLabel`                                                                                                     | `v-model`; teclado: flechas, Inicio y Fin                                                               |
+| `BaseFieldInfo`     | `text`, `type`, `ariaLabel`                                                                                                                                            | Tooltip al foco o hover                                                                                 |
+| `BaseDropdownMenu`  | `groups` (`{ label, event, color?, disabled?, tooltip? }[][]`)                                                                                                         | `select`; menú accesible con teclado                                                                    |
+| `BaseSearchQL`      | `v-model`, `filters`, `defaultFilters`, rango de fecha opcional, textos y etiquetas accesibles, `disabled`                                                             | `update:modelValue`, `change`, `date-change`; emite filtros y el rango aplicado                         |
+| `BaseIcon`          | `name`, `size` (`sm`, `md`, `lg`, `xl`), `label`, `decorative`                                                                                                         | Sin eventos; icono SVG accesible                                                                        |
+| `BaseFormSection`   | `title`, `description`, `stretch`, `titleAs` (`h2`, `h3`, `h4`)                                                                                                        | Slot predeterminado; sin eventos ni métodos expuestos                                                   |
+| `BaseFormRow`       | `columns` (`1`, `2`, `3`, `4`), `columnWidths`, `alignItems` (`start`, `center`, `end`, `stretch`)                                                                     | Slot predeterminado; sin eventos ni métodos expuestos                                                   |
+| `BaseFormColumns`   | Sin props                                                                                                                                                              | Slot predeterminado; sin eventos ni métodos expuestos                                                   |
 
 `BaseDropdownMenu` emite `select` con `{ item, groupIndex, itemIndex }`. Los colores disponibles
 son `default`, `danger`, `success` e `info`. Para usar la directiva `v-tooltip` directamente,
@@ -136,19 +138,19 @@ expone modelos, slots o métodos.
 El tipo `BaseIconName` reúne los nombres disponibles y ofrece autocompletado; `BaseIconProps.name`
 sigue aceptando cualquier `string` por compatibilidad. Nombres disponibles:
 
-| Grupo          | Nombres                                                                                                                                    |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Navegación     | `menu`, `moreVertical`, `close`, `search`, `arrowLeft`, `arrowRight`, `chevronDown`, `chevronLeft`, `chevronRight`, `externalLink`, `home` |
-| Acciones       | `plus`, `edit`, `trash`, `copy`, `clipboard`, `download`, `send`, `printer`, `sort`, `check`, `settings`, `loader`                         |
-| Estado         | `info`, `help`, `alertTriangle`, `circleCheck`, `circleX`, `bell`, `lock`, `shield`, `eye`, `eyeOff`, `clock`, `calendar`                  |
-| Personas       | `user`, `circleUser`, `support`, `mail`, `message`, `smartphone`, `monitor`, `camera`                                                      |
-| Comercio       | `cart`, `card`, `bank`, `piggyBank`, `receipt`, `tag`, `package`, `truck`, `weight`, `location`, `map`, `building`                         |
-| Contenido      | `grid`, `list`, `bolt`, `code`, `briefcase`, `graduationCap`, `languages`                                                                  |
-| Tema           | `sun`, `moon`                                                                                                                              |
-| Marcas y otros | `logo`, `facebook`, `twitter`, `github`, `linkedin`                                                                                        |
+| Grupo          | Nombres                                                                                                                                             |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Navegación     | `menu`, `moreVertical`, `close`, `search`, `arrowLeft`, `arrowRight`, `chevronDown`, `chevronLeft`, `chevronRight`, `externalLink`, `home`          |
+| Acciones       | `plus`, `edit`, `trash`, `copy`, `clipboard`, `download`, `send`, `printer`, `sort`, `check`, `settings`, `loader`, `zoomIn`, `zoomOut`, `maximize` |
+| Estado         | `info`, `help`, `alertTriangle`, `circleCheck`, `circleX`, `bell`, `lock`, `shield`, `eye`, `eyeOff`, `clock`, `calendar`                           |
+| Personas       | `user`, `circleUser`, `support`, `mail`, `message`, `smartphone`, `monitor`, `camera`                                                               |
+| Comercio       | `cart`, `card`, `bank`, `piggyBank`, `receipt`, `tag`, `package`, `truck`, `weight`, `location`, `map`, `building`                                  |
+| Contenido      | `grid`, `list`, `bolt`, `code`, `briefcase`, `graduationCap`, `languages`                                                                           |
+| Tema           | `sun`, `moon`                                                                                                                                       |
+| Marcas y otros | `logo`, `facebook`, `twitter`, `github`, `linkedin`                                                                                                 |
 
 Los trazados de `github`, `linkedin`, `sun`, `moon`, `languages`, `externalLink`, `code`,
-`briefcase` y `graduationCap` están adaptados de [Lucide](https://lucide.dev) (licencia ISC); la
+`briefcase`, `graduationCap`, `zoomIn`, `zoomOut` y `maximize` están adaptados de [Lucide](https://lucide.dev) (licencia ISC); la
 atribución se distribuye en `NOTICE`.
 
 ## BaseCollapse
@@ -222,6 +224,114 @@ Sin `v-model`, ambos componentes conservan el estado internamente.
 - Dentro de `BaseCollapseGroup`, `↑`/`↓` mueven el foco entre cabeceras habilitadas (de forma
   circular) e `Inicio`/`Fin` van a la primera y la última.
 - Con `prefers-reduced-motion: reduce` se desactivan las animaciones.
+
+## BaseImageViewer
+
+Muestra una imagen recibida por props en dos variantes:
+
+- `thumbnail`: miniatura cuadrada (`thumbnailSize`) que abre el visor ampliado al hacer click.
+- `default`: ocupa el ancho del contenedor y, al pasar el puntero o al recibir el foco, muestra de
+  una a cuatro acciones: editar, eliminar, ampliar y descargar.
+
+`radius` controla lo redondeado de ambas variantes, desde `none` hasta `full` (círculo en la
+miniatura). El visor ampliado es `BaseImageLightbox`, que también puede usarse de forma
+independiente.
+
+```vue
+<BaseImageViewer variant="thumbnail" :src="foto" alt="Perro" radius="full" />
+
+<BaseImageViewer
+  :src="foto"
+  alt="Perro"
+  :actions="['edit', 'delete', 'expand', 'download']"
+  @edit="editarFoto"
+  @delete="eliminarFoto"
+/>
+```
+
+### Props de BaseImageViewer
+
+| Prop            | Tipo                                               | Predeterminado    | Descripción                                                                                                |
+| --------------- | -------------------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| `src`           | `string`                                           | — (obligatoria)   | URL de la imagen                                                                                           |
+| `alt`           | `string`                                           | `""`              | Texto alternativo; usa `""` solo para imágenes decorativas                                                 |
+| `variant`       | `"default" \| "thumbnail"`                         | `"default"`       | Versión normal a ancho completo o miniatura                                                                |
+| `radius`        | `"none" \| "sm" \| "md" \| "lg" \| "full"`         | `"md"`            | Radio del borde (`--radius-sm/md/lg`; `full` usa `--radius-round`)                                         |
+| `thumbnailSize` | `"sm" \| "md" \| "lg"`                             | `"md"`            | Lado de la miniatura: `--jnv-image-viewer-thumbnail-{sm,md,lg}` (3, 4.5 y 6 rem)                           |
+| `aspectRatio`   | `string`                                           | `""`              | Relación de aspecto CSS de la versión normal (p. ej. `"16 / 9"`); vacío conserva la altura natural         |
+| `fit`           | `"cover" \| "contain"`                             | `"cover"`         | Ajuste de la imagen dentro de su caja                                                                      |
+| `actions`       | `("edit" \| "delete" \| "expand" \| "download")[]` | `["expand"]`      | Acciones de la versión normal, en el orden indicado; se ignoran duplicados                                 |
+| `bordered`      | `boolean`                                          | `false`           | Añade un borde del color principal (`--jnv-image-viewer-border-color` y `--jnv-image-viewer-border-width`) |
+| `previewable`   | `boolean`                                          | `true`            | La miniatura abre el visor al hacer click; con `false` solo se muestra                                     |
+| `downloadable`  | `boolean`                                          | `true`            | Muestra el botón de descarga en el visor ampliado                                                          |
+| `copyable`      | `boolean`                                          | `false`           | Muestra el botón de copiar en el visor ampliado (si el navegador lo permite)                               |
+| `downloadName`  | `string`                                           | `""`              | Nombre del archivo descargado; vacío usa el nombre de la URL o `imagen`                                    |
+| `maxZoom`       | `number`                                           | `4`               | Zoom máximo del visor (`1` = imagen ajustada a la pantalla)                                                |
+| `zoomStep`      | `number`                                           | `0.5`             | Incremento de cada paso de zoom                                                                            |
+| `caption`       | `string`                                           | `""`              | Título visible en la barra del visor; también lo etiqueta                                                  |
+| `texts`         | `BaseImageViewerTexts`                             | textos en español | Sustituye cualquier texto visible o accesible (ver abajo)                                                  |
+
+Los atributos no declarados (`class`, `data-*`, etc.) se aplican al elemento raíz: `<figure>` en
+la versión normal, y `<button>` (o `<span>` sin `previewable`) en la miniatura.
+
+### Props de BaseImageLightbox
+
+`open` (`v-model:open`, `false`), `src` (obligatoria), `alt`, `caption`, `downloadable` (`true`),
+`copyable` (`false`), `downloadName`, `maxZoom` (`4`), `zoomStep` (`0.5`) y `texts`, con el mismo
+significado que en `BaseImageViewer`.
+
+### Textos (`texts`)
+
+| Clave                                         | Predeterminado                                                                        | Uso                                                                  |
+| --------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `edit`, `delete`, `expand`, `download`        | `"Editar imagen"`, `"Eliminar imagen"`, `"Ver imagen ampliada"`, `"Descargar imagen"` | Etiquetas y tooltips de las acciones; `download` también en el visor |
+| `open`                                        | `"Ver imagen"`                                                                        | Etiqueta accesible de la miniatura                                   |
+| `actionsLabel`                                | `"Acciones de la imagen"`                                                             | Etiqueta del grupo de acciones                                       |
+| `loadError`                                   | `"No se pudo cargar la imagen"`                                                       | Estado de error de carga                                             |
+| `dialogLabel`                                 | `"Visor de imagen"`                                                                   | Etiqueta del visor cuando no hay `caption`                           |
+| `close`                                       | `"Cerrar visor"`                                                                      | Botón de cierre                                                      |
+| `zoomIn`, `zoomOut`, `resetZoom`, `zoomLevel` | `"Acercar"`, `"Alejar"`, `"Restablecer zoom"`, `"Nivel de zoom"`                      | Controles e indicador de zoom                                        |
+| `copy`, `copied`, `copyError`                 | `"Copiar imagen"`, `"Imagen copiada"`, `"No se pudo copiar la imagen"`                | Botón de copiar y su resultado                                       |
+| `downloadError`                               | `"No se pudo descargar la imagen"`                                                    | Error al descargar                                                   |
+
+### Eventos
+
+| Componente          | Evento                  | Payload                  | Cuándo se emite                                                               |
+| ------------------- | ----------------------- | ------------------------ | ----------------------------------------------------------------------------- |
+| `BaseImageViewer`   | `edit`, `delete`        | `{ src }`                | Al pulsar la acción; el componente no hace nada más                           |
+| `BaseImageViewer`   | `download`              | `{ src }`                | Al pulsar descargar, en la imagen o en el visor, antes de iniciar la descarga |
+| `BaseImageViewer`   | `copy`                  | `{ success: boolean }`   | Tras intentar copiar desde el visor                                           |
+| `BaseImageViewer`   | `open`, `close`         | —                        | Al abrir y cerrar el visor ampliado                                           |
+| `BaseImageViewer`   | `error`                 | `Event`                  | Si la imagen no se puede cargar                                               |
+| `BaseImageLightbox` | `v-model:open`, `close` | `boolean`, —             | Al cerrar con el botón, `Escape` o el navegador                               |
+| `BaseImageLightbox` | `download`, `copy`      | `{ src }`, `{ success }` | Igual que en `BaseImageViewer`                                                |
+| `BaseImageLightbox` | `zoom`                  | `number`                 | Cada vez que cambia el nivel de zoom                                          |
+
+### Slots y métodos expuestos
+
+- `BaseImageViewer`: `actions` (botones adicionales tras los integrados) y `fallback` (contenido
+  cuando la imagen no carga; por defecto, un icono y `texts.loadError`). Expone `openPreview()` y
+  `closePreview()`.
+- `BaseImageLightbox`: sin slots ni métodos expuestos.
+
+### Teclado y accesibilidad
+
+- Las acciones se muestran al pasar el puntero o cuando el foco está dentro de la imagen; en
+  dispositivos táctiles están siempre visibles. Son botones con etiqueta y tooltip.
+- El visor es un `<dialog>` modal centrado, con el mismo estilo que `BaseDialog`: al abrirse enfoca
+  el botón de cerrar; `Escape` o un click fuera del modal lo cierran y el foco vuelve al control
+  que lo abrió.
+- Zoom: botones, rueda del ratón (centrada en el puntero), doble click (alterna 100 %/200 %) y
+  teclas `+`/`=`, `-` y `0` (restablecer). Con zoom, la imagen se arrastra con el puntero o se
+  desplaza con las flechas. El nivel se anuncia en una región `role="status"`.
+- Con `prefers-reduced-motion: reduce` se desactivan las transiciones.
+
+### Descarga, copia y CORS
+
+La descarga obtiene la imagen con `fetch` para guardarla con `downloadName`. Si el servidor no
+permite CORS, se abre la URL directamente y el navegador decide si la descarga o la muestra.
+Copiar requiere la API de portapapeles (contexto seguro) y que la imagen permita CORS. La imagen
+se copia como PNG. Si falla, se emite `copy` con `success: false` y se anuncia `texts.copyError`.
 
 ## Directiva `v-tooltip`
 

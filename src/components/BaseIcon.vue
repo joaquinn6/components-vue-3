@@ -45,6 +45,23 @@ const iconPaths = {
   arrowLeft: ["M19 12H5", "m10 17-5-5 5-5"],
   arrowRight: ["M5 12h14", "m14 7 5 5-5 5"],
   download: ["M12 3v12", "m7 10 5 5 5-5", "M5 21h14"],
+  zoomIn: [
+    "M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z",
+    "m21 21-4.35-4.35",
+    "M11 8v6",
+    "M8 11h6",
+  ],
+  zoomOut: [
+    "M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z",
+    "m21 21-4.35-4.35",
+    "M8 11h6",
+  ],
+  maximize: [
+    "M8 3H5a2 2 0 0 0-2 2v3",
+    "M21 8V5a2 2 0 0 0-2-2h-3",
+    "M3 16v3a2 2 0 0 0 2 2h3",
+    "M16 21h3a2 2 0 0 0 2-2v-3",
+  ],
   plus: ["M12 5v14", "M5 12h14"],
   trash: ["M4 7h16", "M9 7V4h6v3", "m8 7 1 13h6l1-13", "M10 11v5", "M14 11v5"],
   facebook: [
@@ -224,6 +241,9 @@ const props = defineProps({
         "arrowLeft",
         "arrowRight",
         "download",
+        "zoomIn",
+        "zoomOut",
+        "maximize",
         "plus",
         "trash",
         "facebook",

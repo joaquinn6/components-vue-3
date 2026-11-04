@@ -220,6 +220,26 @@ ejemplo:
 
 La variante `card` reutiliza `BaseCard`, por lo que también responde a `--jnv-card-background`.
 
+## Tokens de BaseImageViewer
+
+| Token                                                       | JNV oscuro y claro               | Uso                                                                   |
+| ----------------------------------------------------------- | -------------------------------- | --------------------------------------------------------------------- |
+| `--jnv-image-viewer-thumbnail-{sm,md,lg}`                   | `3rem`, `4.5rem`, `6rem`         | Lado de la miniatura según `thumbnailSize`                            |
+| `--jnv-image-viewer-background`                             | `var(--jnv-color-surface-muted)` | Fondo mientras carga o si falla la imagen                             |
+| `--jnv-image-viewer-border-color`                           | `var(--jnv-color-brand-primary)` | Color del borde con `bordered`                                        |
+| `--jnv-image-viewer-border-width`                           | `var(--border-width-accent)`     | Grosor del borde con `bordered`                                       |
+| `--jnv-image-viewer-scrim`                                  | `rgb(0 0 0 / 0.32)`              | Velo sobre la imagen al mostrar las acciones                          |
+| `--jnv-image-viewer-action-background`                      | `rgb(0 0 0 / 0.56)`              | Fondo de los botones de acción                                        |
+| `--jnv-image-viewer-action-hover-background`                | `rgb(0 0 0 / 0.78)`              | Fondo de los botones de acción al pasar el puntero                    |
+| `--jnv-image-viewer-action-text`                            | `#ffffff`                        | Icono de los botones de acción                                        |
+| `--jnv-image-lightbox-width`, `--jnv-image-lightbox-height` | `64rem`, `48rem`                 | Tamaño máximo del modal; se limita al viewport menos `var(--space-8)` |
+| `--jnv-image-lightbox-stage-background`                     | `var(--jnv-color-surface-muted)` | Fondo del área de la imagen dentro del modal                          |
+
+Los botones y el velo sobre la imagen usan colores oscuros fijos en ambos temas JNV para destacar
+sobre cualquier fotografía; el contrato los define a partir de `--jnv-color-surface-footer`. El
+modal comparte el radio, la sombra y el fondo exterior de `BaseDialog` (`--jnv-dialog-radius`,
+`--jnv-dialog-shadow` y `--jnv-dialog-backdrop-background`).
+
 ## Tokens de BaseAlert
 
 Cada tono define fondo, borde y texto con `--jnv-alert-{tono}-{background,border,text}`.

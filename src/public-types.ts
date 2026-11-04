@@ -80,6 +80,9 @@ export type BaseIconName =
   | "arrowLeft"
   | "arrowRight"
   | "download"
+  | "zoomIn"
+  | "zoomOut"
+  | "maximize"
   | "plus"
   | "trash"
   | "facebook"
@@ -197,6 +200,68 @@ export interface BaseCollapseGroupProps {
   collapsible?: boolean;
   /** Variante predeterminada de los ítems. `card` los separa con `--jnv-collapse-group-gap`. */
   variant?: BaseCollapseVariant;
+}
+export type BaseImageViewerAction = "edit" | "delete" | "expand" | "download";
+export type BaseImageViewerRadius = "none" | "sm" | "md" | "lg" | "full";
+/** Textos de `BaseImageViewer` y `BaseImageLightbox`. Los no indicados usan el valor en español. */
+export interface BaseImageViewerTexts {
+  edit?: string;
+  delete?: string;
+  expand?: string;
+  download?: string;
+  /** Etiqueta accesible de la miniatura que abre el visor. */
+  open?: string;
+  actionsLabel?: string;
+  loadError?: string;
+  dialogLabel?: string;
+  close?: string;
+  zoomIn?: string;
+  zoomOut?: string;
+  resetZoom?: string;
+  zoomLevel?: string;
+  copy?: string;
+  copied?: string;
+  copyError?: string;
+  downloadError?: string;
+}
+export interface BaseImageLightboxProps {
+  open?: boolean;
+  src: string;
+  alt?: string;
+  caption?: string;
+  downloadable?: boolean;
+  copyable?: boolean;
+  downloadName?: string;
+  /** Zoom máximo (1 = tamaño ajustado al visor). Predeterminado: `4`. */
+  maxZoom?: number;
+  /** Incremento de cada paso de zoom. Predeterminado: `0.5`. */
+  zoomStep?: number;
+  texts?: BaseImageViewerTexts;
+}
+export interface BaseImageViewerProps extends Omit<
+  BaseImageLightboxProps,
+  "open"
+> {
+  variant?: "default" | "thumbnail";
+  /** Radio del borde: `--radius-sm`, `--radius-md`, `--radius-lg` o `--radius-round` (`full`). */
+  radius?: BaseImageViewerRadius;
+  /**
+   * Lado de la miniatura cuadrada: `--jnv-image-viewer-thumbnail-sm` (3rem en los temas JNV),
+   * `-md` (4.5rem) o `-lg` (6rem). Predeterminado: `md`.
+   */
+  thumbnailSize?: "sm" | "md" | "lg";
+  /** Relación de aspecto CSS de la versión normal, por ejemplo `"16 / 9"`. */
+  aspectRatio?: string;
+  fit?: "cover" | "contain";
+  /** Acciones al pasar el puntero, en el orden indicado. Predeterminado: `["expand"]`. */
+  actions?: BaseImageViewerAction[];
+  /** La miniatura abre el visor al hacer click. Predeterminado: `true`. */
+  previewable?: boolean;
+  /**
+   * Muestra un borde de `--jnv-image-viewer-border-width` con el color
+   * `--jnv-image-viewer-border-color` (color principal del tema). Predeterminado: `false`.
+   */
+  bordered?: boolean;
 }
 export interface BaseAlertProps {
   title?: string;

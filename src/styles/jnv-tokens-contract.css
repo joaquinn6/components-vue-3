@@ -104,6 +104,33 @@
   --jnv-collapse-icon: var(--jnv-color-text-muted);
   --jnv-collapse-group-gap: var(--space-3);
 
+  /* BaseImageViewer y BaseImageLightbox. */
+  --jnv-image-viewer-thumbnail-sm: 3rem;
+  --jnv-image-viewer-thumbnail-md: 4.5rem;
+  --jnv-image-viewer-thumbnail-lg: 6rem;
+  --jnv-image-viewer-background: var(--jnv-color-surface-muted);
+  --jnv-image-viewer-border-color: var(--jnv-color-brand-primary);
+  --jnv-image-viewer-border-width: var(--border-width-accent);
+  --jnv-image-viewer-scrim: color-mix(
+    in srgb,
+    var(--jnv-color-surface-footer) 32%,
+    transparent
+  );
+  --jnv-image-viewer-action-background: color-mix(
+    in srgb,
+    var(--jnv-color-surface-footer) 64%,
+    transparent
+  );
+  --jnv-image-viewer-action-hover-background: color-mix(
+    in srgb,
+    var(--jnv-color-surface-footer) 86%,
+    transparent
+  );
+  --jnv-image-viewer-action-text: var(--jnv-color-text-inverse);
+  --jnv-image-lightbox-width: 64rem;
+  --jnv-image-lightbox-height: 48rem;
+  --jnv-image-lightbox-stage-background: var(--jnv-color-surface-muted);
+
   /* BaseBadge: tamaños, ancho fijo y colores por tono. */
   --jnv-badge-sm-padding-block: 0.125rem;
   --jnv-badge-sm-padding-inline: var(--space-2);

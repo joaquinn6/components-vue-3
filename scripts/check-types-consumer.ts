@@ -8,6 +8,8 @@ import {
   BaseFormColumns,
   BaseBreadcrumb,
   BaseIcon,
+  BaseImageLightbox,
+  BaseImageViewer,
   BaseRadio,
   BaseSearchQL,
   BaseSelect,
@@ -28,6 +30,8 @@ import type {
   BaseBreadcrumbItem,
   BaseIconName,
   BaseIconProps,
+  BaseImageLightboxProps,
+  BaseImageViewerProps,
   BaseBreadcrumbProps,
   BaseRadioProps,
   BaseSearchQLChange,
@@ -78,6 +82,30 @@ const invalidCollapse: BaseCollapseProps = {
   variant: "outlined",
 };
 void invalidCollapse;
+
+const imageViewerProps: BaseImageViewerProps = {
+  src: "/perro.jpg",
+  alt: "Perro",
+  radius: "full",
+  actions: ["edit", "delete", "expand", "download"],
+  texts: { edit: "Editar foto" },
+};
+void imageViewerProps;
+
+const imageLightboxProps: BaseImageLightboxProps = {
+  open: true,
+  src: "/perro.jpg",
+  copyable: true,
+  maxZoom: 6,
+};
+void imageLightboxProps;
+
+const invalidImageViewer: BaseImageViewerProps = {
+  src: "/perro.jpg",
+  // @ts-expect-error Image viewer actions are intentionally restricted.
+  actions: ["share"],
+};
+void invalidImageViewer;
 
 const breadcrumbItems: BaseBreadcrumbItem[] = [
   { name: "Inicio", to: { name: "home" } },
@@ -264,6 +292,8 @@ void BaseToast;
 void BaseBadge;
 void BaseFormColumns;
 void BaseIcon;
+void BaseImageLightbox;
+void BaseImageViewer;
 
 const loadingDirective: LoadingDirective = loading;
 void loadingDirective;

@@ -231,7 +231,7 @@ defineExpose({
 
 .base-collapse__trigger:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: var(--opacity-disabled);
 }
 
 .base-collapse__icon {
