@@ -3,7 +3,8 @@ import { computed, ref, type PropType } from "vue";
 import { BaseInput, BaseText } from "../../src/index";
 import { displayName } from "../demos/displayName";
 import type { DemoEntry } from "../demos/registry";
-import { useUiMessages } from "../i18n/ui";
+import { demoSearchTerms } from "../demos/searchTerms";
+import { categoryLabelsByLocale, useUiMessages } from "../i18n/ui";
 
 const props = defineProps({
   items: { type: Array as PropType<readonly DemoEntry[]>, required: true },
@@ -25,10 +26,14 @@ const groups = computed(() => {
 
   props.items.forEach((item) => {
     const label = ui.value.categories[item.category];
+    // Se busca en ambos idiomas, sin importar el idioma activo.
+    const searchable = [
+      item.name,
+      ...categoryLabelsByLocale.map((labels) => labels[item.category]),
+      ...(demoSearchTerms[item.id] ?? []),
+    ];
     const matches =
-      !term ||
-      normalize(item.name).includes(term) ||
-      normalize(label).includes(term);
+      !term || searchable.some((value) => normalize(value).includes(term));
     if (!matches) return;
 
     let group = result.find((entry) => entry.category === item.category);

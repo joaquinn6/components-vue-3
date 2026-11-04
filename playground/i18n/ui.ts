@@ -57,6 +57,9 @@ const es: typeof en = {
   },
 };
 
+/** Nombres de las categorías en todos los idiomas, para buscar sin depender del idioma activo. */
+export const categoryLabelsByLocale = [en.categories, es.categories] as const;
+
 /** Textos de la interfaz del playground (barra, índice y bloque de código). */
 export function useUiMessages() {
   return useMessages({ en, es });
