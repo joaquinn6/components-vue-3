@@ -16,6 +16,7 @@ const files = [
   "BaseConfirmDialog",
   "BaseDialog",
   "BaseFieldInfo",
+  "BaseFileUpload",
   "BaseFormColumns",
   "BaseFormRow",
   "BaseFormSection",

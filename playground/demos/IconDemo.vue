@@ -75,6 +75,8 @@ const iconNames = [
   "code",
   "briefcase",
   "graduationCap",
+  "upload",
+  "file",
 ];
 
 const t = useMessages({

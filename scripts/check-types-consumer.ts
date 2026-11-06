@@ -5,6 +5,7 @@ import {
   BaseColorPicker,
   BaseCollapse,
   BaseCollapseGroup,
+  BaseFileUpload,
   BaseFormColumns,
   BaseBreadcrumb,
   BaseIcon,
@@ -28,6 +29,9 @@ import type {
   BaseCollapseGroupProps,
   BaseCollapseProps,
   BaseBreadcrumbItem,
+  BaseFileUploadExposed,
+  BaseFileUploadProps,
+  BaseFileUploadRejection,
   BaseIconName,
   BaseIconProps,
   BaseImageLightboxProps,
@@ -106,6 +110,37 @@ const invalidImageViewer: BaseImageViewerProps = {
   actions: ["share"],
 };
 void invalidImageViewer;
+
+const fileUploadProps: BaseFileUploadProps = {
+  modelValue: [],
+  variant: "dropzone",
+  multiple: true,
+  accept: ".pdf,image/*",
+  maxFiles: 5,
+  maxSize: 5 * 1024 * 1024,
+  buttonVariant: "ghost",
+  validator: (file) => (file.name.includes(" ") ? "Sin espacios" : null),
+  formatSize: (bytes) => `${bytes} bytes`,
+  texts: { select: "Adjuntar", remove: "Quitar {name}" },
+};
+void fileUploadProps;
+
+const fileUploadRejection: BaseFileUploadRejection["reason"] = "duplicate";
+void fileUploadRejection;
+
+const fileUploadExposed: BaseFileUploadExposed = {
+  open: () => {},
+  clear: () => {},
+  remove: (index: number) => void index,
+  focus: () => {},
+};
+void fileUploadExposed;
+
+const invalidFileUpload: BaseFileUploadProps = {
+  // @ts-expect-error File upload variants are intentionally restricted.
+  variant: "dropdown",
+};
+void invalidFileUpload;
 
 const breadcrumbItems: BaseBreadcrumbItem[] = [
   { name: "Inicio", to: { name: "home" } },
@@ -294,6 +329,7 @@ void BaseFormColumns;
 void BaseIcon;
 void BaseImageLightbox;
 void BaseImageViewer;
+void BaseFileUpload;
 
 const loadingDirective: LoadingDirective = loading;
 void loadingDirective;

@@ -138,16 +138,16 @@ expone modelos, slots o métodos.
 El tipo `BaseIconName` reúne los nombres disponibles y ofrece autocompletado; `BaseIconProps.name`
 sigue aceptando cualquier `string` por compatibilidad. Nombres disponibles:
 
-| Grupo          | Nombres                                                                                                                                             |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Navegación     | `menu`, `moreVertical`, `close`, `search`, `arrowLeft`, `arrowRight`, `chevronDown`, `chevronLeft`, `chevronRight`, `externalLink`, `home`          |
-| Acciones       | `plus`, `edit`, `trash`, `copy`, `clipboard`, `download`, `send`, `printer`, `sort`, `check`, `settings`, `loader`, `zoomIn`, `zoomOut`, `maximize` |
-| Estado         | `info`, `help`, `alertTriangle`, `circleCheck`, `circleX`, `bell`, `lock`, `shield`, `eye`, `eyeOff`, `clock`, `calendar`                           |
-| Personas       | `user`, `circleUser`, `support`, `mail`, `message`, `smartphone`, `monitor`, `camera`                                                               |
-| Comercio       | `cart`, `card`, `bank`, `piggyBank`, `receipt`, `tag`, `package`, `truck`, `weight`, `location`, `map`, `building`                                  |
-| Contenido      | `grid`, `list`, `bolt`, `code`, `briefcase`, `graduationCap`, `languages`                                                                           |
-| Tema           | `sun`, `moon`                                                                                                                                       |
-| Marcas y otros | `logo`, `facebook`, `twitter`, `github`, `linkedin`                                                                                                 |
+| Grupo          | Nombres                                                                                                                                                       |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Navegación     | `menu`, `moreVertical`, `close`, `search`, `arrowLeft`, `arrowRight`, `chevronDown`, `chevronLeft`, `chevronRight`, `externalLink`, `home`                    |
+| Acciones       | `plus`, `edit`, `trash`, `copy`, `clipboard`, `download`, `upload`, `send`, `printer`, `sort`, `check`, `settings`, `loader`, `zoomIn`, `zoomOut`, `maximize` |
+| Estado         | `info`, `help`, `alertTriangle`, `circleCheck`, `circleX`, `bell`, `lock`, `shield`, `eye`, `eyeOff`, `clock`, `calendar`                                     |
+| Personas       | `user`, `circleUser`, `support`, `mail`, `message`, `smartphone`, `monitor`, `camera`                                                                         |
+| Comercio       | `cart`, `card`, `bank`, `piggyBank`, `receipt`, `tag`, `package`, `truck`, `weight`, `location`, `map`, `building`                                            |
+| Contenido      | `grid`, `list`, `bolt`, `code`, `briefcase`, `graduationCap`, `languages`, `file`                                                                             |
+| Tema           | `sun`, `moon`                                                                                                                                                 |
+| Marcas y otros | `logo`, `facebook`, `twitter`, `github`, `linkedin`                                                                                                           |
 
 Los trazados de `github`, `linkedin`, `sun`, `moon`, `languages`, `externalLink`, `code`,
 `briefcase`, `graduationCap`, `zoomIn`, `zoomOut` y `maximize` están adaptados de [Lucide](https://lucide.dev) (licencia ISC); la
@@ -1109,6 +1109,7 @@ predeterminado) y conserva `totalItems` igual a `rows.length`.
 | `BaseAutocomplete` | `options`, `fetchOptions`, `labelKey`, `valueKey`, `selectedLabelKey`, `minChars`, `debounceMs`, `maxSuggestions`, `allowCreate`, textos `loadingText`, `noResultsText`, `loadErrorText`, `clearAriaLabel`                                               | `v-model`, `select`, `blur`; slot `leading`; expone `focus()`                                                                                                                                                                                                                                                                                                         |
 | `BaseColorPicker`  | `swatches`, textos accesibles; ver [BaseColorPicker](#basecolorpicker), estado común                                                                                                                                                                     | `v-model` `#rrggbb` o `""`; `change`, `blur`, `open`, `close`; expone `focus()`, `open()` y `close()`                                                                                                                                                                                                                                                                 |
 | `BaseSignature`    | `id`, `label`, `width`, `height`, `clearAriaLabel`, `drawingInstructions`, `help`, `error`                                                                                                                                                               | `v-model` con PNG data URL; se opera con puntero táctil, lápiz o ratón                                                                                                                                                                                                                                                                                                |
+| `BaseFileUpload`   | `variant` (`button`, `dropzone`), `multiple`, `accept`, `maxFiles`, `maxSize`, `preview`, `texts`; ver [BaseFileUpload](#basefileupload), estado común                                                                                                   | `v-model` con `File[]`; `add`, `remove`, `clear`, `reject`; slots `button`, `dropzone`, `file` y `file-actions`; expone `open()`, `clear()`, `remove(index)` y `focus()`                                                                                                                                                                                              |
 
 > **Migración de `BaseCheckbox`:** desde esta versión la etiqueta se muestra por defecto a la
 > derecha de la casilla (`labelPosition="end"`). Para conservar la etiqueta encima, como antes,
@@ -1250,6 +1251,139 @@ input, sin modificar el panel.
 
 No tiene slots. Expone `focus()` (enfoca el input de texto), `open()` y `close()` para controlar el
 panel.
+
+## BaseFileUpload
+
+Selector de archivos con dos variantes:
+
+- `button`: solo un botón (`BaseButton`) que abre el selector del sistema. También acepta archivos
+  soltados sobre él.
+- `dropzone`: zona para arrastrar y soltar archivos que también abre el selector al hacer clic o al
+  pulsar `Enter`/`Espacio`.
+
+En modo simple o múltiple (`multiple`), los archivos aceptados se muestran en una lista desde la que
+cada uno se puede eliminar. El componente no sube archivos: entrega los `File` en el `v-model` para
+que la aplicación decida cómo enviarlos.
+
+```vue
+<BaseFileUpload v-model="cv" label="Currículum" accept=".pdf" />
+
+<BaseFileUpload
+  v-model="attachments"
+  variant="dropzone"
+  label="Adjuntos"
+  multiple
+  accept="image/*,.pdf"
+  :max-files="5"
+  :max-size="5 * 1024 * 1024"
+  preview
+  clearable
+  @reject="onReject"
+/>
+```
+
+### Props
+
+| Prop                                | Tipo                                           | Predeterminado                        | Descripción                                                                                            |
+| ----------------------------------- | ---------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `modelValue`                        | `File[]`                                       | `[]`                                  | Archivos seleccionados (`v-model`); siempre es un arreglo, también en modo simple                      |
+| `variant`                           | `"button" \| "dropzone"`                       | `"button"`                            | Solo botón o zona de arrastrar y soltar                                                                |
+| `multiple`                          | `boolean`                                      | `false`                               | Permite varios archivos; en modo simple, una nueva selección reemplaza la anterior                     |
+| `accept`                            | `string`                                       | `""`                                  | Sintaxis del atributo `accept`: extensiones (`.pdf`), MIME (`application/pdf`) o comodines (`image/*`) |
+| `maxFiles`                          | `number`                                       | `0`                                   | Máximo de archivos con `multiple`; `0` sin límite. Al alcanzarlo, el disparador se deshabilita         |
+| `maxSize`                           | `number`                                       | `0`                                   | Tamaño máximo por archivo en bytes; `0` sin límite                                                     |
+| `append`                            | `boolean`                                      | `true`                                | Con `multiple`, añade la nueva selección a la actual; con `false` la reemplaza                         |
+| `dedupe`                            | `boolean`                                      | `true`                                | Rechaza archivos ya presentes (mismo nombre, tamaño y fecha de modificación)                           |
+| `validator`                         | `(file, files) => string \| null \| undefined` | —                                     | Validación adicional; devolver un texto rechaza el archivo con ese mensaje                             |
+| `formatSize`                        | `(bytes: number) => string`                    | base 1024 (`1.5 MB`)                  | Formato de los tamaños de la lista, las restricciones y los mensajes                                   |
+| `name`                              | `string`                                       | `""`                                  | Nombre del `<input type="file">`; la selección se refleja en él para envíos nativos de formulario      |
+| `capture`                           | `"user" \| "environment" \| ""`                | `""`                                  | Atributo `capture` del input (cámara en móviles)                                                       |
+| `id`                                | `string`                                       | `""` (se genera uno único)            | Prefijo de los ids internos                                                                            |
+| `label`                             | `string`                                       | `""`                                  | Etiqueta visible; nombra el grupo (`role="group"`)                                                     |
+| `info`, `infoAriaLabel`, `infoType` | igual que `BaseInput`                          | `""`, `"Información adicional"`, `""` | Botón `BaseFieldInfo` junto a la etiqueta                                                              |
+| `size`                              | `"sm" \| "md" \| "lg"`                         | `"sm"`                                | Tamaño del botón, relleno de la zona y densidad de la lista                                            |
+| `state`                             | `"default" \| "error" \| "success"`            | `"default"`                           | Estado visual; `error` y `success` también lo activan                                                  |
+| `help`, `error`, `success`          | `string`                                       | `""`                                  | Mensaje del campo; se muestra el primero disponible en el orden `error`, `success`, `help`             |
+| `required`                          | `boolean`                                      | `false`                               | Muestra el asterisco en la etiqueta                                                                    |
+| `disabled`                          | `boolean`                                      | `false`                               | Deshabilita la selección y la eliminación                                                              |
+| `readonly`                          | `boolean`                                      | `false`                               | Oculta el disparador, las restricciones y los botones de eliminar; solo muestra la lista               |
+| `tone`                              | `"default" \| "inverse"`                       | `"default"`                           | `inverse` adapta la etiqueta a superficies invertidas                                                  |
+| `buttonVariant`                     | `ButtonVariant`                                | `"outline"`                           | Variante de `BaseButton` del disparador `button`                                                       |
+| `icon`                              | `string`                                       | `"upload"`                            | Icono del botón y de la zona; `""` lo oculta                                                           |
+| `block`                             | `boolean`                                      | `false`                               | El botón ocupa todo el ancho                                                                           |
+| `showList`                          | `boolean`                                      | `true`                                | Muestra la lista de archivos seleccionados                                                             |
+| `removable`                         | `boolean`                                      | `true`                                | Botón para eliminar cada archivo                                                                       |
+| `clearable`                         | `boolean`                                      | `false`                               | Botón "Quitar todos" cuando hay más de un archivo                                                      |
+| `showSize`                          | `boolean`                                      | `true`                                | Muestra el tamaño de cada archivo                                                                      |
+| `preview`                           | `boolean`                                      | `false`                               | Las imágenes muestran una miniatura (`BaseImageViewer`) que abre la vista ampliada                     |
+| `showRestrictions`                  | `boolean`                                      | `true`                                | Muestra formatos, tamaño y cantidad máximos bajo el disparador                                         |
+| `showRejections`                    | `boolean`                                      | `true`                                | Muestra los mensajes de los archivos rechazados en la última selección                                 |
+| `listMaxHeight`                     | `string`                                       | `""`                                  | Altura máxima CSS de la lista antes de desplazarse; vacío usa `--jnv-file-upload-list-max-height`      |
+| `texts`                             | `BaseFileUploadTexts`                          | textos en español                     | Sustituye cualquier texto visible o accesible (ver abajo)                                              |
+
+Los atributos no declarados (`class`, `data-*`, etc.) se aplican al contenedor raíz.
+
+### Textos (`texts`)
+
+| Clave                                       | Predeterminado                                                                                    | Uso                                                     |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `select`, `selectMultiple`                  | `"Seleccionar archivo"`, `"Seleccionar archivos"`                                                 | Texto del botón                                         |
+| `replace`                                   | `"Cambiar archivo"`                                                                               | Texto del botón en modo simple cuando ya hay un archivo |
+| `dropzoneTitle`, `dropzoneTitleMultiple`    | `"Arrastra un archivo aquí"`, `"Arrastra tus archivos aquí"`                                      | Título de la zona                                       |
+| `dropzoneAction`, `dropzoneActionMultiple`  | `"o haz clic para seleccionarlo"`, `"o haz clic para seleccionarlos"`                             | Segunda línea de la zona                                |
+| `dropzoneActive`                            | `"Suelta para añadir"`                                                                            | Título mientras se arrastran archivos encima            |
+| `acceptHint`, `maxSizeHint`, `maxFilesHint` | `"Formatos: {types}"`, `"Tamaño máximo: {size}"`, `"Máximo {max} archivos"`                       | Restricciones visibles                                  |
+| `listLabel`                                 | `"Archivos seleccionados"`                                                                        | Etiqueta accesible de la lista                          |
+| `remove`                                    | `"Eliminar {name}"`                                                                               | Etiqueta y tooltip del botón de eliminar                |
+| `clear`                                     | `"Quitar todos"`                                                                                  | Botón para quitar todos                                 |
+| `invalidType`, `invalidSize`                | `"{name}: tipo de archivo no permitido"`, `"{name} supera el tamaño máximo de {size}"`            | Rechazos por tipo y tamaño                              |
+| `tooMany`, `single`                         | `"Solo puedes seleccionar hasta {max} archivos"`, `"Solo puedes seleccionar un archivo"`          | Rechazos por cantidad                                   |
+| `duplicate`                                 | `"{name} ya está en la lista"`                                                                    | Rechazo de un archivo repetido                          |
+| `added`, `removed`, `cleared`               | `"Archivos añadidos: {count}"`, `"Archivo eliminado: {name}"`, `"Se quitaron todos los archivos"` | Anuncios para lectores de pantalla                      |
+
+### Modelo y eventos
+
+| Nombre                   | Payload                                     | Cuándo se emite                                                                 |
+| ------------------------ | ------------------------------------------- | ------------------------------------------------------------------------------- |
+| `v-model` (`modelValue`) | `File[]`                                    | Al añadir, eliminar o quitar todos los archivos                                 |
+| `add`                    | `{ files: File[] }`                         | Con los archivos aceptados en una selección o al soltar                         |
+| `remove`                 | `{ file: File, index: number }`             | Al eliminar un archivo de la lista                                              |
+| `clear`                  | `{ files: File[] }`                         | Al quitar todos los archivos (botón o método `clear()`)                         |
+| `reject`                 | `{ rejections: BaseFileUploadRejection[] }` | Si algún archivo se descarta; cada rechazo incluye `file`, `reason` y `message` |
+
+`reason` puede ser `"type"`, `"size"`, `"duplicate"`, `"count"` o `"custom"` (el `validator`), y se
+comprueban en ese orden. Los archivos válidos de una tanda se aceptan aunque otros se rechacen.
+`accept` también se comprueba al soltar archivos, ya que el navegador solo filtra el diálogo de
+selección.
+
+### Slots y métodos expuestos
+
+- `button` (`{ files, open }`): contenido del botón; por defecto, icono y texto.
+- `dropzone` (`{ dragging, files, open }`): contenido de la zona de arrastre.
+- `file` (`{ file, index, size, remove, removable }`): contenido completo de cada fila. Al usarlo,
+  el botón de eliminar integrado no se muestra; llama a `remove()` desde tu propio control.
+- `file-actions` (`{ file, index }`): acciones adicionales antes del botón de eliminar.
+
+Expone `open()` (abre el selector del sistema), `clear()`, `remove(index)` y `focus()` (enfoca el
+disparador). Para tipar la referencia de plantilla usa `BaseFileUploadExposed`:
+
+```ts
+import type { BaseFileUploadExposed } from "@joaquinn6/jnv-ui-components";
+
+const uploader = ref<BaseFileUploadExposed | null>(null);
+uploader.value?.open();
+```
+
+### Teclado y accesibilidad
+
+- El botón y la zona son elementos `<button>` nativos: se activan con `Enter` o `Espacio`. El
+  `<input type="file">` real queda oculto y fuera del orden de tabulación.
+- Cada archivo tiene un botón de eliminar con etiqueta accesible (`texts.remove`). Tras eliminar,
+  el foco pasa al siguiente archivo, al anterior o, si la lista queda vacía, al disparador.
+- Las altas, bajas y rechazos se anuncian en regiones `aria-live="polite"`; el mensaje de `error`
+  usa `role="alert"`. El disparador se describe con el mensaje y las restricciones.
+- Con `preview`, las URLs de las miniaturas se crean con `URL.createObjectURL` y se revocan al
+  quitar el archivo, desactivar `preview` o desmontar el componente.
 
 ## Fecha y hora
 

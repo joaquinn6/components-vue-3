@@ -18,6 +18,7 @@ import DateTimeInputDemo from "./DateTimeInputDemo.vue";
 import DialogDemo from "./DialogDemo.vue";
 import DropdownMenuDemo from "./DropdownMenuDemo.vue";
 import FieldInfoDemo from "./FieldInfoDemo.vue";
+import FileUploadDemo from "./FileUploadDemo.vue";
 import FormLayoutDemo from "./FormLayoutDemo.vue";
 import HeadingDemo from "./HeadingDemo.vue";
 import IconDemo from "./IconDemo.vue";
@@ -228,6 +229,12 @@ export const demos: readonly DemoEntry[] = [
     name: "BaseSignature",
     category: "forms",
     component: SignatureDemo,
+  },
+  {
+    id: "base-file-upload",
+    name: "BaseFileUpload",
+    category: "forms",
+    component: FileUploadDemo,
   },
 
   {

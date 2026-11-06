@@ -134,7 +134,9 @@ export type BaseIconName =
   | "externalLink"
   | "code"
   | "briefcase"
-  | "graduationCap";
+  | "graduationCap"
+  | "upload"
+  | "file";
 export interface BaseIconProps {
   /**
    * Nombre del icono. Acepta cualquier `string` por compatibilidad; los nombres de
@@ -262,6 +264,116 @@ export interface BaseImageViewerProps extends Omit<
    * `--jnv-image-viewer-border-color` (color principal del tema). Predeterminado: `false`.
    */
   bordered?: boolean;
+}
+export type BaseFileUploadVariant = "button" | "dropzone";
+export type BaseFileUploadRejectionReason =
+  "type" | "size" | "count" | "duplicate" | "custom";
+/** Archivo descartado al seleccionar o soltar, con el motivo y el mensaje mostrado. */
+export interface BaseFileUploadRejection {
+  file: File;
+  reason: BaseFileUploadRejectionReason;
+  message: string;
+}
+/**
+ * Validación adicional por archivo. Devuelve un mensaje para rechazarlo o `null`/`undefined`
+ * para aceptarlo. `files` es la selección vigente más los archivos ya aceptados en la misma tanda.
+ */
+export type BaseFileUploadValidator = (
+  file: File,
+  files: readonly File[],
+) => string | null | undefined;
+/** Formatea un tamaño en bytes para la lista y los mensajes. */
+export type BaseFileUploadSizeFormatter = (bytes: number) => string;
+/**
+ * Textos de `BaseFileUpload`. Los no indicados usan el valor en español. Admiten las variables
+ * `{name}`, `{size}`, `{max}`, `{types}` y `{count}` donde se indica en la documentación.
+ */
+export interface BaseFileUploadTexts {
+  select?: string;
+  selectMultiple?: string;
+  /** Botón cuando ya hay un archivo en modo simple. */
+  replace?: string;
+  dropzoneTitle?: string;
+  dropzoneTitleMultiple?: string;
+  dropzoneAction?: string;
+  dropzoneActionMultiple?: string;
+  /** Título mientras se arrastran archivos sobre la zona. */
+  dropzoneActive?: string;
+  acceptHint?: string;
+  maxSizeHint?: string;
+  maxFilesHint?: string;
+  listLabel?: string;
+  remove?: string;
+  clear?: string;
+  invalidType?: string;
+  invalidSize?: string;
+  tooMany?: string;
+  single?: string;
+  duplicate?: string;
+  added?: string;
+  removed?: string;
+  cleared?: string;
+}
+export interface BaseFileUploadProps extends CommonFieldProps {
+  /** Archivos seleccionados; admite `v-model`. Siempre es un arreglo, también en modo simple. */
+  modelValue?: File[];
+  /** `button` muestra solo un botón; `dropzone`, una zona para arrastrar y soltar. Predeterminado: `"button"`. */
+  variant?: BaseFileUploadVariant;
+  multiple?: boolean;
+  /** Tipos aceptados con la sintaxis del atributo `accept` (`.pdf`, `image/*`, `application/pdf`). */
+  accept?: string;
+  /** Máximo de archivos con `multiple`; `0` sin límite. Predeterminado: `0`. */
+  maxFiles?: number;
+  /** Tamaño máximo por archivo en bytes; `0` sin límite. Predeterminado: `0`. */
+  maxSize?: number;
+  /** Con `multiple`, una nueva selección se añade a la actual en lugar de reemplazarla. Predeterminado: `true`. */
+  append?: boolean;
+  /** Descarta archivos con el mismo nombre, tamaño y fecha de modificación. Predeterminado: `true`. */
+  dedupe?: boolean;
+  validator?: BaseFileUploadValidator;
+  formatSize?: BaseFileUploadSizeFormatter;
+  /** Nombre del `<input type="file">` para envíos nativos de formulario. */
+  name?: string;
+  /** Atributo `capture` del input (cámara en móviles). */
+  capture?: "user" | "environment" | "";
+  /** Variante de `BaseButton` del disparador `button`. Predeterminado: `"outline"`. */
+  buttonVariant?: ButtonVariant;
+  /** Icono del botón y de la zona de arrastre. Predeterminado: `"upload"`. */
+  icon?: string;
+  /** El botón ocupa todo el ancho. */
+  block?: boolean;
+  /** Muestra la lista de archivos seleccionados. Predeterminado: `true`. */
+  showList?: boolean;
+  /** Cada archivo tiene un botón para eliminarlo. Predeterminado: `true`. */
+  removable?: boolean;
+  /** Muestra el botón para quitar todos los archivos cuando hay más de uno. Predeterminado: `false`. */
+  clearable?: boolean;
+  /** Muestra el tamaño de cada archivo. Predeterminado: `true`. */
+  showSize?: boolean;
+  /** Miniatura con vista ampliada para imágenes en lugar del icono. Predeterminado: `false`. */
+  preview?: boolean;
+  /** Muestra automáticamente formatos, tamaño y cantidad máximos. Predeterminado: `true`. */
+  showRestrictions?: boolean;
+  /** Muestra los mensajes de archivos rechazados. Predeterminado: `true`. */
+  showRejections?: boolean;
+  /**
+   * Altura máxima CSS de la lista antes de desplazarse, por ejemplo `"16rem"`. Vacío usa
+   * `--jnv-file-upload-list-max-height` (`none` en los temas JNV). La zona `dropzone` mide al
+   * menos `--jnv-file-upload-dropzone-min-height` (8rem) en cualquier `size`.
+   */
+  listMaxHeight?: string;
+  texts?: BaseFileUploadTexts;
+}
+/** Métodos expuestos por `BaseFileUpload`, para tipar una referencia de plantilla. */
+export interface BaseFileUploadExposed {
+  /** Abre el selector de archivos del sistema. */
+  open: () => void;
+  /** Quita todos los archivos y emite `clear`. */
+  clear: () => void;
+  /** Elimina el archivo en la posición indicada y emite `remove`. */
+  remove: (index: number) => void;
+  /** Enfoca el botón o la zona de arrastre. */
+  focus: () => void;
 }
 export interface BaseAlertProps {
   title?: string;

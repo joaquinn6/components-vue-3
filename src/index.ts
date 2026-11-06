@@ -18,6 +18,7 @@ import _BaseDateTimeInput from "./components/BaseDateTimeInput.vue";
 import _BaseDropdownMenu from "./components/BaseDropdownMenu.vue";
 import _BaseDialog from "./components/BaseDialog.vue";
 import _BaseFieldInfo from "./components/BaseFieldInfo.vue";
+import _BaseFileUpload from "./components/BaseFileUpload.vue";
 import _BaseFormRow from "./components/BaseFormRow.vue";
 import _BaseFormColumns from "./components/BaseFormColumns.vue";
 import _BaseFormSection from "./components/BaseFormSection.vue";
@@ -62,6 +63,7 @@ import type {
   BaseDropdownMenuProps,
   BaseDialogProps,
   BaseFieldInfoProps,
+  BaseFileUploadProps,
   BaseFormRowProps,
   BaseFormColumnsProps,
   BaseFormSectionProps,
@@ -123,6 +125,8 @@ export const BaseDropdownMenu =
   _BaseDropdownMenu as TypedComponent<BaseDropdownMenuProps>;
 export const BaseFieldInfo =
   _BaseFieldInfo as TypedComponent<BaseFieldInfoProps>;
+export const BaseFileUpload =
+  _BaseFileUpload as unknown as TypedComponent<BaseFileUploadProps>;
 export const BaseFormRow = _BaseFormRow as TypedComponent<BaseFormRowProps>;
 export const BaseFormColumns =
   _BaseFormColumns as TypedComponent<BaseFormColumnsProps>;

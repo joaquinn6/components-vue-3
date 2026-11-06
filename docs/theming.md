@@ -240,6 +240,31 @@ sobre cualquier fotografía; el contrato los define a partir de `--jnv-color-sur
 modal comparte el radio, la sombra y el fondo exterior de `BaseDialog` (`--jnv-dialog-radius`,
 `--jnv-dialog-shadow` y `--jnv-dialog-backdrop-background`).
 
+## Tokens de BaseFileUpload
+
+| Token                                          | JNV oscuro y claro                   | Uso                                                               |
+| ---------------------------------------------- | ------------------------------------ | ----------------------------------------------------------------- |
+| `--jnv-file-upload-dropzone-min-height`        | `8rem`                               | Altura mínima de la zona con `variant="dropzone"`                 |
+| `--jnv-file-upload-dropzone-background`        | `var(--jnv-control-background)`      | Fondo de la zona en reposo                                        |
+| `--jnv-file-upload-dropzone-border`            | `var(--jnv-control-border)`          | Color del borde de la zona en reposo                              |
+| `--jnv-file-upload-dropzone-border-width`      | `var(--border-width-accent)`         | Grosor del borde de la zona                                       |
+| `--jnv-file-upload-dropzone-border-style`      | `dashed`                             | Estilo del borde de la zona                                       |
+| `--jnv-file-upload-dropzone-radius`            | `var(--radius-lg)`                   | Radio de la zona                                                  |
+| `--jnv-file-upload-dropzone-hover-border`      | `var(--jnv-control-hover-border)`    | Borde al pasar el puntero                                         |
+| `--jnv-file-upload-dropzone-active-border`     | `var(--jnv-color-brand-primary)`     | Borde mientras se arrastran archivos encima                       |
+| `--jnv-file-upload-dropzone-active-background` | `var(--jnv-color-surface-highlight)` | Fondo mientras se arrastran archivos encima                       |
+| `--jnv-file-upload-icon`                       | `var(--jnv-color-brand-primary)`     | Icono de la zona y de cada archivo                                |
+| `--jnv-file-upload-icon-background`            | `var(--jnv-color-surface-highlight)` | Fondo del icono de cada archivo                                   |
+| `--jnv-file-upload-item-background`            | `var(--jnv-color-surface-subtle)`    | Fondo de cada fila de la lista                                    |
+| `--jnv-file-upload-item-border`                | `var(--jnv-color-border-default)`    | Borde de cada fila de la lista                                    |
+| `--jnv-file-upload-list-gap`                   | `var(--space-2)`                     | Separación entre filas                                            |
+| `--jnv-file-upload-list-max-height`            | `none`                               | Altura máxima de la lista; la prop `listMaxHeight` la sobrescribe |
+
+Los estados `error` y `success` de la zona usan `--jnv-color-state-{error,success}` y sus
+superficies, igual que los demás campos. El estado deshabilitado reutiliza
+`--jnv-control-disabled-background` y `--jnv-control-disabled-border`; el botón y las miniaturas
+heredan los tokens de `BaseButton` y `BaseImageViewer`.
+
 ## Tokens de BaseAlert
 
 Cada tono define fondo, borde y texto con `--jnv-alert-{tono}-{background,border,text}`.

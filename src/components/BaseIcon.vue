@@ -216,6 +216,13 @@ const iconPaths = {
     "M22 10v6",
     "M6 12.5V16a6 3 0 0 0 12 0v-3.5",
   ],
+  upload: ["M12 15V3", "m7 8 5-5 5 5", "M5 21h14"],
+  file: [
+    "M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z",
+    "M14 3v5h5",
+    "M9 13h6",
+    "M9 17h6",
+  ],
 };
 
 const props = defineProps({
@@ -296,6 +303,8 @@ const props = defineProps({
         "code",
         "briefcase",
         "graduationCap",
+        "upload",
+        "file",
       ].includes(value),
   },
   size: {
