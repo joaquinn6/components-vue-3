@@ -521,6 +521,10 @@ completos. Un campo desconocido se muestra con su `name` y su valor para que pue
 una opción desconocida muestra su valor. Si el modelo repite un campo, se muestra su último valor.
 Las actualizaciones de la configuración también actualizan las etiquetas.
 
+En pantallas de hasta `40rem`, el botón de filtros predefinidos muestra solo su icono;
+`defaultFiltersLabel` se conserva como su nombre accesible. Los controles ocupan una sola línea y
+los chips solo añaden otra cuando hay filtros aplicados. Los menús se alinean con la barra.
+
 El rango de fechas conserva su contrato independiente `dateValue` / `date-change` y no forma
 parte de `v-model`. No hay slots ni métodos expuestos.
 

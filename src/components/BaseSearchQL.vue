@@ -532,11 +532,14 @@ onBeforeUnmount(() =>
               :size="size === 'lg' ? 'md' : 'sm'"
               decorative
             />
-            <span>{{ textLabels.defaultFiltersLabel }}</span>
+            <span class="base-search-ql__filter-label">{{
+              textLabels.defaultFiltersLabel
+            }}</span>
             <BaseIcon
               name="chevronDown"
               :size="size === 'lg' ? 'md' : 'sm'"
               decorative
+              class="base-search-ql__filter-chevron"
             />
           </span>
         </BaseButton>
@@ -1111,25 +1114,83 @@ onBeforeUnmount(() =>
 }
 
 @media (max-width: 40rem) {
-  .base-search-ql__bar {
+  .base-search-ql .base-search-ql__bar {
     flex-wrap: wrap;
+    row-gap: var(--space-1);
   }
 
+  /*
+   * Chips e input participan directamente en la barra: sin chips, todo ocupa una
+   * sola línea. Los chips van primero para coincidir con el orden de tabulación.
+   */
   .base-search-ql__search-area {
-    flex-basis: calc(100% - var(--icon-size-md) - var(--space-4));
-    order: 1;
+    display: contents;
   }
 
-  .base-search-ql__filter-control {
-    order: 2;
-    margin-left: auto;
+  .base-search-ql__input {
+    min-width: 0;
+    flex: 1 1 0;
+    text-overflow: ellipsis;
+  }
+
+  .base-search-ql__chip {
+    max-width: 100%;
+    order: -2;
+  }
+
+  .base-search-ql__bar:has(.base-search-ql__chip) {
+    padding-top: var(--space-2);
+  }
+
+  .base-search-ql__bar:has(.base-search-ql__chip)::after {
+    content: "";
+    height: 0;
+    flex-basis: 100%;
+    order: -1;
+  }
+
+  /* Los menús se anclan a la barra para no salirse de la pantalla. */
+  .base-search-ql__filter-control,
+  .base-search-ql__date-control {
+    position: static;
+  }
+
+  .base-search-ql__date-menu {
+    width: min(22rem, 100%);
+  }
+
+  /* El aria-label del botón conserva el nombre accesible sin el texto visible. */
+  .base-search-ql__filter-label,
+  .base-search-ql__filter-chevron {
+    display: none;
+  }
+
+  .base-search-ql .base-search-ql__filter-trigger {
+    width: calc(var(--control-height-md) - var(--space-1));
+    padding: var(--space-1);
+  }
+
+  .base-search-ql--sm .base-search-ql__filter-trigger {
+    width: var(--control-height-sm);
+  }
+
+  /* Controles compactos en lg para reservar el ancho al campo de búsqueda. */
+  .base-search-ql--lg .base-search-ql__bar {
+    column-gap: var(--space-2);
+    padding-right: var(--space-3);
+    padding-left: var(--space-3);
+  }
+
+  .base-search-ql--lg .base-search-ql__filter-trigger,
+  .base-search-ql--lg .base-search-ql__date-trigger {
+    width: calc(var(--control-height-md) - var(--space-1));
+    min-height: calc(var(--control-height-md) - var(--space-1));
   }
 
   .base-search-ql__filter-menu {
     grid-auto-columns: minmax(12rem, 1fr);
     grid-auto-flow: row;
-    right: calc(-1 * var(--space-3));
-    width: min(22rem, calc(100vw - var(--space-8)));
+    width: min(22rem, 100%);
   }
 }
 </style>
