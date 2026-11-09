@@ -138,20 +138,29 @@ expone modelos, slots o métodos.
 El tipo `BaseIconName` reúne los nombres disponibles y ofrece autocompletado; `BaseIconProps.name`
 sigue aceptando cualquier `string` por compatibilidad. Nombres disponibles:
 
-| Grupo          | Nombres                                                                                                                                                       |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Navegación     | `menu`, `moreVertical`, `close`, `search`, `arrowLeft`, `arrowRight`, `chevronDown`, `chevronLeft`, `chevronRight`, `externalLink`, `home`                    |
-| Acciones       | `plus`, `edit`, `trash`, `copy`, `clipboard`, `download`, `upload`, `send`, `printer`, `sort`, `check`, `settings`, `loader`, `zoomIn`, `zoomOut`, `maximize` |
-| Estado         | `info`, `help`, `alertTriangle`, `circleCheck`, `circleX`, `bell`, `lock`, `shield`, `eye`, `eyeOff`, `clock`, `calendar`                                     |
-| Personas       | `user`, `circleUser`, `support`, `mail`, `message`, `smartphone`, `monitor`, `camera`                                                                         |
-| Comercio       | `cart`, `card`, `bank`, `piggyBank`, `receipt`, `tag`, `package`, `truck`, `weight`, `location`, `map`, `building`                                            |
-| Contenido      | `grid`, `list`, `bolt`, `code`, `briefcase`, `graduationCap`, `languages`, `file`                                                                             |
-| Tema           | `sun`, `moon`                                                                                                                                                 |
-| Marcas y otros | `logo`, `facebook`, `twitter`, `github`, `linkedin`                                                                                                           |
+| Grupo               | Nombres                                                                                                                                                                                                                                                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Navegación          | `menu`, `moreVertical`, `close`, `search`, `arrowLeft`, `arrowRight`, `chevronDown`, `chevronLeft`, `chevronRight`, `externalLink`, `home`                                                                                                                                                                                           |
+| Acciones            | `plus`, `edit`, `trash`, `copy`, `clipboard`, `download`, `upload`, `send`, `printer`, `sort`, `check`, `settings`, `loader`, `zoomIn`, `zoomOut`, `maximize`                                                                                                                                                                        |
+| Estado              | `info`, `help`, `alertTriangle`, `circleCheck`, `circleX`, `bell`, `lock`, `shield`, `eye`, `eyeOff`, `clock`, `calendar`                                                                                                                                                                                                            |
+| Personas            | `user`, `circleUser`, `support`, `mail`, `message`, `smartphone`, `monitor`, `camera`                                                                                                                                                                                                                                                |
+| Comercio            | `cart`, `card`, `bank`, `piggyBank`, `receipt`, `tag`, `package`, `truck`, `weight`, `location`, `map`, `building`                                                                                                                                                                                                                   |
+| Contenido           | `grid`, `list`, `bolt`, `code`, `briefcase`, `graduationCap`, `languages`, `file`                                                                                                                                                                                                                                                    |
+| Tema                | `sun`, `moon`                                                                                                                                                                                                                                                                                                                        |
+| Marcas y otros      | `logo`, `facebook`, `twitter`, `twitterX`, `github`, `linkedin`, `whatsapp`, `instagram`, `tiktok`, `youtube`, `telegram`, `pinterest`, `discord`, `threads`, `snapchat`, `messenger`, `reddit`, `twitch`, `spotify`, `google`, `apple`, `paypal`                                                                                    |
+| Contacto            | `phone`, `globe`, `share`, `link`, `users`, `userPlus`, `star`, `heart`                                                                                                                                                                                                                                                              |
+| Animales            | `pawPrint`, `dog`, `cat`, `bird`, `fish`, `rabbit`, `turtle`, `horse`, `pig`, `bone`                                                                                                                                                                                                                                                 |
+| Salud y veterinaria | `syringe`, `pill`, `pillBottle`, `tablets`, `stethoscope`, `heartPulse`, `thermometer`, `microscope`, `testTube`, `bandage`, `hospital`, `ambulance`, `scissors`, `bath`, `showerHead`, `clipboardPlus`, `calendarCheck`, `calendarClock`, `calendarPlus`                                                                            |
+| Inventario          | `warehouse`, `boxes`, `barcode`, `scanBarcode`, `qrCode`, `clipboardList`, `clipboardCheck`, `packageCheck`, `packagePlus`, `packageMinus`, `packageX`, `packageSearch`, `packageOpen`, `forklift`, `container`, `store`, `factory`, `scale`, `ruler`, `layers`, `archive`, `filter`, `refresh`, `arrowLeftRight`, `history`, `hash` |
+| Finanzas y reportes | `trendingUp`, `trendingDown`, `chartBar`, `chartPie`, `fileSpreadsheet`, `fileText`, `dollarSign`, `percent`, `shoppingBag`, `wallet`, `handCoins`                                                                                                                                                                                   |
 
 Los trazados de `github`, `linkedin`, `sun`, `moon`, `languages`, `externalLink`, `code`,
-`briefcase`, `graduationCap`, `zoomIn`, `zoomOut` y `maximize` están adaptados de [Lucide](https://lucide.dev) (licencia ISC); la
-atribución se distribuye en `NOTICE`.
+`briefcase`, `graduationCap`, `zoomIn`, `zoomOut`, `maximize`, `trash` y los grupos Contacto, Animales, Salud y
+veterinaria, Inventario y Finanzas y reportes están adaptados de [Lucide](https://lucide.dev)
+(licencia ISC), salvo `horse` y `pig`. Estos dos y `whatsapp`, `instagram`, `tiktok`, `youtube`,
+`telegram`, `twitterX`, `pinterest`, `discord`, `threads`, `snapchat`, `messenger`, `reddit`,
+`twitch`, `spotify`, `google`, `apple` y `paypal` están adaptados de
+[Tabler Icons](https://tabler.io/icons) (licencia MIT). La atribución se distribuye en `NOTICE`.
 
 ## BaseCollapse
 
